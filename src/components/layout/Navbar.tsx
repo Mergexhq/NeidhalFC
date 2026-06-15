@@ -11,12 +11,8 @@ import { cn } from "@/lib/utils";
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Programs", href: "/programs" },
   { label: "Locations", href: "/locations" },
-  { label: "Coaches", href: "/coaches" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Events", href: "/events" },
-  { label: "News", href: "/news" },
+  { label: "Media", href: "/media" },
 ];
 
 export const Navbar: React.FC = () => {
@@ -109,7 +105,7 @@ export const Navbar: React.FC = () => {
           {/* Action CTA Button */}
           <div className="hidden lg:flex items-center">
             <Link
-              href="/join"
+              href="/book-trial"
               className={cn(
                 "inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-sans font-bold text-xs tracking-wider uppercase transition-all duration-300 transform hover:scale-[1.03] cursor-pointer",
                 isScrolled 
@@ -167,7 +163,7 @@ export const Navbar: React.FC = () => {
               })}
               <div className="pt-4 px-3">
                 <Link
-                  href="/join"
+                  href="/book-trial"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-sans font-bold text-sm tracking-wider uppercase bg-[#000000] hover:bg-[#000000]/90 text-[#FFFFFF] shadow-md transition-all cursor-pointer"
                 >

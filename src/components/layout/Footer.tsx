@@ -79,10 +79,9 @@ export const Footer: React.FC = () => {
                 {[
                   { label: "Home", href: "/" },
                   { label: "About Club", href: "/about" },
-                  { label: "Training Programs", href: "/programs" },
                   { label: "Locations", href: "/locations" },
-                  { label: "Meet the Coaches", href: "/coaches" },
-                  { label: "Gallery", href: "/gallery" },
+                  { label: "Media Hub", href: "/media" },
+                  { label: "Book a Trial", href: "/book-trial" },
                 ].map((link) => (
                   <li key={link.href}>
                     <Link 
@@ -180,7 +179,7 @@ export const Footer: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-white/40 font-normal w-full border-t border-white/10 pt-8 mt-4">
               <p>© {currentYear} Neidhal Football Club. All rights reserved.</p>
               <div className="flex items-center gap-6">
-                <Link href="/join" className="hover:text-white transition-colors duration-200">Register</Link>
+                <Link href="/book-trial" className="hover:text-white transition-colors duration-200">Register</Link>
                 <a href="https://wa.me/919962916597" className="hover:text-white transition-colors duration-200">WhatsApp support</a>
               </div>
             </div>
