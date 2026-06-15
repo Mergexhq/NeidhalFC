@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
-import PageHero from "@/components/common/PageHero";
+import TrialIntro from "@/modules/book-trial/TrialIntro";
+import MembershipOptions from "@/modules/book-trial/MembershipOptions";
 import TrialForm from "@/modules/book-trial/TrialForm";
 
 export const metadata: Metadata = {
@@ -11,12 +12,10 @@ export const metadata: Metadata = {
 export default function BookTrialPage() {
   return (
     <>
-      <PageHero 
-        title="Book a Free Trial" 
-        subtitle="Experience our professional double-coach system. Choose your closest Chennai center and book a slot today." 
-      />
+      <TrialIntro />
+      <MembershipOptions />
       <Suspense fallback={
-        <div className="py-24 text-center text-slate-500 font-sans font-medium text-sm">
+        <div className="py-24 text-center text-slate-500 font-sans font-medium text-sm bg-[#FAF7F2]">
           Loading booking form...
         </div>
       }>
@@ -25,3 +24,4 @@ export default function BookTrialPage() {
     </>
   );
 }
+

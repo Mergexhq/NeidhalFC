@@ -1,8 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
 import PageHero from "@/components/common/PageHero";
-import LocationsGrid from "@/modules/locations/LocationsGrid";
 import MapSection from "@/modules/locations/MapSection";
+import LocationsSection from "@/modules/locations/LocationsSection";
 
 export const metadata: Metadata = {
   title: "Our Locations",
@@ -16,8 +16,8 @@ export default function LocationsPage() {
         title="Training Locations" 
         subtitle="We operate across three major coaching hubs in Chennai, strategically located for parents and students." 
       />
-      <LocationsGrid />
       <MapSection />
+      <LocationsSection />
     </>
   );
 }

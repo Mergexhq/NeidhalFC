@@ -18,7 +18,7 @@ export const WhatsAppCTA: React.FC = () => {
   const whatsappUrl = "https://wa.me/919962916597?text=Hi%20Neidhal%20FC!%20I%20would%20like%20to%20enquire%20about%20a%20free%20trial%20session%20for%20my%20child.";
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div

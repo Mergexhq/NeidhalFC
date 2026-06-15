@@ -3,7 +3,6 @@ import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import WhatsAppCTA from "@/components/common/WhatsAppCTA";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -66,7 +65,6 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <WhatsAppCTA />
       </body>
     </html>
   );

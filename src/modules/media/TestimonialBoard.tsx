@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { Quote } from "lucide-react";
 import Image from "next/image";
 
 const TESTIMONIALS = [
@@ -39,9 +39,9 @@ export const TestimonialBoard: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-20">
           <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-sand mb-4 block">
-            Parent Reviews
+            Chapter 2: The Voices
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-white font-display tracking-tight leading-tight uppercase">
             Trusted by Chennai Parents
@@ -66,14 +66,7 @@ export const TestimonialBoard: React.FC = () => {
               <Quote className="absolute top-8 right-8 h-10 w-10 text-white/5 pointer-events-none" />
 
               <div>
-                {/* Stars */}
-                <div className="flex gap-1 mb-6 text-sand">
-                  {[...Array(t.stars)].map((_, i) => (
-                    <Star key={i} size={14} fill="currentColor" />
-                  ))}
-                </div>
-
-                <p className="text-slate-200 text-sm md:text-base leading-relaxed font-normal mb-8 italic text-left">
+                <p className="text-slate-200 text-sm md:text-base leading-relaxed font-normal mb-8 italic text-left pt-4">
                   "{t.quote}"
                 </p>
               </div>

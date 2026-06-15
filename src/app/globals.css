@@ -9,9 +9,9 @@
   --color-sand: #D9C3A5;
   --color-sand-light: #F5EFE6;
   --color-sand-dark: #BCA688;
-  --color-accent: #0E4D92;
-  --color-accent-light: #3A75B4;
-  --color-accent-dark: #0A386B;
+  --color-accent: #0077b6;
+  --color-accent-light: #00b4d8;
+  --color-accent-dark: #005f73;
 
   --font-sans: "Inter", var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
   --font-display: "Instrument Serif", var(--font-outfit), ui-sans-serif, system-ui, sans-serif;

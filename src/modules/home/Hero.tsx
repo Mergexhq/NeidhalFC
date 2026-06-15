@@ -88,14 +88,6 @@ export const Hero: React.FC = () => {
       {/* Gradient Overlays on Video to blend with layout */}
       <div className="absolute inset-0 bg-linear-to-b from-primary/30 via-transparent to-[#FAF7F2] pointer-events-none z-0" />
 
-      {/* Subtle Jumping Dolphin Mascot Background Outline */}
-      <svg viewBox="0 0 100 100" className="w-[260px] h-[260px] md:w-[480px] md:h-[480px] text-sand fill-none stroke-current stroke-[0.35] opacity-[0.06] select-none pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 animate-pulse">
-        <path d="M10,65 C30,35 60,30 85,55 C88,58 92,60 95,58 C90,52 82,45 75,42 C60,35 45,38 30,50 C20,58 15,62 10,65 Z" />
-        <path d="M85,55 C70,68 50,75 35,70 C22,65 15,55 10,48 C12,52 18,58 25,60 C38,65 55,60 70,50 L85,55 Z" />
-        <path d="M55,38 C58,30 63,22 70,25 C66,28 62,34 60,40" />
-        <path d="M35,62 C32,68 28,75 22,72 C25,70 28,66 30,62" />
-      </svg>
-
       {/* Hero Content Layer */}
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
         {/* Headline */}

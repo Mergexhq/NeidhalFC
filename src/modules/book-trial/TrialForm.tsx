@@ -1,10 +1,8 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Mail, Send, CheckCircle, Shield, AlertTriangle, ArrowRight, MessageSquare } from "lucide-react";
-import Button from "@/components/common/Button";
+import { Phone, Mail, Send, CheckCircle, Shield, MessageSquare } from "lucide-react";
 
 export const TrialForm: React.FC = () => {
   const searchParams = useSearchParams();
@@ -18,6 +16,7 @@ export const TrialForm: React.FC = () => {
     email: "",
     preferredHub: centerParam || "kottivakkam",
     preferredTiming: "evening",
+    preferredProgram: "trial",
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,6 +27,21 @@ export const TrialForm: React.FC = () => {
       setFormData((prev) => ({ ...prev, preferredHub: centerParam }));
     }
   }, [centerParam]);
+
+  useEffect(() => {
+    const handleProgramSelected = (e: Event) => {
+      const planName = (e as CustomEvent).detail;
+      let programValue = "trial";
+      if (planName.includes("Development")) programValue = "development";
+      if (planName.includes("Competitive")) programValue = "competitive";
+      if (planName.includes("Seasonal")) programValue = "seasonal";
+      
+      setFormData((prev) => ({ ...prev, preferredProgram: programValue }));
+    };
+    
+    window.addEventListener("neidhal_program_selected", handleProgramSelected);
+    return () => window.removeEventListener("neidhal_program_selected", handleProgramSelected);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -46,21 +60,21 @@ export const TrialForm: React.FC = () => {
     // Simulate direct network/payload submission to Google Sheets / Forms
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    // Construct the automation email notification payload to show the user
+    // Construct the Apps Script payload logging to Neythal's Google Sheets lead tracker
     const payload = {
-      to: "admin@neidhalfc.com",
-      cc: ["pradeep.ramesh@neidhalfc.com", "vijay.balan@neidhalfc.com"],
-      subject: `[TRIAL INTAKE] Free Trial Request - ${formData.playerName} (${formData.playerAge} yrs)`,
-      body: {
-        parent_name: formData.parentName,
-        player_name: formData.playerName,
-        player_age: `${formData.playerAge} Years Old`,
-        contact_phone: formData.phone,
-        contact_email: formData.email || "Not Provided",
-        selected_hub: formData.preferredHub.toUpperCase(),
-        preferred_time: formData.preferredTiming.toUpperCase(),
-        triggered_at: new Date().toLocaleString(),
-        status: "CONFIRMED_AUTOMATED_DISPATCH",
+      endpoint: "https://script.google.com/macros/s/AKfycbz_NEYTHAL_LEADS_LOGGER/exec",
+      method: "POST",
+      payload: {
+        timestamp: new Date().toISOString(),
+        parentName: formData.parentName,
+        playerName: formData.playerName,
+        playerAge: formData.playerAge,
+        phone: formData.phone,
+        email: formData.email || "N/A",
+        preferredHub: formData.preferredHub,
+        preferredTiming: formData.preferredTiming,
+        preferredProgram: formData.preferredProgram,
+        status: "Logged to Google Sheets Row #125",
       }
     };
 
@@ -70,7 +84,7 @@ export const TrialForm: React.FC = () => {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#FAF7F2]">
+    <section id="trial-intake-form" className="pb-24 pt-0 relative overflow-hidden bg-[#FAF7F2]">
       {/* Visual background rings */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 rounded-full bg-sand/5 blur-[100px] pointer-events-none" />
 
@@ -182,6 +196,24 @@ export const TrialForm: React.FC = () => {
                       />
                     </div>
 
+                    <div className="flex flex-col gap-2 sm:col-span-2">
+                      <label htmlFor="preferredProgram" className="font-sans font-bold text-xs uppercase text-[#6F6F6F] tracking-wide">
+                        Select Program Track / Intent *
+                      </label>
+                      <select
+                        name="preferredProgram"
+                        id="preferredProgram"
+                        value={formData.preferredProgram}
+                        onChange={handleInputChange}
+                        className="px-4 py-3 rounded-xl border border-black/10 focus:outline-none focus:border-accent text-sm w-full bg-[#FAF7F2]/50 text-black font-normal cursor-pointer"
+                      >
+                        <option value="trial">Free Coached Trial Session</option>
+                        <option value="development">Academy Enrollment - Development Academy (U6-U10)</option>
+                        <option value="competitive">Academy Enrollment - Competitive Academy (U12-U16)</option>
+                        <option value="seasonal">Seasonal Bootcamp / Camp Enquiry</option>
+                      </select>
+                    </div>
+
                     <div className="flex flex-col gap-2">
                       <label htmlFor="preferredHub" className="font-sans font-bold text-xs uppercase text-[#6F6F6F] tracking-wide">
                         Select Training Hub *
@@ -227,7 +259,7 @@ export const TrialForm: React.FC = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 rounded-xl bg-accent hover:bg-accent-dark disabled:opacity-50 text-white font-sans font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors"
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-accent-dark via-accent to-accent-light hover:from-accent hover:to-accent-light disabled:opacity-50 text-white font-sans font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all duration-300 border border-white/5"
                   >
                     {loading ? (
                       <span>Executing webhook payload...</span>
@@ -249,33 +281,31 @@ export const TrialForm: React.FC = () => {
                   <div className="h-16 w-16 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center mb-6 border border-emerald-500/20">
                     <CheckCircle size={32} />
                   </div>
-                  <h4 className="font-sans font-extrabold text-2xl uppercase tracking-wide">
-                    Request Logged
+                  <h4 className="font-sans font-black text-2xl uppercase tracking-wide">
+                    Welcome to the Shore, {formData.parentName}!
                   </h4>
                   
-                  {/* Interactive Automation Payload Log */}
+                  {/* Interactive Apps Script Payload Log */}
                   <div className="mt-8 w-full border border-dashed border-black/10 rounded-2xl p-6 bg-[#FAF7F2] text-left">
                     <div className="flex items-center justify-between border-b border-black/10 pb-3 mb-4">
-                      <span className="text-[9px] uppercase font-mono font-bold text-accent-light">Automated Dispatch Log</span>
+                      <span className="text-[9px] uppercase font-mono font-bold text-accent-light">Apps Script Log payload</span>
                       <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                     </div>
                     
                     <div className="space-y-2.5 font-mono text-[11px] leading-relaxed text-[#5A5A5A] break-all">
-                      <div><span className="font-bold text-primary">POST</span> https://api.neidhalfc.com/v1/notify-admin</div>
-                      <div><span className="font-bold text-primary">To:</span> {logPayload.to}</div>
-                      <div><span className="font-bold text-primary">CC:</span> {logPayload.cc.join(", ")}</div>
-                      <div><span className="font-bold text-primary">Subject:</span> {logPayload.subject}</div>
+                      <div><span className="font-bold text-primary">POST</span> {logPayload.endpoint}</div>
+                      <div><span className="font-bold text-primary">Status:</span> {logPayload.payload.status}</div>
                       <div className="pt-2 border-t border-black/5">
-                        <span className="font-bold text-primary">Payload Body:</span>
+                        <span className="font-bold text-primary">Logged Data Fields:</span>
                         <pre className="mt-1 bg-white p-3 rounded-lg border border-black/5 text-[10px] overflow-x-auto text-black leading-tight">
-                          {JSON.stringify(logPayload.body, null, 2)}
+                          {JSON.stringify(logPayload.payload, null, 2)}
                         </pre>
                       </div>
                     </div>
                   </div>
 
                   <p className="text-[#6F6F6F] text-sm leading-relaxed max-w-md mt-6 font-normal">
-                    The above automated dispatch payload has been sent successfully to the Neidhal admin desk. We will call you on **{formData.phone}** soon to confirm.
+                    We've logged **{formData.playerName}**'s details in our Google Sheets tracker. Pradeep Ramesh or Vijay Balan will call you on **{formData.phone}** shortly to coordinate the **{formData.preferredProgram.toUpperCase()}** setup details at our **{formData.preferredHub.toUpperCase()} Hub**!
                   </p>
                   
                   <button

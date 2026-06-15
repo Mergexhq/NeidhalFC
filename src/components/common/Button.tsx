@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   const baseStyles = "inline-flex items-center justify-center font-sans font-semibold transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-sand/50 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
   
   const variants = {
-    primary: "bg-accent hover:bg-accent-dark text-white shadow-md hover:shadow-accent/20",
+    primary: "bg-gradient-to-r from-accent-dark via-accent to-accent-light hover:from-accent hover:to-accent-light text-white shadow-md hover:shadow-accent/20 border border-white/5",
     secondary: "bg-primary-light hover:bg-primary-light/80 text-white border border-white/10",
     sand: "bg-sand hover:bg-sand-dark text-primary-dark shadow-md hover:shadow-sand/20",
     outline: "border border-sand text-sand hover:bg-sand hover:text-primary-dark",

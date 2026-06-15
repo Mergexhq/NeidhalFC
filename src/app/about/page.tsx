@@ -1,10 +1,12 @@
 import React from "react";
 import type { Metadata } from "next";
 import PageHero from "@/components/common/PageHero";
-import HeritageScroll from "@/modules/about/HeritageScroll";
+import BrandMeaning from "@/modules/about/BrandMeaning";
 import OriginsSlider from "@/modules/about/OriginsSlider";
+import Philosophy from "@/modules/about/Philosophy";
 import SymbolismBoard from "@/modules/about/SymbolismBoard";
 import OperationalUSP from "@/modules/about/OperationalUSP";
+import Facilities from "@/modules/about/Facilities";
 
 export const metadata: Metadata = {
   title: "About Our Story",
@@ -15,13 +17,15 @@ export default function AboutPage() {
   return (
     <>
       <PageHero 
-        title="About Neidhal FC" 
-        subtitle="The story, the naming concept, and the philosophy behind Chennai's premier coastal academy." 
+        title="About Neythal" 
+        subtitle="Our backstory, the naming concept, and the standard behind the coaching." 
       />
-      <HeritageScroll />
+      <BrandMeaning />
       <OriginsSlider />
+      <Philosophy />
       <SymbolismBoard />
       <OperationalUSP />
+      <Facilities />
     </>
   );
 }

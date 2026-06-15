@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import PageHero from "@/components/common/PageHero";
 import InstagramFeed from "@/modules/media/InstagramFeed";
 import TestimonialBoard from "@/modules/media/TestimonialBoard";
+import PressKit from "@/modules/media/PressKit";
 
 export const metadata: Metadata = {
   title: "Media & Social Proof",
@@ -18,6 +19,7 @@ export default function MediaPage() {
       />
       <InstagramFeed />
       <TestimonialBoard />
+      <PressKit />
     </>
   );
 }
