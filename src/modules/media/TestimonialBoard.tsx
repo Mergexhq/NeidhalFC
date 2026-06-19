@@ -43,7 +43,7 @@ export const TestimonialBoard: React.FC = () => {
           <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-sand mb-4 block">
             Chapter 2: The Voices
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-white font-display tracking-tight leading-tight uppercase">
+          <h2 className="text-4xl md:text-5xl font-semibold text-white font-display tracking-wide leading-tight">
             Trusted by Chennai Parents
           </h2>
           <p className="text-slate-400 font-normal text-sm md:text-base mt-4 max-w-xl mx-auto">

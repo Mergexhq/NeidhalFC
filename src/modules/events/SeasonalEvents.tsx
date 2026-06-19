@@ -41,7 +41,7 @@ export const SeasonalEvents: React.FC = () => {
           <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-accent mb-3 block">
             Chapter 4: What's Happening
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-primary font-display tracking-tight leading-tight uppercase">
+          <h2 className="text-4xl md:text-5xl font-semibold text-primary font-display tracking-wide leading-tight">
             Active Programs & Camps
           </h2>
           <p className="text-[#6F6F6F] text-sm md:text-base leading-relaxed mt-4 font-normal">

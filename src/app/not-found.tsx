@@ -19,7 +19,7 @@ export default function NotFound() {
         <div className="max-w-md mx-auto px-4 flex flex-col items-center gap-6 relative z-10">
           <Compass className="h-16 w-16 text-accent animate-spin-slow mb-4" />
           
-          <h2 className="text-3xl font-black text-primary font-display uppercase tracking-wide">
+          <h2 className="text-3xl font-semibold text-primary font-display tracking-wide">
             Lost Your Bearings?
           </h2>
           

@@ -9,21 +9,33 @@ import Button from "@/components/common/Button";
 const SLIDES = [
   {
     year: "2016",
-    title: "The Sunset Pact",
-    description: "It began as a simple friendship. In 2016, a group of friends gathered on Chennai's beaches to play recreational football during golden hour. Playing barefoot on the heavy sand, they fell in love with the uninhibited freedom, raw touch, and creative flair that beach football demanded.",
+    title: "The beach had no rules.",
+    description: "In 2016, two people found each other on the shores of the Bay of Bengal. No pitch. No permission slips. Just the open stretch of ECR sand and a football. They played because they loved it. That was enough to begin.",
     image: "/images/about/backstory_2016.png",
   },
   {
+    year: "2017",
+    title: "They kept showing up.",
+    description: "Days turned into weeks. More people joined. The game grew louder than the waves. What started as two friends kicking a ball became something harder to explain — a tribe forming around a shared belief that football should feel like freedom.",
+    image: "/images/about/going_roots.png",
+  },
+  {
     year: "2018",
-    title: "Legalizing Beach Soccer",
-    description: "What started as an informal game quickly faced local hurdles. To protect and formalize their playing area, the founders worked with local coastal authorities and community leaders, legalizing beach soccer courts on the shoreline. They set up proper goalposts and created a safe haven for youth training.",
+    title: "Then came the dolphins.",
+    description: "Just thirty feet from where they played, dolphins moved through the Bay of Bengal. Most people in Chennai do not know this. They did — because they were there every morning, watching the sea the way you only can when you belong to it. The dolphin became their symbol. Not chosen. Earned.",
+    image: "/images/about/slider_dolphins.png",
+  },
+  {
+    year: "2020",
+    title: "They built something permanent.",
+    description: "What began on the beach became a structure. A coaching program. A philosophy. Locations across the coastline. A name rooted in the land they came from. Neidhal FC was not founded in a boardroom. It was founded in the sand.",
     image: "/images/about/beach_soccer_legal.png",
   },
   {
-    year: "2020+",
-    title: "Going Back to Our Roots",
-    description: "As the project scaled to elite turfs in Kottivakkam and Nandanam, we noticed traditional academies over-coached young players, stripping away their flair. Neidhal FC was established to go back to our roots—bringing the raw, fearless decision-making of sand soccer onto the turf.",
-    image: "/images/about/going_roots.png",
+    year: "Present",
+    title: "And they never forgot where they started.",
+    description: "Every session, every drill, every player we train carries the spirit of that original game on the shore. Unscripted. Uninhibited. Alive. That is what Neidhal FC is still trying to give every child who steps onto the pitch.",
+    image: "/images/about/slider_coaching.png",
   },
 ];
 
@@ -39,7 +51,7 @@ export const OriginsSlider: React.FC = () => {
   };
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden bg-[#FAF7F2] border-b border-black/5">
+    <section id="chapter-two" className="py-24 md:py-32 relative overflow-hidden bg-[#FAF7F2] border-b border-black/5">
       {/* Background elements */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 rounded-full bg-sand/5 blur-[100px] pointer-events-none" />
 
@@ -47,11 +59,17 @@ export const OriginsSlider: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-left mb-16 max-w-2xl">
-          <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-accent mb-3 block">
-            How We Started
-          </span>
-          <h2 className="text-4xl md:text-6xl font-black font-display tracking-tight text-primary uppercase leading-tight">
-            Our Origins
+          <motion.span
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-xs sm:text-sm uppercase tracking-[0.3em] font-bold text-accent mb-4 block font-sans"
+          >
+            Chapter 02 — The Story
+          </motion.span>
+          <h2 className="text-4xl md:text-5xl font-semibold font-display tracking-wide text-primary leading-tight">
+            How It All Started
           </h2>
         </div>
 
@@ -70,12 +88,12 @@ export const OriginsSlider: React.FC = () => {
                 className="flex flex-col"
               >
                 {/* Year Badge */}
-                <div className="text-sand-dark font-display font-black text-6xl md:text-7xl leading-none mb-4">
+                <div className="text-sand-dark font-display font-bold text-5xl md:text-6xl leading-none mb-4">
                   {SLIDES[activeIdx].year}
                 </div>
                 
                 {/* Title */}
-                <h3 className="font-sans font-extrabold text-2xl md:text-3xl text-primary mb-6 leading-tight">
+                <h3 className="font-sans font-extrabold text-2xl md:text-3xl text-primary mb-6 leading-tight uppercase tracking-wide">
                   {SLIDES[activeIdx].title}
                 </h3>
                 

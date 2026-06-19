@@ -20,7 +20,7 @@ export const TrialIntro: React.FC = () => {
           Chapter 1: The Invitation
         </span>
         
-        <h2 className="text-3xl md:text-5xl font-black font-display tracking-tight text-primary uppercase leading-tight max-w-2xl mb-6">
+        <h2 className="text-3xl md:text-5xl font-semibold font-display tracking-wide text-primary mb-6">
           Step onto the Shore
         </h2>
 
@@ -28,21 +28,6 @@ export const TrialIntro: React.FC = () => {
           {"We do not run high-pressure assessment screenings. A trial session at Neythal is simply an invitation for your child to feel the ECR sea breeze, run on the turf with our U6-U16 coaching pods, and experience training run by licensed coaches. There are no expectations or evaluations—just come, play, and see if they belong."}
         </p>
 
-        {/* Expectation bullets */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-2xl mt-12 border-t border-black/5 pt-8 text-left text-[#6F6F6F]">
-          <div>
-            <span className="font-sans font-bold text-xs uppercase text-primary block">1. Coach Greeting</span>
-            <span className="text-[11px] leading-relaxed block mt-1">Pradeep or Vijay will meet you at the turf entrance to introduce your child to their age group pod.</span>
-          </div>
-          <div>
-            <span className="font-sans font-bold text-xs uppercase text-primary block">2. Barefoot Warmups</span>
-            <span className="text-[11px] leading-relaxed block mt-1">We often run micro barefoot ball-mastery drills to build spatial balance and comfort before turf games.</span>
-          </div>
-          <div>
-            <span className="font-sans font-bold text-xs uppercase text-primary block">3. Pod Integration</span>
-            <span className="text-[11px] leading-relaxed block mt-1">Your child joins training with a strict 2:1 coaching ratio cap, ensuring constant guidance and support.</span>
-          </div>
-        </div>
 
       </div>
     </section>

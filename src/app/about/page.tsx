@@ -1,12 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
-import PageHero from "@/components/common/PageHero";
+import AboutHero from "@/modules/about/AboutHero";
 import BrandMeaning from "@/modules/about/BrandMeaning";
 import OriginsSlider from "@/modules/about/OriginsSlider";
 import Philosophy from "@/modules/about/Philosophy";
-import SymbolismBoard from "@/modules/about/SymbolismBoard";
 import OperationalUSP from "@/modules/about/OperationalUSP";
-import Facilities from "@/modules/about/Facilities";
 
 export const metadata: Metadata = {
   title: "About Our Story",
@@ -16,16 +14,11 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <PageHero 
-        title="About Neythal" 
-        subtitle="Our backstory, the naming concept, and the standard behind the coaching." 
-      />
+      <AboutHero />
       <BrandMeaning />
       <OriginsSlider />
       <Philosophy />
-      <SymbolismBoard />
       <OperationalUSP />
-      <Facilities />
     </>
   );
 }

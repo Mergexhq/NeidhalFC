@@ -66,7 +66,7 @@ export const LocationsSection: React.FC = () => {
                   {loc.chapter}
                 </span>
                 
-                <h3 className="text-4xl md:text-5xl font-black font-display tracking-tight text-primary uppercase mb-4">
+                <h3 className="text-4xl md:text-5xl font-semibold font-display tracking-wide text-primary mb-4">
                   {loc.title}
                 </h3>
                 
@@ -152,7 +152,7 @@ export const LocationsSection: React.FC = () => {
             {/* Bottom notice for Nandanam */}
             {loc.moreLocationsNotice && (
               <div className="mt-24 border border-dashed border-black/10 rounded-[2rem] p-8 bg-[#FAF7F2] text-center max-w-3xl mx-auto">
-                <span className="font-display font-black text-lg text-primary block">MORE LOCATIONS COMING</span>
+                <span className="font-display font-semibold text-lg text-primary tracking-wide block">More Locations Coming</span>
                 <span className="text-xs text-[#6F6F6F] font-normal block mt-1">We are actively scouting coastal turf structures along South Chennai ECR. Stay tuned.</span>
               </div>
             )}

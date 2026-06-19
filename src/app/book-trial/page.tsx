@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import TrialIntro from "@/modules/book-trial/TrialIntro";
-import MembershipOptions from "@/modules/book-trial/MembershipOptions";
+import TrialFAQ from "@/modules/book-trial/TrialFAQ";
 import TrialForm from "@/modules/book-trial/TrialForm";
+import NextSteps from "@/modules/book-trial/NextSteps";
 
 export const metadata: Metadata = {
   title: "Book a Free Trial Session",
@@ -13,7 +14,7 @@ export default function BookTrialPage() {
   return (
     <>
       <TrialIntro />
-      <MembershipOptions />
+      <TrialFAQ />
       <Suspense fallback={
         <div className="py-24 text-center text-slate-500 font-sans font-medium text-sm bg-[#FAF7F2]">
           Loading booking form...
@@ -21,6 +22,7 @@ export default function BookTrialPage() {
       }>
         <TrialForm />
       </Suspense>
+      <NextSteps />
     </>
   );
 }

@@ -97,7 +97,7 @@ export const TrialForm: React.FC = () => {
             {/* Header info */}
             <div className="text-center mb-12">
               <span className="text-[10px] uppercase tracking-widest font-extrabold text-accent">Intake Module</span>
-              <h2 className="font-sans font-black text-3xl md:text-4xl text-primary mt-2 uppercase">
+              <h2 className="font-sans font-semibold text-3xl md:text-4xl text-primary mt-2 tracking-wide">
                 Schedule Coached Trial
               </h2>
               <p className="text-[#6F6F6F] text-xs md:text-sm font-normal mt-2">
@@ -281,7 +281,7 @@ export const TrialForm: React.FC = () => {
                   <div className="h-16 w-16 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center mb-6 border border-emerald-500/20">
                     <CheckCircle size={32} />
                   </div>
-                  <h4 className="font-sans font-black text-2xl uppercase tracking-wide">
+                  <h4 className="font-sans font-bold text-2xl tracking-wide">
                     Welcome to the Shore, {formData.parentName}!
                   </h4>
                   
@@ -328,7 +328,7 @@ export const TrialForm: React.FC = () => {
               
               <div className="relative z-10">
                 <span className="text-[10px] uppercase tracking-widest font-extrabold text-sand">Direct Channels</span>
-                <h3 className="font-sans font-black text-2xl text-white mt-2 mb-6 uppercase">
+                <h3 className="font-sans font-semibold text-2xl text-white mt-2 mb-6 tracking-wide">
                   Co-Founder Desk
                 </h3>
                 

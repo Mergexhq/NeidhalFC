@@ -56,7 +56,7 @@ export const PageHero: React.FC<PageHeroProps> = ({ title, subtitle, crumbs = []
             )}
           </nav>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-4 font-display">
+          <h1 className="text-4xl md:text-6xl font-semibold text-white tracking-wide mb-4 font-display">
             {title}
           </h1>
           {subtitle && (

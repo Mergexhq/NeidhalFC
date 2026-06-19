@@ -87,7 +87,7 @@ export const InstagramFeed: React.FC = () => {
           <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-accent mb-3 block">
             Instagram Feed Layer
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-primary font-display tracking-tight leading-tight uppercase">
+          <h2 className="text-4xl md:text-5xl font-semibold text-primary font-display tracking-wide leading-tight">
             Social Proof Feed
           </h2>
           <p className="text-[#6F6F6F] text-sm md:text-base leading-relaxed mt-4 font-normal">

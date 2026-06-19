@@ -3,11 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Check, ShieldCheck, Zap } from "lucide-react";
 
 export const OperationalUSP: React.FC = () => {
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden bg-primary text-white border-t border-b border-white/5">
+    <section id="chapter-four" className="py-24 md:py-32 relative overflow-hidden bg-primary text-white border-t border-b border-white/5">
       {/* Decorative Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-size-[4rem_4rem] pointer-events-none" />
 
@@ -43,56 +42,50 @@ export const OperationalUSP: React.FC = () => {
 
           {/* Right Column: Copy & Details (lg:col-span-6) */}
           <div className="lg:col-span-6 flex flex-col items-start text-left">
-            <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-sand mb-4 block font-sans">
-              Operational Quality
-            </span>
-            <h2 className="text-4xl md:text-6xl font-black font-display tracking-tight leading-[0.95] text-white uppercase mb-8">
-              Guaranteed<br />Double-Coach<br />System
+            <motion.span
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-xs sm:text-sm uppercase tracking-[0.3em] font-bold text-sand mb-8 block font-sans"
+            >
+              Chapter 04 — The Standard
+            </motion.span>
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold font-display tracking-wide leading-[1.1] text-white mb-8">
+              We do the simple things correctly.<br />
+              <span className="text-sand">That is rarer than it sounds.</span>
             </h2>
             
-            <p className="text-[#FAF7F2]/80 text-sm md:text-base leading-relaxed font-normal mb-8 max-w-xl">
-              We never leave a single trainer alone with a squad. To ensure maximum technical attention and safety, every Neidhal session is run by a **Main Coach** managing tactical space, paired with an **Assistant Coach** providing individual corrections.
-            </p>
-
-            {/* Feature List */}
-            <ul className="space-y-4 w-full mb-10">
-              {[
-                {
-                  title: "Active Space Management",
-                  desc: "Our head coaches actively position themselves to read body shape, movement timing, and space management."
-                },
-                {
-                  title: "Individual Dribbling Diagnostics",
-                  desc: "The assistant coach analyzes ball contacts, dribble selection, and micro-techniques on a 1v1 basis."
-                },
-                {
-                  title: "Structured 20-Player Cap",
-                  desc: "We strictly enforce a limit of 20 players per session to guarantee a real 10:1 player-to-coach training block."
-                }
-              ].map((item, idx) => (
-                <li key={idx} className="flex gap-4 items-start">
-                  <div className="h-6 w-6 rounded-full bg-sand/10 border border-sand/30 flex items-center justify-center text-sand shrink-0 mt-0.5">
-                    <Check size={12} strokeWidth={3} />
-                  </div>
-                  <div>
-                    <span className="font-sans font-extrabold text-sm md:text-base text-white block">
-                      {item.title}
-                    </span>
-                    <span className="text-[#FAF7F2]/60 text-xs md:text-sm font-normal block mt-0.5">
-                      {item.desc}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            {/* Trust badge */}
-            <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 max-w-md">
-              <ShieldCheck className="h-6 w-6 text-sand shrink-0" />
-              <p className="text-[11px] md:text-xs text-[#FAF7F2]/70 leading-normal font-normal text-left">
-                Every member of our coaching staff is licensed by the AIFF (All India Football Federation) and vetted for high-caliber developmental academy environments.
+            <div className="text-slate-300 text-sm md:text-base leading-relaxed font-light font-sans max-w-xl mb-12 space-y-6">
+              <p>
+                Every single session at Neidhal FC runs with one main coach and one assistant coach. Always. No exceptions. This is not a marketing claim &mdash; it is a structural decision we made from day one and have never compromised on.
+              </p>
+              <p>
+                What this means for your child: they are never lost in a crowd. They are seen. They are corrected in real time. They are pushed at the right moment.
               </p>
             </div>
+
+            {/* Three-Column Stat Layout */}
+            <div className="grid grid-cols-3 gap-6 w-full border-t border-white/10 pt-10 mb-10 text-left">
+              <div>
+                <span className="font-display font-bold text-3xl md:text-4xl text-sand block">2:1</span>
+                <span className="text-[10px] text-slate-400 font-normal leading-relaxed block mt-1">Player-to-coach ratio. Every session, every location, every time.</span>
+              </div>
+              <div className="border-l border-white/10 pl-4">
+                <span className="font-display font-bold text-3xl md:text-4xl text-sand block">2016</span>
+                <span className="text-[10px] text-slate-400 font-normal leading-relaxed block mt-1">The year we started. Eight years of doing this the right way.</span>
+              </div>
+              <div className="border-l border-white/10 pl-4">
+                <span className="font-display font-bold text-3xl md:text-4xl text-sand block">3 Hubs</span>
+                <span className="text-[10px] text-slate-400 font-normal leading-relaxed block mt-1">Kottivakkam. Injambakkam. Nandanam. More coming.</span>
+              </div>
+            </div>
+
+            {/* Closing Line */}
+            <p className="text-slate-400 italic text-xs font-normal border-t border-white/5 pt-4 w-full">
+              The photograph of a coach leading from the front, kids fanning out behind &mdash; that is not a posed shot. That is what Tuesday morning looks like at Neidhal FC.
+            </p>
 
           </div>
 

@@ -43,6 +43,7 @@ export const Navbar: React.FC = () => {
   }, [lastScrollY]);
 
   const isBookTrial = pathname === "/book-trial";
+  const isAbout = pathname === "/about";
 
   return (
     <>
@@ -62,13 +63,13 @@ export const Navbar: React.FC = () => {
           <div className="flex flex-col text-left">
             <span className={cn(
               "font-display font-extrabold text-xl tracking-wider leading-none transition-colors duration-300",
-              isBookTrial ? "text-black" : "text-white"
+              isBookTrial ? "text-black" : isAbout ? "text-primary" : "text-white"
             )}>
               NEIDHAL
             </span>
             <span className={cn(
               "font-sans text-[10px] uppercase font-bold tracking-widest leading-none mt-1 transition-colors duration-300",
-              isBookTrial ? "text-[#6F6F6F]" : "text-sand"
+              isBookTrial ? "text-[#6F6F6F]" : isAbout ? "text-accent-dark" : "text-sand"
             )}>
               FOOTBALL CLUB
             </span>
@@ -84,23 +85,8 @@ export const Navbar: React.FC = () => {
             animate={{ y: 0, x: "-50%", opacity: 1 }}
             exit={{ y: 100, x: "-50%", opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 30 }}
-            className="fixed bottom-6 sm:bottom-8 left-1/2 z-50 w-[92%] sm:w-auto min-w-[280px] sm:max-w-xl flex items-center justify-between gap-2 sm:gap-4 md:gap-6 p-1.5 md:p-2 bg-[#0B1528]/95 backdrop-blur-md border border-white/10 rounded-full shadow-[0_15px_30px_-5px_rgba(0,0,0,0.3)]"
+            className="fixed bottom-6 sm:bottom-8 left-1/2 z-50 w-[92%] sm:w-auto min-w-[280px] sm:max-w-xl flex items-center justify-between gap-2 sm:gap-4 md:gap-6 p-1.5 md:p-2 pl-3 sm:pl-4 bg-[#0B1528]/50 backdrop-blur-xl border border-white/15 rounded-full shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]"
           >
-            {/* Logo Icon on the left */}
-            <Link 
-              href="/" 
-              className="relative h-7 w-7 sm:h-8 sm:w-8 shrink-0 overflow-hidden rounded-full border border-white/10 hover:scale-110 active:scale-95 transition-transform duration-200 cursor-pointer ml-1 bg-white/5 p-1 flex items-center justify-center"
-              title="Home"
-            >
-              <Image
-                src="/logo/neidhal_logo.png"
-                alt="Neidhal Logo Mark"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
-            </Link>
-
             {/* Menu Links */}
             <nav className="flex items-center gap-0.5 sm:gap-1">
               {NAV_LINKS.map((link) => {
@@ -117,9 +103,10 @@ export const Navbar: React.FC = () => {
                     <span className="relative z-10">{link.label}</span>
                     {isActive && (
                       <motion.span
-                        layoutId="activeDockBubble"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
                         className="absolute inset-0 bg-white/10 rounded-full z-0 border border-white/5"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        transition={{ duration: 0.15 }}
                       />
                     )}
                   </Link>

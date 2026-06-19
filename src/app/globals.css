@@ -14,7 +14,7 @@
   --color-accent-dark: #005f73;
 
   --font-sans: "Inter", var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Instrument Serif", var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
   --font-condensed: "Bebas Neue", sans-serif;
   
   --animate-fade-in-up: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -79,10 +79,26 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(212, 163, 115, 0.3);
-  border-radius: 4px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-sand);
+}
+::-webkit-scrollbar-button:single-button {
+  background-color: var(--color-primary-dark);
+  display: block;
+  height: 14px;
+  width: 8px;
+  background-repeat: no-repeat;
+  background-size: 6px 5px;
+  background-position: center;
+}
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23D9C3A5'><polygon points='50,15 0,85 100,85'/></svg>");
+}
+::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23D9C3A5'><polygon points='50,85 0,15 100,15'/></svg>");
 }
 
 /* Styled text selections */
