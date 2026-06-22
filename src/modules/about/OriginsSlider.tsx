@@ -2,177 +2,260 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import Button from "@/components/common/Button";
+import { ChevronLeft, ChevronRight, ArrowUpRight, Compass, Sparkles, Trophy } from "lucide-react";
 
-const SLIDES = [
+const SETS = [
   {
-    year: "2016",
-    title: "The beach had no rules.",
-    description: "In 2016, two people found each other on the shores of the Bay of Bengal. No pitch. No permission slips. Just the open stretch of ECR sand and a football. They played because they loved it. That was enough to begin.",
-    image: "/images/about/backstory_2016.png",
+    id: "origins",
+    label: "Origins (2016 - 2018)",
+    cards: [
+      {
+        type: "large",
+        year: "2016",
+        title: "A ball and the sea breeze.",
+        description: "Two friends met on the Bay of Bengal shoreline. No training kits, no permission slips, no boundary lines. Just a ball, heavy ECR sand, and a love for the game. We played because we had to.",
+        image: "/images/about/backstory_2016.png",
+        tag: "Chapter 03 &mdash; The Start",
+        icon: Compass,
+      },
+      {
+        type: "medium",
+        year: "2017",
+        title: "They kept showing up.",
+        description: "More players joined the beach circle. What was a morning kickabout became a tribe forming around a shared belief that football is about freedom, not systems.",
+        image: "/images/about/going_roots.png",
+        tag: "The Tribe",
+      },
+      {
+        type: "medium",
+        year: "2018",
+        title: "Spotted in the waves.",
+        description: "Dolphins would surface just thirty feet from our beach training. They became our mascot—quick, fluid, and belonging to the sea.",
+        image: "/images/about/slider_dolphins.png",
+        tag: "The Mascot",
+      }
+    ]
   },
   {
-    year: "2017",
-    title: "They kept showing up.",
-    description: "Days turned into weeks. More people joined. The game grew louder than the waves. What started as two friends kicking a ball became something harder to explain — a tribe forming around a shared belief that football should feel like freedom.",
-    image: "/images/about/going_roots.png",
-  },
-  {
-    year: "2018",
-    title: "Then came the dolphins.",
-    description: "Just thirty feet from where they played, dolphins moved through the Bay of Bengal. Most people in Chennai do not know this. They did — because they were there every morning, watching the sea the way you only can when you belong to it. The dolphin became their symbol. Not chosen. Earned.",
-    image: "/images/about/slider_dolphins.png",
-  },
-  {
-    year: "2020",
-    title: "They built something permanent.",
-    description: "What began on the beach became a structure. A coaching program. A philosophy. Locations across the coastline. A name rooted in the land they came from. Neidhal FC was not founded in a boardroom. It was founded in the sand.",
-    image: "/images/about/beach_soccer_legal.png",
-  },
-  {
-    year: "Present",
-    title: "And they never forgot where they started.",
-    description: "Every session, every drill, every player we train carries the spirit of that original game on the shore. Unscripted. Uninhibited. Alive. That is what Neidhal FC is still trying to give every child who steps onto the pitch.",
-    image: "/images/about/slider_coaching.png",
-  },
+    id: "structure",
+    label: "Structure (2020 - Present)",
+    cards: [
+      {
+        type: "large",
+        year: "2020",
+        title: "From the sand to a structure.",
+        description: "We built a training academy to give Chennai's youth a real alternative. Locations opened along the ECR coast. The beach drills became a structured methodology.",
+        image: "/images/about/beach_soccer_legal.png",
+        tag: "Chapter 03 &mdash; Evolution",
+        icon: Trophy,
+      },
+      {
+        type: "medium",
+        year: "Present",
+        title: "The raw beach touch.",
+        description: "No matter how large we grow, we never forget the shoreline. Every drill carries the unscripted energy of the beach.",
+        image: "/images/about/slider_coaching.png",
+        tag: "The Spirit",
+      },
+      {
+        type: "medium",
+        year: "Join",
+        title: "Start your chapter.",
+        description: "Bring your child to experience the Neidhal wave at Kottivakkam, Injambakkam, or Nandanam. Let them play.",
+        image: "/advanced_match.png",
+        tag: "Free Trial",
+      }
+    ]
+  }
 ];
 
 export const OriginsSlider: React.FC = () => {
-  const [activeIdx, setActiveIdx] = useState(0);
+  const [activeSetIdx, setActiveSetIdx] = useState(0);
+  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
 
   const handleNext = () => {
-    setActiveIdx((prev) => (prev + 1) % SLIDES.length);
+    setDirection(1);
+    setActiveSetIdx((prev) => (prev + 1) % SETS.length);
   };
 
   const handlePrev = () => {
-    setActiveIdx((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
+    setDirection(-1);
+    setActiveSetIdx((prev) => (prev - 1 + SETS.length) % SETS.length);
+  };
+
+  const currentSet = SETS[activeSetIdx];
+
+  const slideVariants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+    },
+    exit: (dir: number) => ({
+      x: dir > 0 ? -300 : 300,
+      opacity: 0,
+      transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const },
+    }),
   };
 
   return (
-    <section id="chapter-two" className="py-24 md:py-32 relative overflow-hidden bg-[#FAF7F2] border-b border-black/5">
-      {/* Background elements */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 rounded-full bg-sand/5 blur-[100px] pointer-events-none" />
-
+    <section
+      id="chapter-three"
+      className="py-20 md:py-28 bg-[#FAF7F2] text-[#0B1F3A] relative overflow-hidden border-b border-black/5"
+    >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* Section Header */}
-        <div className="text-left mb-16 max-w-2xl">
-          <motion.span
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-xs sm:text-sm uppercase tracking-[0.3em] font-bold text-accent mb-4 block font-sans"
+        {/* Header Block with Navigation Arrows on the right (Image 1 Style) */}
+        <div className="flex items-end justify-between mb-12">
+          <div className="text-left">
+            <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-extrabold text-[#0077b6] mb-3">
+              <Sparkles size={12} />
+              Chapter 03 &mdash; The Milestones
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-[#0B1F3A]">
+              Experience More Than Just Football
+            </h2>
+          </div>
+
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handlePrev}
+              className="h-10 w-10 rounded-full border border-black/10 bg-white text-[#0B1F3A] flex items-center justify-center hover:scale-[1.05] active:scale-95 transition-all shadow-xs cursor-pointer"
+              aria-label="Previous slide set"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              onClick={handleNext}
+              className="h-10 w-10 rounded-full border border-black/10 bg-white text-[#0B1F3A] flex items-center justify-center hover:scale-[1.05] active:scale-95 transition-all shadow-xs cursor-pointer"
+              aria-label="Next slide set"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Slide Container (Interactive Grid matching Image 1 layout) */}
+        <div className="relative min-h-[500px]">
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div
+              key={activeSetIdx}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"
+            >
+              {currentSet.cards.map((card, idx) => {
+                if (card.type === "large") {
+                  const CardIcon = card.icon || Compass;
+                  return (
+                    <div
+                      key={idx}
+                      className="col-span-1 lg:col-span-6 bg-[#16271c] text-white rounded-[2rem] overflow-hidden flex flex-col md:flex-row shadow-lg border border-white/5 group"
+                    >
+                      {/* Left: Image */}
+                      <div className="relative w-full md:w-1/2 min-h-[250px] md:min-h-full">
+                        <Image
+                          src={card.image}
+                          alt={card.title}
+                          fill
+                          sizes="(max-w-768px) 100vw, 30vw"
+                          className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-[#16271c]/25 pointer-events-none" />
+                      </div>
+
+                      {/* Right: Copy */}
+                      <div className="w-full md:w-1/2 p-6 sm:p-8 flex flex-col justify-between text-left">
+                        <div>
+                          <div className="flex items-center justify-between mb-4">
+                            <span className="text-[9px] uppercase font-bold tracking-widest text-[#D9C3A5]">
+                              {card.year}
+                            </span>
+                            <div className="h-8 w-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#D9C3A5]">
+                              <CardIcon size={14} />
+                            </div>
+                          </div>
+                          <h3 className="font-display font-semibold text-lg sm:text-xl leading-tight text-white mb-3">
+                            {card.title}
+                          </h3>
+                          <p className="text-white/70 text-xs sm:text-sm leading-relaxed font-light">
+                            {card.description}
+                          </p>
+                        </div>
+
+                        <Link
+                          href="/book-trial"
+                          className="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#D9C3A5] hover:text-white transition-colors duration-200 mt-6"
+                        >
+                          <span>Learn more</span>
+                          <ArrowUpRight size={14} />
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div
+                      key={idx}
+                      className="col-span-1 lg:col-span-3 relative rounded-[2rem] overflow-hidden shadow-lg border border-black/5 group min-h-[320px] lg:min-h-full flex flex-col justify-end"
+                    >
+                      {/* Background Image */}
+                      <Image
+                        src={card.image}
+                        alt={card.title}
+                        fill
+                        sizes="(max-w-768px) 100vw, 20vw"
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      />
+                      {/* Deep dark gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-[1]" />
+                      
+                      {/* Card Content Overlay */}
+                      <div className="relative z-10 p-6 text-left">
+                        <span className="inline-block px-3 py-1 rounded-full bg-[#0077b6]/85 border border-[#0077b6]/30 text-[9px] font-bold uppercase tracking-widest text-white mb-3">
+                          {card.tag}
+                        </span>
+                        <div className="text-[10px] uppercase font-bold tracking-widest text-[#D9C3A5] mb-1">
+                          {card.year}
+                        </div>
+                        <h3 className="font-display font-semibold text-base text-white leading-snug mb-2 uppercase">
+                          {card.title}
+                        </h3>
+                        <p className="text-white/80 text-[11px] leading-relaxed font-light line-clamp-3">
+                          {card.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Global Section Footer Arrow Link (Image 1 style) */}
+        <div className="flex justify-center mt-12">
+          <Link
+            href="/locations"
+            className="inline-flex items-center gap-2 text-xs font-sans font-bold uppercase tracking-widest text-[#0B1F3A] hover:text-[#0077b6] transition-colors duration-200"
           >
-            Chapter 02 — The Story
-          </motion.span>
-          <h2 className="text-4xl md:text-5xl font-semibold font-display tracking-wide text-primary leading-tight">
-            How It All Started
-          </h2>
+            <div className="h-8 w-8 rounded-full border border-black/10 flex items-center justify-center bg-white shadow-xs">
+              <ArrowUpRight size={14} className="rotate-[45deg]" />
+            </div>
+            <span>Learn more about our hubs</span>
+          </Link>
         </div>
 
-        {/* Two-Column Interactive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          
-          {/* Column A: Typographic & Description (lg:col-span-5) */}
-          <div className="lg:col-span-5 flex flex-col justify-center text-left">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIdx}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col"
-              >
-                {/* Year Badge */}
-                <div className="text-sand-dark font-display font-bold text-5xl md:text-6xl leading-none mb-4">
-                  {SLIDES[activeIdx].year}
-                </div>
-                
-                {/* Title */}
-                <h3 className="font-sans font-extrabold text-2xl md:text-3xl text-primary mb-6 leading-tight uppercase tracking-wide">
-                  {SLIDES[activeIdx].title}
-                </h3>
-                
-                {/* Description */}
-                <p className="text-[#6F6F6F] text-sm md:text-base leading-relaxed font-normal mb-8">
-                  {SLIDES[activeIdx].description}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Interactive Control Row */}
-            <div className="flex items-center gap-6 mt-4">
-              <div className="flex gap-3">
-                <button
-                  onClick={handlePrev}
-                  className="h-12 w-12 rounded-full border border-sand/30 bg-white text-primary flex items-center justify-center hover:scale-[1.05] active:scale-95 hover:bg-sand-light transition-all shadow-xs cursor-pointer"
-                  aria-label="Previous slide"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={handleNext}
-                  className="h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-[1.05] active:scale-95 hover:bg-primary-light transition-all shadow-md cursor-pointer"
-                  aria-label="Next slide"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-
-              {/* Progress Indicators */}
-              <div className="flex gap-2">
-                {SLIDES.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveIdx(idx)}
-                    className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      activeIdx === idx ? "w-8 bg-accent" : "w-2.5 bg-sand-dark/40 hover:bg-sand-dark"
-                    }`}
-                    aria-label={`Go to slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Trial CTA link */}
-            <div className="mt-10">
-              <Button href="/book-trial" variant="outline" className="flex items-center gap-2">
-                Book a Free Trial Session
-                <ArrowRight size={16} />
-              </Button>
-            </div>
-          </div>
-
-          {/* Column B: Dynamic Ghibli Canvas (lg:col-span-7) */}
-          <div className="lg:col-span-7 relative aspect-[4/3] sm:aspect-[16/10] rounded-[2.5rem] overflow-hidden shadow-2xl bg-[#000000]/10 border border-sand/15">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIdx}
-                initial={{ opacity: 0, scale: 1.03 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.6 }}
-                className="absolute inset-0 w-full h-full"
-              >
-                <Image
-                  src={SLIDES[activeIdx].image}
-                  alt={SLIDES[activeIdx].title}
-                  fill
-                  sizes="(max-w-768px) 100vw, 60vw"
-                  className="object-cover"
-                  priority
-                />
-                {/* Soft gradient blend */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent pointer-events-none" />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-        </div>
       </div>
     </section>
   );

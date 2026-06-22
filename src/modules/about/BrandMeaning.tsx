@@ -1,65 +1,198 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Compass } from "lucide-react";
+import { Compass, Sparkles, Anchor, Scale } from "lucide-react";
 
 export const BrandMeaning: React.FC = () => {
+  // Animation variants for text reveal
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
+    },
+  };
+
   return (
-    <section id="chapter-one" className="py-24 md:py-32 relative overflow-hidden bg-primary text-white border-b border-white/5">
-      {/* Background visual details */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-size-[5rem_5rem] pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[450px] h-[450px] rounded-full bg-sand/5 blur-[120px] pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
-        
-        {/* Navigation icon */}
-        <div className="h-10 w-10 rounded-full border border-sand/20 flex items-center justify-center text-sand mb-8 animate-spin-slow">
-          <Compass size={16} />
+    <section
+      id="chapter-two"
+      className="py-20 md:py-28 bg-[#FAF7F2] text-[#0B1F3A] relative overflow-hidden border-b border-black/5"
+    >
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Cinematic Chapter Label */}
+        <div className="text-center mb-6">
+          <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-extrabold text-[#0077b6]">
+            <Compass size={12} className="animate-spin-slow" />
+            Chapter 02 &mdash; The Land
+          </span>
         </div>
 
-        <motion.span
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-xs sm:text-sm uppercase tracking-[0.3em] font-bold text-sand mb-8 block font-sans"
-        >
-          Chapter 01 — The Land
-        </motion.span>
-        
-        {/* Big Bold Emotional Headline */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal font-display tracking-wide text-white leading-tight max-w-3xl mb-4">
-          There is a word in ancient Tamil for the land that lives between the ocean and everything else.
-        </h2>
-        
-        <h3 className="text-4xl sm:text-6xl md:text-7xl font-semibold font-display tracking-wide text-sand leading-none mb-10">
-          That word is Neidhal.
-        </h3>
-
-        {/* Brand Copy */}
-        <div className="text-slate-300 text-sm md:text-base leading-relaxed font-light font-sans max-w-2xl mb-16 text-center space-y-6">
-          <p>
-            Thousands of years ago, Tamil poets classified the world into five landscapes. Kurinji &mdash; the mountains. Mullai &mdash; the forests. Paalai &mdash; the desert. Marutham &mdash; the farmlands. And Neidhal &mdash; the coastal region. The strip of earth where the sea meets the shore. Where salt is in the air and sand is under every step.
-          </p>
-          <p>
-            We did not choose this name to sound poetic. We chose it because it is exactly where we began.
-          </p>
+        {/* Narrative Intro Box (Image 2 style) */}
+        <div className="max-w-5xl mx-auto text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.0 }}
+            className="text-2xl sm:text-4xl md:text-5xl font-display font-light leading-[1.2] tracking-tight text-[#5A6E85]"
+          >
+            We coach a <span className="font-extrabold text-[#0B1F3A]">fearless, creative style</span> of football where the <span className="font-extrabold text-[#0B1F3A]">sea meets the shore</span>. In ancient Tamil, this coastal strip of salt and sand is called <span className="text-[#0077b6] font-semibold underline decoration-sand decoration-2 underline-offset-4">Neidhal</span>. Rooted here since 2016, we teach kids to play with <span className="font-extrabold text-[#0B1F3A]">flair and freedom</span>, not robotic systems.
+          </motion.h2>
         </div>
 
-        {/* Pull Quote */}
+        {/* Two-Column Assets Row (Image 2 style) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border-t border-black/5 pt-16">
+          
+          {/* Left: Two Small Images Side-by-Side */}
+          <div className="lg:col-span-6 grid grid-cols-2 gap-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative aspect-square rounded-[2rem] overflow-hidden shadow-md border border-black/5 hover:scale-[1.02] transition-transform duration-300"
+            >
+              <Image
+                src="/beach_soccer.png"
+                alt="Neidhal FC Barefoot Beach Football Practice"
+                fill
+                sizes="(max-w-768px) 50vw, 25vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-[#0d1c10]/10" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="relative aspect-square rounded-[2rem] overflow-hidden shadow-md border border-black/5 hover:scale-[1.02] transition-transform duration-300"
+            >
+              <Image
+                src="/soccer_thumb.png"
+                alt="Neidhal FC Kids Beach Soccer Drill"
+                fill
+                sizes="(max-w-768px) 50vw, 25vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-[#0d1c10]/10" />
+            </motion.div>
+          </div>
+
+          {/* Right: Four Pillar Icons & Labels */}
+          <div className="lg:col-span-6 grid grid-cols-2 gap-x-8 gap-y-10">
+            {/* Universal */}
+            <div className="flex flex-col items-start text-left gap-3">
+              <div className="h-10 w-10 rounded-full bg-[#0077b6]/10 text-[#0077b6] flex items-center justify-center border border-[#0077b6]/20">
+                <Compass size={18} />
+              </div>
+              <div>
+                <h4 className="font-sans font-bold text-xs text-[#0B1F3A] uppercase tracking-wider">The Shore</h4>
+                <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                  We train barefoot on sand. It builds natural agility, balance, and raw ankle strength.
+                </p>
+              </div>
+            </div>
+
+            {/* Flair */}
+            <div className="flex flex-col items-start text-left gap-3">
+              <div className="h-10 w-10 rounded-full bg-[#0077b6]/10 text-[#0077b6] flex items-center justify-center border border-[#0077b6]/20">
+                <Sparkles size={18} />
+              </div>
+              <div>
+                <h4 className="font-sans font-bold text-xs text-[#0B1F3A] uppercase tracking-wider">The Flair</h4>
+                <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                  Street-style touch over system drills. We encourage kids to try the impossible.
+                </p>
+              </div>
+            </div>
+
+            {/* Shoreline */}
+            <div className="flex flex-col items-start text-left gap-3">
+              <div className="h-10 w-10 rounded-full bg-[#0077b6]/10 text-[#0077b6] flex items-center justify-center border border-[#0077b6]/20">
+                <Anchor size={18} />
+              </div>
+              <div>
+                <h4 className="font-sans font-bold text-xs text-[#0B1F3A] uppercase tracking-wider">The Ratio</h4>
+                <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                  Two coaches in every single session. One to guide, one to watch every touch.
+                </p>
+              </div>
+            </div>
+
+            {/* 2:1 Ratio */}
+            <div className="flex flex-col items-start text-left gap-3">
+              <div className="h-10 w-10 rounded-full bg-[#0077b6]/10 text-[#0077b6] flex items-center justify-center border border-[#0077b6]/20">
+                <Scale size={18} />
+              </div>
+              <div>
+                <h4 className="font-sans font-bold text-xs text-[#0B1F3A] uppercase tracking-wider">The Open Door</h4>
+                <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                  Every child, regardless of skill, gets the freedom to discover the game.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Detailed Backstory Narrative & Pull Quote (Unified cinematic layout) */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="w-full border-t border-white/10 pt-12 text-center"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 border-t border-black/5 pt-16 mt-16 items-start"
         >
-          <p className="font-display italic font-normal text-xl sm:text-2xl md:text-3xl text-sand max-w-xl mx-auto leading-relaxed">
-            &ldquo;The sea does not ask permission to move. Neither does the kind of football we believe in.&rdquo;
-          </p>
-        </motion.div>
+          {/* Left Column: Historical context */}
+          <motion.div variants={itemVariants} className="md:col-span-7 text-left space-y-6">
+            <h3 className="font-display font-semibold text-xl sm:text-2xl text-[#0B1F3A] leading-tight">
+              Landscape of Salt & Sand
+            </h3>
+            <div className="text-slate-600 text-sm sm:text-base leading-relaxed space-y-4">
+              <p>
+                Thousands of years ago, Tamil poets categorized the world into five landscapes: mountain, forest, desert, and farmland. The fifth they called <strong className="text-[#0077b6] font-semibold">Neidhal</strong>—the coast where the sea meets the shore.
+              </p>
+              <p>
+                We did not choose this name to sound poetic. We chose it because the shore is our teacher. The sea does not ask permission to move, and neither does the kind of football we believe in. We teach kids to play like the ocean—fluid, powerful, and free.
+              </p>
+            </div>
+          </motion.div>
 
+          {/* Right Column: Pull Quote */}
+          <motion.div
+            variants={itemVariants}
+            className="md:col-span-5 bg-white border border-[#D9C3A5]/30 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xs relative"
+          >
+            {/* Quote Marks Background */}
+            <div className="absolute top-4 right-6 text-7xl font-serif text-[#0077b6]/10 select-none pointer-events-none">
+              &ldquo;
+            </div>
+            
+            <p className="font-display italic text-lg sm:text-xl text-[#0B1F3A] leading-relaxed relative z-10">
+              &ldquo;The sea does not ask permission to move. Neither does the kind of football we believe in.&rdquo;
+            </p>
+            <div className="mt-6 flex items-center gap-3">
+              <div className="h-0.5 w-6 bg-[#0077b6]" />
+              <span className="text-[10px] uppercase font-bold tracking-widest text-[#0077b6]">
+                Neidhal FC Manifesto
+              </span>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

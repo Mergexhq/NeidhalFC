@@ -130,11 +130,29 @@ export const Hero: React.FC = () => {
       0.25
     );
 
+    // 4. Section 2 fades out in the last part of the scroll timeline (from 0.88 to 0.93)
+    tl.to(".hero-text-content-2", {
+      opacity: 0,
+      y: -50,
+      duration: 0.05,
+      ease: "power1.inOut"
+    }, 0.88);
+
+    // Disable mouse events for Section 2 after it fades out
+    tl.set(".hero-text-content-2", { pointerEvents: "none" }, 0.93);
+
+    // 5. Canvas fades out at the end of the timeline (from 0.95 to 1.0)
+    tl.to(canvasRef.current, {
+      opacity: 0,
+      duration: 0.05,
+      ease: "power1.inOut"
+    }, 0.95);
+
   }, { scope: containerRef, dependencies: [isLoaded, images] });
   const progressPercent = Math.min(100, Math.round((loadedCount / TOTAL_FRAMES) * 100));
 
   return (
-    <section ref={containerRef} className="relative h-[400vh] w-full bg-primary z-10">
+    <section ref={containerRef} className="relative h-[400vh] w-full bg-black z-10">
       
       {/* Sticky container for the hero elements */}
       <div className="hero-sticky-content sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center px-6">
@@ -158,8 +176,8 @@ export const Hero: React.FC = () => {
           className="z-0"
         />
 
-        {/* Subtle deep navy overlay to ensure text contrast and legibility over bright video spotlights */}
-        <div className="absolute inset-0 bg-primary/45 pointer-events-none z-0" />
+        {/* Subtle black contrast overlay to ensure text contrast and legibility over bright video spotlights */}
+        <div className="absolute inset-0 bg-black/45 pointer-events-none z-0" />
 
         {/* Section 1 Hero Content Layer */}
         <div className="hero-text-content-1 absolute z-10 max-w-7xl mx-auto flex flex-col items-center px-6">
@@ -174,35 +192,37 @@ export const Hero: React.FC = () => {
           </p>
         </div>
 
-        {/* Section 2 Backstory Content Layer (Two-column layout matching MergeX style) */}
-        <div className="hero-text-content-2 absolute z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 text-left opacity-0 pointer-events-none">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
-            {/* Left Column */}
-            <div className="md:col-span-6 flex flex-col items-start gap-4">
-              <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-sand block">
-                Our Backstory
-              </span>
-              <h2 className="text-3xl md:text-5xl font-semibold font-display tracking-wide text-white leading-[1.12]">
-                The meaning of Neidhal
-              </h2>
-            </div>
-            {/* Right Column */}
-            <div className="md:col-span-6 flex flex-col items-start gap-6 md:pt-10">
-              <div className="text-[#FAF7F2]/80 text-sm md:text-base leading-relaxed font-normal space-y-6">
-                <p>
-                  {"Neidhal is the ancient Tamil word for the coastal land where the sea meets the shore. It is the landscape of salt in the air and sand under every step. We did not choose this name for decoration—we chose it because the shore is exactly where our game began."}
-                </p>
-                <p>
-                  {"In 2016, we started training youth along the ECR shoreline with just a football and the open sea breeze. We believe football should be played with street-style touch, barefoot agility, and individual decision-making."}
-                </p>
+        {/* Section 2 Backstory Content Layer (Two-column layout matching MergeX style with dark glass container for readability) */}
+        <div className="hero-text-content-2 absolute z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 md:px-8 text-left opacity-0 pointer-events-none">
+          <div className="bg-black/65 backdrop-blur-lg border border-white/10 p-8 sm:p-10 md:p-12 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+              {/* Left Column */}
+              <div className="md:col-span-6 flex flex-col items-start gap-4">
+                <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-sand block">
+                  Our Backstory
+                </span>
+                <h2 className="text-3xl md:text-5xl font-semibold font-display tracking-wide text-white leading-[1.12]">
+                  The meaning of Neidhal
+                </h2>
               </div>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 text-xs font-sans font-bold uppercase tracking-wider text-sand hover:text-white transition-colors group cursor-pointer self-start"
-              >
-                <span>Read Our Story</span>
-                <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
-              </Link>
+              {/* Right Column */}
+              <div className="md:col-span-6 flex flex-col items-start gap-6 md:pt-4">
+                <div className="text-white/80 text-sm md:text-base leading-relaxed font-normal space-y-6">
+                  <p>
+                    {"Neidhal is the ancient Tamil word for the coastal land where the sea meets the shore. It is the landscape of salt in the air and sand under every step. We did not choose this name for decoration—we chose it because the shore is exactly where our game began."}
+                  </p>
+                  <p>
+                    {"In 2016, we started training youth along the ECR shoreline with just a football and the open sea breeze. We believe football should be played with street-style touch, barefoot agility, and individual decision-making."}
+                  </p>
+                </div>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-2 text-xs font-sans font-bold uppercase tracking-wider text-sand hover:text-white transition-colors group cursor-pointer self-start"
+                >
+                  <span>Read Our Story</span>
+                  <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
