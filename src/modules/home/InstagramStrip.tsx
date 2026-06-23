@@ -76,7 +76,7 @@ export const PhotoStrip: React.FC = () => {
     src: post.image,
     alt: post.caption,
     key: `photo-${post.id}-${index}`,
-    onClick: () => router.push("/media"),
+    onClick: () => window.open("https://www.instagram.com/neidhalfc", "_blank"),
   }));
 
   return (
@@ -111,15 +111,17 @@ export const PhotoStrip: React.FC = () => {
         {/* Pinned Bottom CTA (overlaid at the bottom of the gallery, clear of cards and bottom navigation) */}
         <div className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full flex justify-center">
           <div className="pointer-events-auto">
-            <Link
-              href="/media"
+            <a
+              href="https://www.instagram.com/neidhalfc"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-3 text-[11px] font-sans font-bold uppercase tracking-widest text-primary hover:text-accent transition-colors group cursor-pointer"
             >
               <span>See us in action on Instagram</span>
               <span className="h-8 w-8 rounded-full bg-primary text-sand group-hover:bg-accent group-hover:text-white flex items-center justify-center transition-colors shadow-sm">
                 <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
               </span>
-            </Link>
+            </a>
           </div>
         </div>
       </CircularGallery>

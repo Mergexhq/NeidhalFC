@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Compass, Sparkles, Anchor, Scale } from "lucide-react";
+import { ScrollTextRise } from "@/components/ruixen/scroll-text-rise";
 
 export const BrandMeaning: React.FC = () => {
   // Animation variants for text reveal
@@ -28,7 +29,7 @@ export const BrandMeaning: React.FC = () => {
   return (
     <section
       id="chapter-two"
-      className="py-20 md:py-28 bg-[#FAF7F2] text-[#0B1F3A] relative overflow-hidden border-b border-black/5"
+      className="py-20 md:py-28 bg-[#FAF7F2] text-[#0B1F3A] relative overflow-visible border-b border-black/5"
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Cinematic Chapter Label */}
@@ -41,15 +42,10 @@ export const BrandMeaning: React.FC = () => {
 
         {/* Narrative Intro Box (Image 2 style) */}
         <div className="max-w-5xl mx-auto text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.0 }}
-            className="text-2xl sm:text-4xl md:text-5xl font-display font-light leading-[1.2] tracking-tight text-[#5A6E85]"
-          >
-            We coach a <span className="font-extrabold text-[#0B1F3A]">fearless, creative style</span> of football where the <span className="font-extrabold text-[#0B1F3A]">sea meets the shore</span>. In ancient Tamil, this coastal strip of salt and sand is called <span className="text-[#0077b6] font-semibold underline decoration-sand decoration-2 underline-offset-4">Neidhal</span>. Rooted here since 2016, we teach kids to play with <span className="font-extrabold text-[#0B1F3A]">flair and freedom</span>, not robotic systems.
-          </motion.h2>
+          <ScrollTextRise
+            textClassName="font-display"
+            text="We coach a **fearless,** **creative** **style** of football where the **sea** **meets** **the** **shore.** In ancient Tamil, this coastal strip of salt and sand is called __Neidhal.__ Rooted here since 2016, we teach kids to play with **flair** **and** **freedom,** not robotic systems."
+          />
         </div>
 
         {/* Two-Column Assets Row (Image 2 style) */}

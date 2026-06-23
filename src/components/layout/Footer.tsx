@@ -1,31 +1,88 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+const fadeInUpVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] as const } 
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.05
+    }
+  }
+};
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end end"]
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
+  const borderRadius = useTransform(scrollYProgress, [0.6, 1], ["40px", "0px"]);
+  const paddingX = useTransform(scrollYProgress, [0.6, 1], ["1.5rem", "0rem"]);
+  const paddingBottom = useTransform(scrollYProgress, [0.6, 1], ["1.5rem", "0rem"]);
 
   return (
-    <footer className="bg-[#FAF7F2] px-4 pb-4 md:px-6 md:pb-6 pt-0 relative overflow-hidden">
-      <div className="relative w-full overflow-hidden rounded-[2.5rem] text-[#0B1F3A] px-6 pt-10 pb-8 sm:px-10 sm:pt-12 sm:pb-10 md:px-12 md:pt-16 md:pb-12 lg:px-16 lg:pt-20 lg:pb-14 bg-[#FAF7F2]">
-        {/* Background image — fades from transparent (top) to fully visible (20%) */}
+    <motion.footer 
+      ref={containerRef}
+      style={{
+        paddingLeft: paddingX,
+        paddingRight: paddingX,
+        paddingBottom: paddingBottom,
+      }}
+      className="bg-[#FAF7F2] pt-0 relative overflow-hidden w-full"
+    >
+      <motion.div 
+        style={{
+          scale,
+          borderRadius,
+        }}
+        className="relative w-full overflow-hidden text-white px-6 pt-10 pb-8 sm:px-10 sm:pt-12 sm:pb-10 md:px-12 md:pt-16 md:pb-12 lg:px-16 lg:pt-20 lg:pb-14 bg-transparent origin-bottom"
+      >
+        {/* Background Image with top smudge/fade */}
         <div 
-          className="absolute inset-0 z-0 opacity-85"
+          className="absolute inset-0 z-0 bg-[#0B1F3A]"
           style={{
             backgroundImage: "url('/footer.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 22%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 22%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
           }}
         />
 
+        {/* Dark overlay at the bottom for text readability */}
+        <div className="absolute bottom-0 left-0 right-0 h-[50%] bg-gradient-to-t from-black/85 via-black/40 to-transparent z-0 pointer-events-none" />
 
-
-        <div className="relative z-10 max-w-7xl mx-auto">
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="relative z-10 max-w-7xl mx-auto"
+        >
           {/* Top Section: Brand Logo/Info & Social Links */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10 mb-16">
+          <motion.div 
+            variants={fadeInUpVariants}
+            className="flex flex-col md:flex-row md:items-center md:justify-between gap-10 mb-16"
+          >
             {/* Brand Logo & Description */}
             <div className="flex flex-col sm:flex-row items-center gap-6 max-w-2xl">
               <Link href="/" className="shrink-0">
@@ -70,12 +127,15 @@ export const Footer: React.FC = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Middle Section: Links, Locations, Contact Details */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-12 border-t border-b border-[#0B1F3A]/10 mb-4">
+          <motion.div 
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-12 py-12 border-t border-b border-[#0B1F3A]/10 mb-4 md:pl-16 lg:pl-24"
+          >
             {/* Quick Links Column */}
-            <div className="flex flex-col gap-6">
+            <motion.div variants={fadeInUpVariants} className="flex flex-col gap-6">
               <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#0B1F3A]/40 pl-3">
                 Explore
               </h4>
@@ -84,7 +144,6 @@ export const Footer: React.FC = () => {
                   { label: "Home", href: "/" },
                   { label: "About Club", href: "/about" },
                   { label: "Locations", href: "/locations" },
-                  { label: "Media Hub", href: "/media" },
                   { label: "Book a Trial", href: "/book-trial" },
                 ].map((link) => (
                   <li key={link.href}>
@@ -98,10 +157,10 @@ export const Footer: React.FC = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
 
             {/* Locations Column */}
-            <div className="flex flex-col gap-6">
+            <motion.div variants={fadeInUpVariants} className="flex flex-col gap-6">
               <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#0B1F3A]/40 pl-3">
                 Our Locations
               </h4>
@@ -128,10 +187,10 @@ export const Footer: React.FC = () => {
                   </div>
                 </li>
               </ul>
-            </div>
+            </motion.div>
 
             {/* Contact Column */}
-            <div className="flex flex-col gap-6">
+            <motion.div variants={fadeInUpVariants} className="flex flex-col gap-6">
               <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#0B1F3A]/40 pl-3">
                 Get in Touch
               </h4>
@@ -164,24 +223,28 @@ export const Footer: React.FC = () => {
                   </div>
                 </li>
               </ul>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="flex flex-col gap-4 pt-0">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              {/* Massive Typography matching navbar hierarchy */}
-              <div className="font-sans select-none flex flex-col gap-1 sm:gap-2">
-                <div className="font-semibold text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.85] text-white tracking-tight">
-                  NEIDHAL
-                </div>
-                <div className="font-sans font-bold text-[1.1rem] sm:text-[1.65rem] md:text-[2.2rem] lg:text-[2.75rem] tracking-[0.25em] text-white/60 uppercase whitespace-nowrap leading-none mt-1 pl-[0.08em]">
-                  FOOTBALL CLUB
-                </div>
+          <motion.div 
+            variants={staggerContainer}
+            className="flex flex-col gap-4 pt-0"
+          >
+            {/* Massive Typography matching navbar hierarchy - Single Line Centered */}
+            <motion.div 
+              variants={fadeInUpVariants}
+              className="font-sans select-none w-full text-center mt-2 mb-6 pl-[0.05em]"
+            >
+              <div className="font-bold text-[11vw] sm:text-[12vw] md:text-[12.5vw] lg:text-[13vw] xl:text-[11rem] leading-none text-white tracking-[0.05em] uppercase whitespace-nowrap opacity-90">
+                NEIDHAL FC
               </div>
-            </div>
+            </motion.div>
 
             {/* Copyright & Links */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-white/50 font-normal w-full border-t border-white/15 pt-8 mt-4">
+            <motion.div 
+              variants={fadeInUpVariants}
+              className="flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-white/40 font-normal w-full border-t border-white/10 pt-8 mt-4"
+            >
               <p>© {currentYear} Neidhal Football Club. All rights reserved.</p>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                 <Link href="/book-trial" className="hover:text-white transition-colors duration-200">Register</Link>
@@ -189,12 +252,12 @@ export const Footer: React.FC = () => {
                 <Link href="/utility/terms-and-conditions" className="hover:text-white transition-colors duration-200">Terms & Conditions</Link>
                 <a href="https://wa.me/919962916597" className="hover:text-white transition-colors duration-200">WhatsApp support</a>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-        </div>
-      </div>
-    </footer>
+        </motion.div>
+      </motion.div>
+    </motion.footer>
   );
 };
 

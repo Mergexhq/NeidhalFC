@@ -1,237 +1,144 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { Preloader } from "@/components/common/Preloader";
-
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
-
-const TOTAL_FRAMES = 105;
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { ArrowRight, Sparkles, Trophy, Users, Star } from "lucide-react";
 
 export const Hero: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
-  const [loadedCount, setLoadedCount] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [showLoader, setShowLoader] = useState(true);
-
-  // Preload frames on mount
-  useEffect(() => {
-    setMounted(true);
-    let loaded = 0;
-    const loadedImages: HTMLImageElement[] = [];
-
-    const handleImageLoad = () => {
-      loaded++;
-      setLoadedCount(loaded);
-      if (loaded === TOTAL_FRAMES) {
-        setIsLoaded(true);
-      }
-    };
-
-    const handleImageError = (e: Event | string) => {
-      console.error("Failed to load frame:", e);
-      // Still count it as loaded so we don't get stuck in the loading screen
-      loaded++;
-      setLoadedCount(loaded);
-      if (loaded === TOTAL_FRAMES) {
-        setIsLoaded(true);
-      }
-    };
-
-    // Preload all 119 frames
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = `/hero/frame_${String(i).padStart(4, "0")}.webp`;
-      img.onload = handleImageLoad;
-      img.onerror = handleImageError;
-      loadedImages.push(img);
-    }
-
-    setImages(loadedImages);
-  }, []);
-
-  // Preloader complete callback
-  const handlePreloaderComplete = () => {
-    setShowLoader(false);
-  };
-
-  // Helper to draw a specific frame
-  const drawFrame = (index: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas || images.length === 0 || !images[index]) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.drawImage(images[index], 0, 0, 1920, 1080);
-  };
-
-  // Run scroll animation when images are loaded
-  // Run scroll animation when images are loaded
-  useGSAP(() => {
-    if (!isLoaded || images.length === 0) return;
-
-    // Draw first frame immediately
-    drawFrame(0);
-
-    const frameObj = { val: 0 };
-
-    // Create a GSAP timeline synced with scroll
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.1, // Buttery smooth interpolation
-      }
-    });
-
-    // 1. Video frame animation runs over the entire scroll trigger (duration 1.0)
-    tl.to(frameObj, {
-      val: TOTAL_FRAMES - 1,
-      roundProps: "val",
-      ease: "none",
-      onUpdate: () => {
-        drawFrame(frameObj.val);
-      }
-    }, 0);
-
-    // 2. Section 1 fades out in the first 20% of the scroll timeline
-    tl.to(".hero-text-content-1", {
-      opacity: 0,
-      y: -100, // Slides upwards and fades out
-      duration: 0.2,
-      ease: "power1.inOut"
-    }, 0);
-
-    // Disable mouse events for Section 1 after it fades out
-    tl.set(".hero-text-content-1", { pointerEvents: "none" }, 0.2);
-
-    // 3. Section 2 fades in and slides up from 25% to 55% of the scroll timeline
-    tl.fromTo(".hero-text-content-2", 
-      {
-        opacity: 0,
-        y: 100, // Starts from below (slides upwards into view)
-        pointerEvents: "none"
-      },
-      {
-        opacity: 1,
-        y: 0,
-        pointerEvents: "auto",
-        duration: 0.3,
-        ease: "power1.inOut"
-      },
-      0.25
-    );
-
-    // 4. Section 2 fades out in the last part of the scroll timeline (from 0.88 to 0.93)
-    tl.to(".hero-text-content-2", {
-      opacity: 0,
-      y: -50,
-      duration: 0.05,
-      ease: "power1.inOut"
-    }, 0.88);
-
-    // Disable mouse events for Section 2 after it fades out
-    tl.set(".hero-text-content-2", { pointerEvents: "none" }, 0.93);
-
-    // 5. Canvas fades out at the end of the timeline (from 0.95 to 1.0)
-    tl.to(canvasRef.current, {
-      opacity: 0,
-      duration: 0.05,
-      ease: "power1.inOut"
-    }, 0.95);
-
-  }, { scope: containerRef, dependencies: [isLoaded, images] });
-  const progressPercent = Math.min(100, Math.round((loadedCount / TOTAL_FRAMES) * 100));
-
   return (
-    <section ref={containerRef} className="relative h-[400vh] w-full bg-black z-10">
+    <section className="relative min-h-[92vh] sm:min-h-screen w-full bg-[#0B1F3A] pt-24 sm:pt-28 pb-16 flex items-center overflow-hidden">
+      {/* Decorative Blur Orbs */}
+      <div className="absolute top-1/4 left-[-10%] w-[50vw] h-[50vw] rounded-full bg-sand/5 blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-10 right-[-10%] w-[40vw] h-[40vw] rounded-full bg-accent/5 blur-[120px] pointer-events-none z-0" />
       
-      {/* Sticky container for the hero elements */}
-      <div className="hero-sticky-content sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center px-6">
-        
-        {/* Background Canvas Layer */}
-        <canvas
-          ref={canvasRef}
-          width={1920}
-          height={1080}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            backgroundImage: "url('/hero/frame_0001.webp')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          className="z-0"
-        />
+      {/* Background Subtle Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
 
-        {/* Subtle black contrast overlay to ensure text contrast and legibility over bright video spotlights */}
-        <div className="absolute inset-0 bg-black/45 pointer-events-none z-0" />
+      <div className="max-w-[1500px] w-full mx-auto px-4 sm:px-8 md:px-12 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* --- LEFT COLUMN: Typography & Action --- */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left gap-6">
+            
+            {/* Tagline Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sand text-[10px] uppercase font-bold tracking-widest"
+            >
+              <Sparkles size={10} />
+              <span>Chennai's Premium Coastal Football Club</span>
+            </motion.div>
 
-        {/* Section 1 Hero Content Layer */}
-        <div className="hero-text-content-1 absolute z-10 max-w-7xl mx-auto flex flex-col items-center px-6">
-          {/* Headline */}
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-normal font-display leading-[0.95] tracking-[-2.46px] text-white animate-fade-rise max-w-none lg:whitespace-nowrap">
-            Play with <em className="italic text-sand">flair</em> & <em className="italic text-sand">freedom.</em>
-          </h1>
+            {/* Main Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal font-display leading-[0.92] tracking-tight text-white max-w-3xl font-sans"
+            >
+              Play with <br className="hidden sm:inline" />
+              <em className="italic text-sand font-light">flair</em> & <em className="italic text-sand font-light">freedom.</em>
+            </motion.h1>
 
-          {/* Description */}
-          <p className="text-base sm:text-lg max-w-2xl mt-8 leading-relaxed text-[#FAF7F2]/80 animate-fade-rise-delay">
-            {"Developing fearless, creative players who play with street-style flair and individual decision-making. Rooted in Chennai's beach football beginnings since 2016."}
-          </p>
-        </div>
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed font-sans font-light max-w-xl"
+            >
+              Developing fearless, creative players who play with street-style touch and structured coaching. Rooted on Chennai's ECR sand since 2016.
+            </motion.p>
 
-        {/* Section 2 Backstory Content Layer (Two-column layout matching MergeX style with dark glass container for readability) */}
-        <div className="hero-text-content-2 absolute z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 md:px-8 text-left opacity-0 pointer-events-none">
-          <div className="bg-black/65 backdrop-blur-lg border border-white/10 p-8 sm:p-10 md:p-12 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
-              {/* Left Column */}
-              <div className="md:col-span-6 flex flex-col items-start gap-4">
-                <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-sand block">
-                  Our Backstory
-                </span>
-                <h2 className="text-3xl md:text-5xl font-semibold font-display tracking-wide text-white leading-[1.12]">
-                  The meaning of Neidhal
-                </h2>
-              </div>
-              {/* Right Column */}
-              <div className="md:col-span-6 flex flex-col items-start gap-6 md:pt-4">
-                <div className="text-white/80 text-sm md:text-base leading-relaxed font-normal space-y-6">
-                  <p>
-                    {"Neidhal is the ancient Tamil word for the coastal land where the sea meets the shore. It is the landscape of salt in the air and sand under every step. We did not choose this name for decoration—we chose it because the shore is exactly where our game began."}
-                  </p>
-                  <p>
-                    {"In 2016, we started training youth along the ECR shoreline with just a football and the open sea breeze. We believe football should be played with street-style touch, barefoot agility, and individual decision-making."}
-                  </p>
-                </div>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center gap-2 text-xs font-sans font-bold uppercase tracking-wider text-sand hover:text-white transition-colors group cursor-pointer self-start"
-                >
-                  <span>Read Our Story</span>
-                  <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
-                </Link>
-              </div>
-            </div>
+            {/* Actions */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto"
+            >
+              <Link
+                href="/book-trial"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-sand hover:bg-white text-[#0B1F3A] font-sans font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg hover:scale-[1.02] cursor-pointer"
+              >
+                Book a Free Trial
+                <ArrowRight size={13} />
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border border-white/20 hover:border-white text-white font-sans font-bold text-xs uppercase tracking-wider transition-colors duration-200 cursor-pointer"
+              >
+                Read Our Story
+              </Link>
+            </motion.div>
+
           </div>
+
+          {/* --- RIGHT COLUMN: Bento Glass Graphic --- */}
+          <div className="lg:col-span-5 relative flex items-center justify-center lg:justify-end">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.2 }}
+              className="relative w-full max-w-[460px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-slate-900/40 p-4 flex flex-col justify-between"
+            >
+              {/* Overlay Graphic Container */}
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src="/beach_soccer.png"
+                  alt="Neidhal Beach Football Roots"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover object-center opacity-85 transition-transform duration-700 hover:scale-105"
+                  priority
+                />
+                {/* Vignette Gradients */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/90 via-[#0B1F3A]/10 to-black/25 z-[1]" />
+              </div>
+
+              {/* Bento Content - Top Badges */}
+              <div className="relative z-10 flex justify-between items-start">
+                <div className="flex flex-col gap-2">
+                  <span className="px-3 py-1 rounded-lg bg-black/40 backdrop-blur-md border border-white/10 text-white font-sans font-semibold text-[9px] uppercase tracking-widest flex items-center gap-1.5 w-fit">
+                    <Trophy size={10} className="text-sand" />
+                    Est. 2016
+                  </span>
+                  <span className="px-3 py-1 rounded-lg bg-black/40 backdrop-blur-md border border-white/10 text-white font-sans font-semibold text-[9px] uppercase tracking-widest flex items-center gap-1.5 w-fit">
+                    <Users size={10} className="text-sand" />
+                    2:1 Coach Ratio
+                  </span>
+                </div>
+                
+                <span className="h-10 w-10 rounded-full bg-sand text-[#0B1F3A] flex items-center justify-center shadow-lg font-display font-extrabold text-sm border border-white/20 select-none">
+                  U16
+                </span>
+              </div>
+
+              {/* Bento Content - Bottom Info Card */}
+              <div className="relative z-10 bg-black/45 backdrop-blur-md border border-white/10 p-5 rounded-[1.8rem] flex flex-col gap-2.5">
+                <div className="flex items-center gap-1 text-sand">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={10} className="fill-sand" />
+                  ))}
+                  <span className="text-[9px] text-white/60 font-bold ml-1.5 uppercase tracking-widest">Chennai's Shoreline</span>
+                </div>
+                <h3 className="font-display font-extrabold text-lg text-white leading-tight">
+                  Beach training builds grit. Turf training builds tactical intelligence.
+                </h3>
+                <p className="text-white/70 text-[11px] font-sans font-normal leading-relaxed">
+                  We combine the agility and touch of shoreline play with the structure of tactical field development across our Kottivakkam, Injambakkam, and YMCA Nandanam hubs.
+                </p>
+              </div>
+
+            </motion.div>
+          </div>
+
         </div>
       </div>
-
-      {/* Premium Cinematic Preloader */}
-      {mounted && showLoader && (
-        <Preloader isLoaded={isLoaded} progressPercent={progressPercent} onComplete={handlePreloaderComplete} />
-      )}
     </section>
   );
 };

@@ -48,17 +48,18 @@ const PHILOSOPHIES = [
 export const Philosophy: React.FC = () => {
   const [activeIdx, setActiveIdx] = useState(0);
   const pinContainerRef = useRef<HTMLDivElement>(null);
+  const pinRunwayRef = useRef<HTMLDivElement>(null);
   const pinnedGridRef = useRef<HTMLDivElement>(null);
   const activeIdxRef = useRef(0);
 
   useGSAP(() => {
-    const pinContainer = pinContainerRef.current;
+    const pinRunway = pinRunwayRef.current;
     const pinnedGrid = pinnedGridRef.current;
-    if (!pinContainer || !pinnedGrid) return;
+    if (!pinRunway || !pinnedGrid) return;
 
-    // Pin only the grid in the center while the long scroll track scrolls past
+    // Pin the grid while the runway scrolls past — trigger starts when the runway hits the top
     ScrollTrigger.create({
-      trigger: pinContainer,
+      trigger: pinRunway,
       start: "top top",
       end: "bottom bottom",
       pin: pinnedGrid,
@@ -77,159 +78,163 @@ export const Philosophy: React.FC = () => {
   const current = PHILOSOPHIES[activeIdx];
 
   const handleTabClick = (idx: number) => {
-    const pinContainer = pinContainerRef.current;
-    if (!pinContainer) return;
-    const rect = pinContainer.getBoundingClientRect();
-    const containerTop = window.scrollY + rect.top;
-    const scrollRange = pinContainer.offsetHeight - window.innerHeight;
-    const targetScroll = containerTop + (idx / (PHILOSOPHIES.length - 1)) * scrollRange;
+    const pinRunway = pinRunwayRef.current;
+    if (!pinRunway) return;
+    const rect = pinRunway.getBoundingClientRect();
+    const runwayTop = window.scrollY + rect.top;
+    const scrollRange = pinRunway.offsetHeight - window.innerHeight;
+    const targetScroll = runwayTop + (idx / (PHILOSOPHIES.length - 1)) * scrollRange;
     window.scrollTo({ top: targetScroll, behavior: "smooth" });
   };
 
   return (
     <>
-      {/* ── Section 1: Heading — scrolls away normally ── */}
-      <div className="bg-[#FAF7F2] w-full pt-20 pb-16 text-center">
-        <div className="max-w-5xl mx-auto px-6">
-          <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-extrabold text-[#0077b6] mb-4">
-            <Sparkles size={12} />
-            Chapter 04 &mdash; The Belief
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-light leading-[1.15] text-[#0B1F3A] tracking-tight">
-            Everyone can coach football.
-            <br />
-            <span className="font-extrabold text-[#0077b6] md:whitespace-nowrap">
-              Very few can make a child fall in love with it.
+      {/* ── Outer wrapper: heading + pinned grid together ── */}
+      <div ref={pinContainerRef} className="relative bg-[#FAF7F2] w-full">
+
+        {/* ── Section 1: Heading — natural flow, scrolls away before pin kicks in ── */}
+        <div className="w-full pt-20 pb-16 text-center">
+          <div className="max-w-5xl mx-auto px-6">
+            <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-extrabold text-[#0077b6] mb-4">
+              <Sparkles size={12} />
+              Chapter 04 &mdash; The Belief
             </span>
-          </h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-light leading-[1.15] text-[#0B1F3A] tracking-tight">
+              Everyone can coach football.
+              <br />
+              <span className="font-extrabold text-[#0077b6] md:whitespace-nowrap">
+                Very few can make a child fall in love with it.
+              </span>
+            </h2>
+          </div>
         </div>
-      </div>
 
-      {/* ── Section 2: Scroll-pinned interactive grid ── */}
-      {/* This tall container provides the scroll distance for the pin */}
-      <div ref={pinContainerRef} className="relative h-[400vh] bg-[#FAF7F2] w-full">
-        {/* The pinned element — only the grid, vertically centered */}
-        <div
-          ref={pinnedGridRef}
-          className="h-screen w-full flex items-center justify-center"
-        >
-          <div className="max-w-7xl mx-auto px-6 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* ── Section 2: Scroll runway for pin (400vh tall) ── */}
+        <div ref={pinRunwayRef} className="relative h-[400vh] w-full">
+          {/* The pinned element — only the grid, vertically centered */}
+          <div
+            ref={pinnedGridRef}
+            className="h-screen w-full flex items-center justify-center"
+          >
+            <div className="max-w-7xl mx-auto px-6 w-full">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-              {/* Left Column: Vertical tab titles */}
-              <div className="lg:col-span-5 flex flex-col gap-5 md:gap-7 text-left">
-                {PHILOSOPHIES.map((p, idx) => {
-                  const isActive = activeIdx === idx;
-                  return (
-                    <button
-                      key={p.id}
-                      onClick={() => handleTabClick(idx)}
-                      className="group flex items-center gap-4 text-left border-none bg-transparent cursor-pointer outline-none focus:outline-none"
-                    >
-                      {/* Active indicator line */}
-                      <span
-                        className={`h-[2px] bg-[#0b1f3a] shrink-0 transition-all duration-300 ${
-                          isActive ? "w-6 opacity-100" : "w-0 opacity-0"
-                        }`}
-                      />
-                      <span
-                        className={`font-display text-2xl sm:text-3xl md:text-4xl tracking-tight transition-all duration-300 ${
-                          isActive
-                            ? "text-[#0B1F3A] font-extrabold"
-                            : "text-[#5A6E85]/40 font-semibold group-hover:text-[#5A6E85]/70"
-                        }`}
+                {/* Left Column: Vertical tab titles */}
+                <div className="lg:col-span-5 flex flex-col gap-5 md:gap-7 text-left">
+                  {PHILOSOPHIES.map((p, idx) => {
+                    const isActive = activeIdx === idx;
+                    return (
+                      <button
+                        key={p.id}
+                        onClick={() => handleTabClick(idx)}
+                        className="group flex items-center gap-4 text-left border-none bg-transparent cursor-pointer outline-none focus:outline-none"
                       >
-                        {p.title}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Right Column: Image card */}
-              <div className="lg:col-span-7 relative h-[400px] sm:h-[460px] md:h-[500px] rounded-[2.5rem] overflow-hidden shadow-xl border border-black/5">
-
-                {/* Animated background image */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={current.id}
-                    initial={{ opacity: 0, scale: 1.02 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0 w-full h-full"
-                  >
-                    <Image
-                      src={current.image}
-                      alt={current.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 55vw"
-                      className="object-cover"
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-[#0B1F3A]/20 pointer-events-none" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none" />
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Card overlay content */}
-                <div className="relative z-10 p-6 sm:p-8 flex flex-col justify-between h-full text-left text-white">
-
-                  {/* Top badges */}
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="inline-block px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-[9px] font-bold uppercase tracking-widest text-[#D9C3A5]">
-                      The Philosophy
-                    </span>
-                    <div className="flex items-center gap-3 bg-black/45 backdrop-blur-md border border-white/15 px-4 py-2 rounded-2xl shadow-md">
-                      <Trophy size={14} className="text-[#D9C3A5]" />
-                      <div className="flex flex-col text-left">
-                        <span className="font-condensed font-black text-sm leading-none text-[#D9C3A5]">
-                          150+ PLAYERS
+                        {/* Active indicator line */}
+                        <span
+                          className={`h-[2px] bg-[#0b1f3a] shrink-0 transition-all duration-300 ${
+                            isActive ? "w-6 opacity-100" : "w-0 opacity-0"
+                          }`}
+                        />
+                        <span
+                          className={`font-display text-2xl sm:text-3xl md:text-4xl tracking-tight transition-all duration-300 ${
+                            isActive
+                              ? "text-[#0B1F3A] font-extrabold"
+                              : "text-[#5A6E85]/40 font-semibold group-hover:text-[#5A6E85]/70"
+                          }`}
+                        >
+                          {p.title}
                         </span>
-                        <div className="flex text-amber-400 gap-0.5 mt-1">
-                          {"★★★★★".split("").map((star, i) => (
-                            <span key={i} className="text-[8px] leading-none">{star}</span>
-                          ))}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Right Column: Image card */}
+                <div className="lg:col-span-7 relative h-[400px] sm:h-[460px] md:h-[500px] rounded-[2.5rem] overflow-hidden shadow-xl border border-black/5">
+
+                  {/* Animated background image */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={current.id}
+                      initial={{ opacity: 0, scale: 1.02 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.4 }}
+                      className="absolute inset-0 w-full h-full"
+                    >
+                      <Image
+                        src={current.image}
+                        alt={current.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 55vw"
+                        className="object-cover"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-[#0B1F3A]/20 pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none" />
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Card overlay content */}
+                  <div className="relative z-10 p-6 sm:p-8 flex flex-col justify-between h-full text-left text-white">
+
+                    {/* Top badges */}
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="inline-block px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-[9px] font-bold uppercase tracking-widest text-[#D9C3A5]">
+                        The Philosophy
+                      </span>
+                      <div className="flex items-center gap-3 bg-black/45 backdrop-blur-md border border-white/15 px-4 py-2 rounded-2xl shadow-md">
+                        <Trophy size={14} className="text-[#D9C3A5]" />
+                        <div className="flex flex-col text-left">
+                          <span className="font-condensed font-black text-sm leading-none text-[#D9C3A5]">
+                            150+ PLAYERS
+                          </span>
+                          <div className="flex text-amber-400 gap-0.5 mt-1">
+                            {"★★★★★".split("").map((star, i) => (
+                              <span key={i} className="text-[8px] leading-none">{star}</span>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Bottom: quote + author */}
-                  <div className="flex flex-col gap-4 mt-auto">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={current.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="space-y-4"
-                      >
-                        <p className="font-display italic text-sm sm:text-base md:text-lg text-white leading-relaxed font-light">
-                          &ldquo;{current.quote}&rdquo;
-                        </p>
-                        <div className="flex items-center gap-3 pt-2">
-                          <div className="h-0.5 w-6 bg-[#0077b6] shrink-0" />
-                          <div>
-                            <span className="font-sans font-bold text-xs sm:text-sm text-white block leading-none">
-                              {current.author}
-                            </span>
-                            <span className="text-[10px] text-white/60 block font-medium mt-1.5 leading-none">
-                              {current.role}
-                            </span>
+                    {/* Bottom: quote + author */}
+                    <div className="flex flex-col gap-4 mt-auto">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={current.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}
+                          className="space-y-4"
+                        >
+                          <p className="font-display italic text-sm sm:text-base md:text-lg text-white leading-relaxed font-light">
+                            &ldquo;{current.quote}&rdquo;
+                          </p>
+                          <div className="flex items-center gap-3 pt-2">
+                            <div className="h-0.5 w-6 bg-[#0077b6] shrink-0" />
+                            <div>
+                              <span className="font-sans font-bold text-xs sm:text-sm text-white block leading-none">
+                                {current.author}
+                              </span>
+                              <span className="text-[10px] text-white/60 block font-medium mt-1.5 leading-none">
+                                {current.role}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+
                   </div>
-
                 </div>
-              </div>
 
+              </div>
             </div>
           </div>
         </div>
+
       </div>
 
       {/* ── Section 3: Closing manifesto box ── */}
