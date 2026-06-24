@@ -14,12 +14,22 @@ const NAV_LINKS = [
   { label: "Locations", href: "/locations" },
 ];
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  disableDock?: boolean;
+  forceWhiteText?: boolean;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ disableDock = false, forceWhiteText = false }) => {
   const pathname = usePathname();
   const [isDockActive, setIsDockActive] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    if (disableDock) {
+      setIsDockActive(false);
+      return;
+    }
+
     const handleScroll = () => {
       // Transition to bottom dock when scrolled past 180px
       if (window.scrollY > 180) {
@@ -34,7 +44,7 @@ export const Navbar: React.FC = () => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [disableDock]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -43,6 +53,7 @@ export const Navbar: React.FC = () => {
 
   // Determine if the current page's hero has a dark background
   const isDarkHero =
+    forceWhiteText ||
     pathname === "/about" ||
     pathname === "/locations" ||
     pathname.startsWith("/utility") ||

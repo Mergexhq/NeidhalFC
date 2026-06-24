@@ -25,6 +25,7 @@ export const Hero: React.FC = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLDivElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
 
@@ -145,13 +146,14 @@ export const Hero: React.FC = () => {
         },
       });
 
-      // 1. Play video frames across the entire timeline (0% -> 95%)
+      // 1. Play video frames across the entire timeline (0% -> 100%)
       tl.to(
         frameObj,
         {
           val: TOTAL_FRAMES - 1,
           roundProps: "val",
           ease: "none",
+          duration: 1.0,
           onUpdate: () => {
             drawFrame(frameObj.val);
           },
@@ -204,6 +206,18 @@ export const Hero: React.FC = () => {
         0.28
       );
 
+      // Fade out and disable the entire content block to prevent overlap in Stage 2
+      tl.to(
+        contentRef.current,
+        {
+          opacity: 0,
+          pointerEvents: "none",
+          duration: 0.1,
+          ease: "power1.inOut",
+        },
+        0.3
+      );
+
       // 3. Pinned hero container scales down and gains rounded corners
       tl.to(
         heroRef.current,
@@ -228,43 +242,22 @@ export const Hero: React.FC = () => {
         0.2
       );
 
-      // 5. Stage 2 Backstory content slides up and emerges (48% -> 78%)
+      // 5. Stage 2 Backstory content slides up and emerges (45% -> 85%)
       tl.fromTo(
         aboutRef.current,
         {
           y: 80,
           opacity: 0,
+          pointerEvents: "none",
         },
         {
           y: 0,
           opacity: 1,
-          duration: 0.28,
+          pointerEvents: "auto", // Make backstory interactive
+          duration: 0.4,
           ease: "power1.out",
         },
         0.45
-      );
-
-      // 6. Section 2 fades out in the last part of scroll timeline (88% -> 94%)
-      tl.to(
-        aboutRef.current,
-        {
-          opacity: 0,
-          y: -40,
-          duration: 0.06,
-          ease: "power1.inOut",
-        },
-        0.86
-      );
-
-      // 7. Canvas layer fades out at the very end of timeline (94% -> 100%)
-      tl.to(
-        canvasRef.current,
-        {
-          opacity: 0,
-          duration: 0.06,
-          ease: "power1.inOut",
-        },
-        0.94
       );
     },
     { scope: containerRef, dependencies: [isLoaded, images] }
@@ -276,7 +269,7 @@ export const Hero: React.FC = () => {
     <section ref={containerRef} className="home-hero-scroll-wrapper">
       {/* Pinned Hero Card Container */}
       <div ref={heroRef} className="home-hero">
-        <Navbar />
+        <Navbar disableDock={true} forceWhiteText={true} />
 
         {/* Dynamic Background Canvas Layer */}
         <canvas
@@ -302,7 +295,7 @@ export const Hero: React.FC = () => {
 
         {/* Stage 1: Pinned Hero Title/Intro Content */}
         {!showLoader && (
-          <div className="hh-content">
+          <div ref={contentRef} className="hh-content">
             <div className="hh-top-content">
               {/* Pinned animation ref preserved inside empty div */}
               <div ref={eyebrowRef} />

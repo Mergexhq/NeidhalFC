@@ -1,10 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Sparkles, Users, Award, Shield, CheckCircle } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const COACHES = [
   {
@@ -23,122 +29,131 @@ const COACHES = [
   },
 ];
 
-const RATIO_DETAILS = [
-  {
-    title: "Licensed Lead Coach",
-    desc: "Orchestrates complex technical drills, manages spatial playing structures, and drives dynamic team match scenarios.",
-    icon: Award,
-  },
-  {
-    title: "Dedicated Assistant Coach",
-    desc: "Tracks individual contact points, monitors body positioning, tracks touch count, and delivers real-time micro-corrections.",
-    icon: Users,
-  },
-  {
-    title: "Diagnostic Feedback",
-    desc: "Every player is observed and diagnosed individually, ensuring no child gets lost in the crowd or left behind.",
-    icon: Shield,
-  },
-];
-
 export const CoachSection: React.FC = () => {
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      // Horizontal scroll animation only on desktop screens
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) return;
+
+      const track = trackRef.current;
+      if (!track) return;
+
+      // Calculate translation amount (total scrollable width minus visible width of track container)
+      const scrollAmount = track.scrollWidth - track.clientWidth;
+
+      gsap.to(track, {
+        x: -scrollAmount,
+        ease: "none",
+        scrollTrigger: {
+          trigger: triggerRef.current,
+          start: "top top",
+          end: () => `+=${scrollAmount}`,
+          pin: true,
+          scrub: 0.15,
+          invalidateOnRefresh: true,
+        },
+      });
+    },
+    { scope: triggerRef }
+  );
+
   return (
-    <section className="py-24 bg-[#0B1F3A] text-white relative overflow-hidden">
-      {/* Decorative radial gradients */}
-      <div className="absolute top-1/2 left-[-10%] w-[40vw] h-[40vw] rounded-full bg-sand/5 blur-[120px] pointer-events-none z-0" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[35vw] h-[35vw] rounded-full bg-accent/5 blur-[120px] pointer-events-none z-0" />
+    <section ref={triggerRef} className="w-full bg-[#FAF7F2] text-primary relative overflow-hidden border-b border-black/5">
+      {/* Decorative subtle background grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,31,58,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,31,58,0.012)_1px,transparent_1px)] bg-[size:5rem_5rem] pointer-events-none z-0" />
 
-      {/* Decorative Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.005)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.005)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
-
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-8 md:px-12 relative z-10">
+      {/* Grid wrapper: Left (Static Title block), Right (Horizontal Coach track) */}
+      <div className="flex flex-col md:flex-row relative z-10 w-full min-h-screen">
         
-        {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col items-center gap-3">
-          <span className="text-[10px] uppercase tracking-widest font-extrabold text-sand flex items-center gap-1.5">
-            <Sparkles size={12} />
-            The Standard
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-semibold font-display tracking-wide leading-tight font-sans">
-            Two Coaches. Every Session.
-          </h2>
-          <p className="text-white/60 text-xs sm:text-sm max-w-lg mt-2">
-            Every session runs with a strict 2:1 coaching ratio cap. One lead coach directing play, and one assistant tracking touch metrics.
-          </p>
+        {/* --- LEFT SIDE: Static Title and Philosophy --- */}
+        <div className="w-full md:w-[40%] md:h-screen sticky top-0 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-16 md:py-0 border-r border-black/5 bg-[#FAF7F2] z-20">
+          <div className="flex flex-col items-start gap-4 text-left max-w-md">
+            <div className="flex items-center gap-3">
+              <span className="font-sans text-xs font-bold text-primary/40 tracking-wider">(01)</span>
+              <span className="text-[10px] uppercase tracking-widest font-extrabold text-accent bg-sand/15 px-2.5 py-1 rounded-full">
+                The Mentors
+              </span>
+            </div>
+            
+            <h2 className="text-3xl sm:text-5xl font-semibold font-display tracking-wide leading-tight text-primary font-sans mt-2">
+              Two Coaches. Every Session.
+            </h2>
+            
+            <p className="text-[#5A6E85] text-xs sm:text-sm font-sans font-light leading-relaxed mt-2">
+              Every session runs with a strict 2:1 coaching ratio cap. One lead coach directing play, and one assistant tracking touch metrics.
+            </p>
+            
+            <p className="text-sm sm:text-base font-sans font-light leading-relaxed text-[#5A6E85] mt-4 pt-4 border-t border-black/5">
+              Our training is driven by a deep passion for developing fearless, creative decision-makers with street-style touches and structured coaching.
+            </p>
+          </div>
         </div>
 
-        {/* --- DUAL COACH CARDS --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-20 max-w-6xl mx-auto">
-          {COACHES.map((coach, index) => (
-            <motion.div
-              key={coach.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="group relative flex flex-col sm:flex-row gap-6 p-6 rounded-[2rem] bg-slate-900/40 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300 shadow-xl"
-            >
-              {/* Profile Image */}
-              <div className="relative w-full sm:w-[180px] aspect-square sm:h-auto rounded-2xl overflow-hidden bg-white/5 shrink-0">
+        {/* --- RIGHT SIDE: Horizontal Scrollable Coach Track --- */}
+        <div className="w-full md:w-[60%] md:h-screen flex items-center overflow-x-auto md:overflow-x-hidden px-6 md:px-12 py-12 md:py-0 z-10 scrollbar-none">
+          <div 
+            ref={trackRef} 
+            className="flex gap-8 md:gap-12 flex-nowrap pr-12 md:pr-24"
+          >
+            {COACHES.map((coach) => (
+              <div
+                key={coach.name}
+                className="coach-card w-[80vw] md:w-[45vw] lg:w-[38vw] h-[65vh] md:h-[70vh] relative rounded-[2.5rem] overflow-hidden shrink-0 shadow-2xl bg-[#0B1F3A] flex flex-col justify-between"
+              >
+                {/* Background Coach Portrait Image */}
                 <Image
                   src={coach.image}
                   alt={coach.name}
                   fill
-                  sizes="(max-width: 640px) 100vw, 180px"
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  sizes="(max-width: 768px) 100vw, 600px"
+                  className="object-cover transition-transform duration-700 hover:scale-[1.03] z-0"
                 />
-                <div className="absolute inset-0 bg-[#0B1F3A]/20 group-hover:opacity-0 transition-opacity duration-300" />
-              </div>
 
-              {/* Profile Info */}
-              <div className="flex flex-col items-start justify-between gap-4 text-left">
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-sand">
-                    {coach.role}
-                  </span>
-                  <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
-                    {coach.name}
-                  </h3>
-                  <span className="text-[10px] text-white/55 font-sans font-medium uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded border border-white/5 w-fit">
-                    {coach.credentials}
-                  </span>
-                </div>
-                <p className="text-white/70 text-xs sm:text-sm font-sans font-light leading-relaxed">
-                  {coach.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                {/* Dark Gradients to ensure text readability */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/85 z-10" />
 
-        {/* --- 2:1 ADVANTAGE GRID --- */}
-        <div className="border-t border-white/10 pt-16 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {RATIO_DETAILS.map((detail, index) => {
-              const Icon = detail.icon;
-              return (
-                <motion.div
-                  key={detail.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
-                  className="flex flex-col items-start gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/5"
-                >
-                  <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 text-sand flex items-center justify-center">
-                    <Icon size={18} />
+                {/* Card Content Layout */}
+                <div className="absolute inset-0 z-20 p-8 sm:p-10 flex flex-col justify-between box-border">
+                  {/* Top Content (Credentials) */}
+                  <div className="flex flex-col items-start gap-1">
+                    <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#C8A96B]">
+                      {coach.role}
+                    </span>
+                    <span className="text-[9px] sm:text-[10px] text-white/70 font-sans font-semibold uppercase tracking-widest bg-white/10 px-2.5 py-0.5 rounded border border-white/10 w-fit mt-1">
+                      {coach.credentials}
+                    </span>
                   </div>
-                  <div className="text-left">
-                    <h4 className="font-sans font-bold text-sm text-white uppercase tracking-wider">
-                      {detail.title}
-                    </h4>
-                    <p className="text-white/50 text-xs mt-2 leading-relaxed">
-                      {detail.desc}
+
+                  {/* Bottom Content (Biography & CTA) */}
+                  <div className="flex flex-col items-start gap-4">
+                    <h3 className="font-sans font-semibold text-2xl sm:text-4xl text-white tracking-wide">
+                      {coach.name}
+                    </h3>
+                    
+                    <p className="text-white/70 text-xs sm:text-sm leading-relaxed font-sans font-light max-w-md">
+                      {coach.description}
                     </p>
+
+                    {/* Custom Styled Learn More CTA */}
+                    <Link
+                      href="/about"
+                      className="inline-flex items-center gap-2 group cursor-pointer mt-1"
+                    >
+                      <span className="font-sans font-bold text-[10px] tracking-widest uppercase border border-white/20 hover:border-white/60 text-white px-5 py-2 rounded-full transition-colors duration-300">
+                        Learn More
+                      </span>
+                      <span className="h-8 w-8 rounded-full bg-white text-[#0B1F3A] flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-md">
+                        <ArrowUpRight size={13} />
+                      </span>
+                    </Link>
                   </div>
-                </motion.div>
-              );
-            })}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

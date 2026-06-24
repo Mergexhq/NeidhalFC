@@ -39,7 +39,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.42); /* Reduced opacity from 0.55 */
   opacity: 0; /* GSAP animates this */
   will-change: opacity;
 }
@@ -51,7 +51,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 100%); /* Reduced opacity */
 }
 
 /* Hero Content Wrapper */
@@ -67,7 +67,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end; /* Align elements closely together at the bottom */
+  gap: 24px; /* Close spacing between H1 and H2 blocks */
   box-sizing: border-box;
   margin-left: auto; /* Position block on the right side */
 }
@@ -97,7 +98,7 @@
 
 /* Main Headline */
 .hh-heading {
-  margin: 0 0 24px;
+  margin: 0; /* Margin managed by parent flex gap */
   font-size: clamp(32px, 4.2vw, 56px); /* Reduced from 80px */
   font-weight: 300;
   line-height: 1.1;
@@ -126,7 +127,7 @@
   color: var(--hh-text-secondary);
   line-height: 1.6;
   max-width: 600px;
-  margin: 0 0 32px;
+  margin: 0 0 28px; /* Tighter gap between description and CTAs */
   text-align: left;
   will-change: transform, opacity;
 }
@@ -313,15 +314,16 @@
     padding-right: 24px;
     padding-bottom: 40px;
     max-width: 100%;
+    gap: 16px; /* Tighter vertical gap on mobile */
   }
 
   .hh-heading {
     font-size: clamp(28px, 8vw, 38px); /* Reduced from 48px */
-    margin-bottom: 16px;
+    margin-bottom: 0; /* Managed by parent flex gap */
   }
 
   .hh-sub {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   
   .hh-actions {
