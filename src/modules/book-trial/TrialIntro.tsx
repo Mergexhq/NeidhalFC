@@ -2,10 +2,12 @@
 
 import React from "react";
 import { Sparkles } from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
 
 export const TrialIntro: React.FC = () => {
   return (
     <section className="pt-24 pb-12 bg-[#FAF7F2] relative overflow-hidden">
+      <Navbar />
       {/* Background light details */}
       <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-sand/5 blur-[100px] pointer-events-none" />
 

@@ -1,0 +1,338 @@
+/* ==========================================================================
+   NEIDHAL FC SCROLL HERO STYLING (GSAP ScrollTrigger Pinned Canvas)
+   ========================================================================== */
+
+.home-hero-scroll-wrapper {
+  --hh-bg-color: #000000;
+  --hh-text-primary: #F5F1E8;
+  --hh-text-secondary: rgba(245, 241, 232, 0.85);
+  --hh-text-eyebrow: #C8A96B;
+  --hh-accent-gold: #C8A96B;
+  --hh-sans: var(--font-plus-jakarta-sans), 'Inter', sans-serif;
+  --hh-display: var(--font-bebas-neue), sans-serif;
+  
+  position: relative;
+  font-family: var(--hh-sans);
+  background: #FAF7F2; /* Page background peeking around card when scaled down */
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Pinned Hero Viewport Card */
+.home-hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  transform-origin: center center;
+  will-change: transform, border-radius;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  background: #000000;
+}
+
+/* Darkening Overlay synced with GSAP scroll timeline */
+.hh-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0; /* GSAP animates this */
+  will-change: opacity;
+}
+
+/* Base static overlay to ensure contrast on mount */
+.home-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 100%);
+}
+
+/* Hero Content Wrapper */
+.hh-content {
+  position: relative;
+  z-index: 2;
+  padding-top: clamp(140px, 16vh, 180px);
+  padding-bottom: clamp(60px, 8vh, 120px);
+  padding-left: 24px;
+  padding-right: 24px;
+  max-width: 600px; /* Reduced from 900px to keep text block aligned on the right */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin-left: auto; /* Position block on the right side */
+}
+
+@media (min-width: 768px) {
+  .hh-content {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+.hh-top-content {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* Eyebrow Label */
+.hh-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--hh-text-eyebrow);
+  margin: 0 0 24px;
+}
+
+/* Main Headline */
+.hh-heading {
+  margin: 0 0 24px;
+  font-size: clamp(32px, 4.2vw, 56px); /* Reduced from 80px */
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--hh-text-primary);
+  will-change: transform, opacity;
+}
+
+.hh-heading-line {
+  display: block;
+  white-space: nowrap; /* Enforce exactly 2 lines total */
+}
+
+.hh-heading-accent {
+  display: block;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--hh-accent-gold);
+  white-space: nowrap; /* Enforce exactly 2 lines total */
+}
+
+/* Hero Description */
+.hh-sub {
+  font-size: clamp(15px, 1.8vw, 19px);
+  font-weight: 300;
+  color: var(--hh-text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 0 32px;
+  text-align: left;
+  will-change: transform, opacity;
+}
+
+/* Hero Call to Actions */
+.hh-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  justify-content: flex-start;
+  width: 100%;
+  will-change: transform, opacity;
+}
+
+/* Staggered Initial Fade-in Animation */
+@keyframes hh-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hh-animate {
+  animation: hh-fadeIn 1s both;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   ABOUT / BACKSTORY LAYOUT (emerges on scroll)
+   ========================================================================== */
+
+.about-section {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px clamp(24px, 5vw, 80px);
+  box-sizing: border-box;
+  will-change: transform, opacity;
+}
+
+.about-inner {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: clamp(40px, 6vw, 96px);
+}
+
+/* About Left - Headings */
+.about-left {
+  flex: 1 1 50%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+}
+
+.about-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--hh-text-eyebrow);
+  margin: 0;
+}
+
+.about-statement {
+  font-size: clamp(26px, 3vw, 42px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--hh-text-primary);
+  margin: 0;
+}
+
+/* About Right - Copy texts & CTA */
+.about-right {
+  flex: 1 1 42%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  text-align: left;
+  padding-top: 28px;
+}
+
+.about-body {
+  font-size: clamp(14px, 1.6vw, 16px);
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--hh-text-secondary);
+  margin: 0;
+}
+
+/* Custom styled CTA Link */
+.about-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hh-accent-gold);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s ease;
+  width: fit-content;
+}
+
+.about-cta::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--hh-accent-gold);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-cta:hover {
+  color: #FFFFFF;
+}
+
+.about-cta:hover::after {
+  width: 100%;
+}
+
+.about-cta-arrow {
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-cta:hover .about-cta-arrow {
+  transform: translateX(6px);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 991px) {
+  .about-inner {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .about-left,
+  .about-right {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .about-right {
+    padding-top: 0;
+  }
+
+  .about-section {
+    padding: 60px 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hh-content {
+    padding-top: 100px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 40px;
+    max-width: 100%;
+  }
+
+  .hh-heading {
+    font-size: clamp(28px, 8vw, 38px); /* Reduced from 48px */
+    margin-bottom: 16px;
+  }
+
+  .hh-sub {
+    margin-bottom: 24px;
+  }
+  
+  .hh-actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .hh-actions > a:first-child {
+    width: auto;
+    text-align: left;
+  }
+}

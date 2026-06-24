@@ -21,12 +21,12 @@ const LOCATIONS = [
     times: "Morning: 6:00 AM – 7:30 AM (Sat)\nEvening: 4:30 PM – 6:00 PM (Weekdays)",
     coach: "Pradeep Ramesh",
     images: [
-      "/beach_soccer.png",
-      "/soccer_thumb.png",
-      "/location.png",
+      "/images/beach_soccer.jpg",
+      "/images/soccer_thumb.jpg",
+      "/images/location.jpg",
     ],
     embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.665977934442!2d80.2543!3d12.9612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d625d9962a7%3A0xe9f70cd56b009e4f!2sKottivakkam%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d388.665977934442!2d80.2543!3d12.9612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d625d9962a7%3A0xe9f70cd56b009e4f!2sKottivakkam%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin",
   },
   {
     chapter: "Hub 02",
@@ -40,9 +40,9 @@ const LOCATIONS = [
     times: "Evening: 4:30 PM – 5:45 PM (U6–U8) / 4:30 PM – 6:00 PM (U9–U12)",
     coach: "Vijay Balan",
     images: [
-      "/coaching_ratio.png",
-      "/beach_soccer.png",
-      "/location.png",
+      "/images/coaching_ratio.jpg",
+      "/images/beach_soccer.jpg",
+      "/images/location.jpg",
     ],
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.378901234567!2d80.2505!3d12.9152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525c38ffffffef%3A0xabcdefabcdef!2sInjambakkam%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000001!5m2!1sen!2sin",
@@ -59,9 +59,9 @@ const LOCATIONS = [
     times: "Morning: 6:30 AM – 8:00 AM (Sun)\nEvening: 5:00 PM – 6:30 PM (Weekdays)",
     coach: "Vijay Balan",
     images: [
-      "/soccer_thumb.png",
-      "/coaching_ratio.png",
-      "/beach_soccer.png",
+      "/images/soccer_thumb.jpg",
+      "/images/coaching_ratio.jpg",
+      "/images/beach_soccer.jpg",
     ],
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.234567890123!2d80.2378!3d13.0298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5267d32512d7bf%3A0x63c3d52d9a3b68!2sYMCA%20Grounds%2C%20Nandanam%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000002!5m2!1sen!2sin",

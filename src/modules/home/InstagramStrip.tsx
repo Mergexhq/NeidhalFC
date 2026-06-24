@@ -9,62 +9,62 @@ import CircularGallery from "@/components/common/CircularGallery";
 const FIELD_SNAPSHOTS = [
   {
     id: 1,
-    image: "https://www.pexels.com/download/video/10349048/",
+    image: "/images/beach_soccer.jpg",
     caption: "POV: A Structured Technical session. 2:1 coaching ratio in action. Building individual decision-making.",
   },
   {
     id: 2,
-    image: "https://www.pexels.com/download/video/9440064/",
+    image: "/images/advanced_match.jpg",
     caption: "Fearless play leads to creative solutions. Weekly turf match snapshots. Chennai Coastline league matches.",
   },
   {
     id: 3,
-    image: "https://www.pexels.com/download/video/9517666/",
+    image: "/images/coaching_ratio.jpg",
     caption: "Barefoot beach conditioning. Instilling grit and street-style touch on the Kottivakkam shoreline.",
   },
   {
     id: 4,
-    image: "https://www.pexels.com/download/video/17144169/",
+    image: "/images/foundation_drill.jpg",
     caption: "Fostering local football talent and creating paths for national-level exposure.",
   },
   {
     id: 5,
-    image: "https://www.pexels.com/download/video/27353726/",
+    image: "/images/soccer_thumb.jpg",
     caption: "Lush green training pitch. Providing international-standard playing turf for advanced development.",
   },
   {
     id: 6,
-    image: "https://www.pexels.com/download/video/10349048/",
+    image: "/images/location.jpg",
     caption: "Speed, agility, and quick decision-making under high-pressure coaching scenarios.",
   },
   {
     id: 7,
-    image: "https://www.pexels.com/download/video/9440064/",
+    image: "/images/about/backstory_2016.jpg",
     caption: "Youth soccer development programs, driving beach-football foundations since 2016.",
   },
   {
     id: 8,
-    image: "https://www.pexels.com/download/video/9517666/",
+    image: "/images/about/beach_soccer_legal.jpg",
     caption: "Precision shooting drills. Training local players to finish with confidence and clinical flair.",
   },
   {
     id: 9,
-    image: "https://www.pexels.com/download/video/17144169/",
+    image: "/images/about/going_roots.jpg",
     caption: "Tactical training layouts. Setting up visual game intelligence exercises for maximum cognitive growth.",
   },
   {
     id: 10,
-    image: "https://www.pexels.com/download/video/27353726/",
+    image: "/images/about/slider_coaching.jpg",
     caption: "Pre-match warmups. Warming up the squad with focus on dynamic movements and joint stability.",
   },
   {
     id: 11,
-    image: "https://www.pexels.com/download/video/10349048/",
+    image: "/images/about/slider_dolphins.jpg",
     caption: "Under the floodlights. Elite night sessions pushing player boundaries and competitive mindset.",
   },
   {
     id: 12,
-    image: "https://www.pexels.com/download/video/9440064/",
+    image: "/images/home/coach_ratio.jpg",
     caption: "Dedicated focus. Mentorship program linking experienced senior players with academy youth.",
   }
 ];

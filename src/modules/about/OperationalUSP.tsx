@@ -26,10 +26,10 @@ export const OperationalUSP: React.FC = () => {
             className="lg:col-span-6 relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl bg-slate-100 border border-black/5 group"
           >
             <Image
-              src="/images/home/coach_ratio.png"
+              src="/images/home/coach_ratio.jpg"
               alt="Neidhal FC Head Coach actively managing field space"
               fill
-              sizes="(max-w-768px) 100vw, 50vw"
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
               priority
             />
@@ -102,7 +102,7 @@ export const OperationalUSP: React.FC = () => {
             className="lg:col-span-6 relative aspect-square lg:aspect-auto min-h-[380px] rounded-[2rem] overflow-hidden shadow-md border border-black/5 group"
           >
             <Image
-              src="/images/about/slider_coaching.png"
+              src="/images/about/slider_coaching.jpg"
               alt="Two Neidhal Football Club Players Training"
               fill
               sizes="(max-w-768px) 100vw, 50vw"

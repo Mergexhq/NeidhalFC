@@ -1,144 +1,380 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Trophy, Users, Star } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { ArrowRight } from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
+import { Preloader } from "@/components/common/Preloader";
+import "@/styles/home-hero.css";
+
+// Register GSAP ScrollTrigger plugin
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+const TOTAL_FRAMES = 145;
 
 export const Hero: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const eyebrowRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subRef = useRef<HTMLDivElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
+
+  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [loadedCount, setLoadedCount] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+
+  // Preload frames on mount
+  useEffect(() => {
+    setMounted(true);
+
+    // Check if the preloader has already been completed in this session
+    const hasShown = sessionStorage.getItem("hasShownPreloader") === "true";
+    if (hasShown) {
+      setShowLoader(false);
+    }
+
+    let loaded = 0;
+    const loadedImages: HTMLImageElement[] = [];
+
+    const handleImageLoad = () => {
+      loaded++;
+      setLoadedCount(loaded);
+      if (loaded === TOTAL_FRAMES) {
+        setIsLoaded(true);
+      }
+    };
+
+    const handleImageError = (e: Event | string) => {
+      console.error("Failed to load frame:", e);
+      // Count as loaded anyway to prevent getting stuck in loading screen
+      loaded++;
+      setLoadedCount(loaded);
+      if (loaded === TOTAL_FRAMES) {
+        setIsLoaded(true);
+      }
+    };
+
+    // Preload all 145 frames
+    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = `/hero/frame_${String(i).padStart(4, "0")}.webp`;
+      img.onload = handleImageLoad;
+      img.onerror = handleImageError;
+      loadedImages.push(img);
+    }
+
+    setImages(loadedImages);
+  }, []);
+
+  const handlePreloaderComplete = () => {
+    sessionStorage.setItem("hasShownPreloader", "true");
+    setShowLoader(false);
+  };
+
+  // Helper to draw a specific frame to the canvas
+  const drawFrame = (index: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas || images.length === 0 || !images[index]) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw image maintaining cover aspect ratio
+    const img = images[index];
+    const canvasRatio = canvas.width / canvas.height;
+    const imgRatio = img.width / img.height;
+    
+    let drawWidth = canvas.width;
+    let drawHeight = canvas.height;
+    let offsetX = 0;
+    let offsetY = 0;
+    
+    if (imgRatio > canvasRatio) {
+      drawWidth = canvas.height * imgRatio;
+      offsetX = (canvas.width - drawWidth) / 2;
+    } else {
+      drawHeight = canvas.width / imgRatio;
+      offsetY = (canvas.height - drawHeight) / 2;
+    }
+    
+    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+  };
+
+  // Staggered text delays on initial load
+  useEffect(() => {
+    if (!showLoader) {
+      const items = containerRef.current?.querySelectorAll(".hh-animate");
+      items?.forEach((el, i) => {
+        (el as HTMLElement).style.animationDelay = `${0.1 + i * 0.15}s`;
+      });
+    }
+  }, [showLoader]);
+
+  // Run scroll animation when images are fully preloaded
+  useGSAP(
+    () => {
+      if (!isLoaded || images.length === 0 || !canvasRef.current) return;
+
+      // Draw the first frame immediately
+      drawFrame(0);
+
+      const frameObj = { val: 0 };
+
+      // Create main GSAP timeline linked to page scroll
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=200%",
+          pin: heroRef.current,
+          scrub: 0.15, // Smooth interpolation
+          anticipatePin: 1,
+        },
+      });
+
+      // 1. Play video frames across the entire timeline (0% -> 95%)
+      tl.to(
+        frameObj,
+        {
+          val: TOTAL_FRAMES - 1,
+          roundProps: "val",
+          ease: "none",
+          onUpdate: () => {
+            drawFrame(frameObj.val);
+          },
+        },
+        0
+      );
+
+      // 2. Stage 1 Elements (Eyebrow, Title, Sub, CTA) fade out sequentially (20% -> 40%)
+      tl.to(
+        eyebrowRef.current,
+        {
+          y: -25,
+          opacity: 0,
+          duration: 0.08,
+          ease: "power1.inOut",
+        },
+        0.18
+      );
+
+      tl.to(
+        headingRef.current,
+        {
+          y: -35,
+          opacity: 0,
+          duration: 0.1,
+          ease: "power1.inOut",
+        },
+        0.22
+      );
+
+      tl.to(
+        subRef.current,
+        {
+          y: -25,
+          opacity: 0,
+          duration: 0.08,
+          ease: "power1.inOut",
+        },
+        0.26
+      );
+
+      tl.to(
+        actionsRef.current,
+        {
+          y: -20,
+          opacity: 0,
+          duration: 0.08,
+          ease: "power1.inOut",
+        },
+        0.28
+      );
+
+      // 3. Pinned hero container scales down and gains rounded corners
+      tl.to(
+        heroRef.current,
+        {
+          scaleX: 0.985,
+          scaleY: 0.975,
+          borderRadius: "32px",
+          duration: 0.5,
+          ease: "power1.inOut",
+        },
+        0.2
+      );
+
+      // 4. Overlay progressively darkens to enhance readability of About section
+      tl.to(
+        overlayRef.current,
+        {
+          opacity: 1,
+          duration: 0.45,
+          ease: "power1.inOut",
+        },
+        0.2
+      );
+
+      // 5. Stage 2 Backstory content slides up and emerges (48% -> 78%)
+      tl.fromTo(
+        aboutRef.current,
+        {
+          y: 80,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.28,
+          ease: "power1.out",
+        },
+        0.45
+      );
+
+      // 6. Section 2 fades out in the last part of scroll timeline (88% -> 94%)
+      tl.to(
+        aboutRef.current,
+        {
+          opacity: 0,
+          y: -40,
+          duration: 0.06,
+          ease: "power1.inOut",
+        },
+        0.86
+      );
+
+      // 7. Canvas layer fades out at the very end of timeline (94% -> 100%)
+      tl.to(
+        canvasRef.current,
+        {
+          opacity: 0,
+          duration: 0.06,
+          ease: "power1.inOut",
+        },
+        0.94
+      );
+    },
+    { scope: containerRef, dependencies: [isLoaded, images] }
+  );
+
+  const progressPercent = Math.min(100, Math.round((loadedCount / TOTAL_FRAMES) * 100));
+
   return (
-    <section className="relative min-h-[92vh] sm:min-h-screen w-full bg-[#0B1F3A] pt-24 sm:pt-28 pb-16 flex items-center overflow-hidden">
-      {/* Decorative Blur Orbs */}
-      <div className="absolute top-1/4 left-[-10%] w-[50vw] h-[50vw] rounded-full bg-sand/5 blur-[120px] pointer-events-none z-0" />
-      <div className="absolute bottom-10 right-[-10%] w-[40vw] h-[40vw] rounded-full bg-accent/5 blur-[120px] pointer-events-none z-0" />
-      
-      {/* Background Subtle Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
+    <section ref={containerRef} className="home-hero-scroll-wrapper">
+      {/* Pinned Hero Card Container */}
+      <div ref={heroRef} className="home-hero">
+        <Navbar />
 
-      <div className="max-w-[1500px] w-full mx-auto px-4 sm:px-8 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
-          {/* --- LEFT COLUMN: Typography & Action --- */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left gap-6">
-            
-            {/* Tagline Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sand text-[10px] uppercase font-bold tracking-widest"
-            >
-              <Sparkles size={10} />
-              <span>Chennai's Premium Coastal Football Club</span>
-            </motion.div>
+        {/* Dynamic Background Canvas Layer */}
+        <canvas
+          ref={canvasRef}
+          width={1920}
+          height={1080}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            backgroundImage: "url('/hero/frame_0001.webp')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          className="z-0"
+        />
 
-            {/* Main Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal font-display leading-[0.92] tracking-tight text-white max-w-3xl font-sans"
-            >
-              Play with <br className="hidden sm:inline" />
-              <em className="italic text-sand font-light">flair</em> & <em className="italic text-sand font-light">freedom.</em>
-            </motion.h1>
+        {/* Dynamic scroll darkened overlay */}
+        <div ref={overlayRef} className="hh-overlay" />
 
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed font-sans font-light max-w-xl"
-            >
-              Developing fearless, creative players who play with street-style touch and structured coaching. Rooted on Chennai's ECR sand since 2016.
-            </motion.p>
+        {/* Stage 1: Pinned Hero Title/Intro Content */}
+        {!showLoader && (
+          <div className="hh-content">
+            <div className="hh-top-content">
+              {/* Pinned animation ref preserved inside empty div */}
+              <div ref={eyebrowRef} />
 
-            {/* Actions */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto"
-            >
-              <Link
-                href="/book-trial"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-sand hover:bg-white text-[#0B1F3A] font-sans font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg hover:scale-[1.02] cursor-pointer"
-              >
-                Book a Free Trial
-                <ArrowRight size={13} />
-              </Link>
-              <Link
-                href="/about"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border border-white/20 hover:border-white text-white font-sans font-bold text-xs uppercase tracking-wider transition-colors duration-200 cursor-pointer"
-              >
-                Read Our Story
-              </Link>
-            </motion.div>
+              <h1 ref={headingRef} className="hh-heading">
+                <span className="hh-heading-line hh-animate">Build Fearless,</span>
+                <span className="hh-heading-accent hh-animate">Creative Footballers.</span>
+              </h1>
+            </div>
 
-          </div>
-
-          {/* --- RIGHT COLUMN: Bento Glass Graphic --- */}
-          <div className="lg:col-span-5 relative flex items-center justify-center lg:justify-end">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.2 }}
-              className="relative w-full max-w-[460px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-slate-900/40 p-4 flex flex-col justify-between"
-            >
-              {/* Overlay Graphic Container */}
-              <div className="absolute inset-0 z-0">
-                <Image
-                  src="/beach_soccer.png"
-                  alt="Neidhal Beach Football Roots"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover object-center opacity-85 transition-transform duration-700 hover:scale-105"
-                  priority
-                />
-                {/* Vignette Gradients */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/90 via-[#0B1F3A]/10 to-black/25 z-[1]" />
-              </div>
-
-              {/* Bento Content - Top Badges */}
-              <div className="relative z-10 flex justify-between items-start">
-                <div className="flex flex-col gap-2">
-                  <span className="px-3 py-1 rounded-lg bg-black/40 backdrop-blur-md border border-white/10 text-white font-sans font-semibold text-[9px] uppercase tracking-widest flex items-center gap-1.5 w-fit">
-                    <Trophy size={10} className="text-sand" />
-                    Est. 2016
-                  </span>
-                  <span className="px-3 py-1 rounded-lg bg-black/40 backdrop-blur-md border border-white/10 text-white font-sans font-semibold text-[9px] uppercase tracking-widest flex items-center gap-1.5 w-fit">
-                    <Users size={10} className="text-sand" />
-                    2:1 Coach Ratio
-                  </span>
-                </div>
-                
-                <span className="h-10 w-10 rounded-full bg-sand text-[#0B1F3A] flex items-center justify-center shadow-lg font-display font-extrabold text-sm border border-white/20 select-none">
-                  U16
-                </span>
-              </div>
-
-              {/* Bento Content - Bottom Info Card */}
-              <div className="relative z-10 bg-black/45 backdrop-blur-md border border-white/10 p-5 rounded-[1.8rem] flex flex-col gap-2.5">
-                <div className="flex items-center gap-1 text-sand">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={10} className="fill-sand" />
-                  ))}
-                  <span className="text-[9px] text-white/60 font-bold ml-1.5 uppercase tracking-widest">Chennai's Shoreline</span>
-                </div>
-                <h3 className="font-display font-extrabold text-lg text-white leading-tight">
-                  Beach training builds grit. Turf training builds tactical intelligence.
-                </h3>
-                <p className="text-white/70 text-[11px] font-sans font-normal leading-relaxed">
-                  We combine the agility and touch of shoreline play with the structure of tactical field development across our Kottivakkam, Injambakkam, and YMCA Nandanam hubs.
+            <div>
+              <div ref={subRef}>
+                <p className="hh-sub hh-animate">
+                  Combining the freedom of Chennai&apos;s street-style touch with world-class structured coaching. Training on the ECR coast since 2016.
                 </p>
               </div>
 
-            </motion.div>
+              <div ref={actionsRef} className="hh-actions hh-animate">
+                <Link
+                  href="/book-trial"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-sand hover:bg-white text-primary font-sans font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:scale-[1.02] active:scale-95 cursor-pointer"
+                >
+                  Book a Free Trial
+                  <ArrowRight size={13} />
+                </Link>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-sand hover:text-white transition-colors group cursor-pointer"
+                >
+                  <span>Read Our Story</span>
+                  <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+                </Link>
+              </div>
+            </div>
           </div>
+        )}
 
-        </div>
+        {/* Stage 2: Backstory / About Glimpse Section inside pin */}
+        <section ref={aboutRef} className="about-section opacity-0 pointer-events-none">
+          <div className="about-inner">
+            {/* Left Column */}
+            <div className="about-left">
+              <p className="about-eyebrow">Our Backstory</p>
+              <h2 className="about-statement">
+                The meaning of Neidhal
+              </h2>
+            </div>
+            {/* Right Column */}
+            <div className="about-right">
+              <p className="about-body">
+                Neidhal is the ancient Tamil word for the coastal land where the sea meets the shore. It is the landscape of salt in the air and sand under every step. We did not choose this name for decoration—we chose it because the shore is exactly where our game began.
+              </p>
+              <p className="about-body">
+                In 2016, we started training youth along the ECR shoreline with just a football and the open sea breeze. We believe football should be played with street-style touch, barefoot agility, and individual decision-making.
+              </p>
+              <Link href="/about" className="about-cta">
+                <span>Read Our Story</span>
+                <span className="about-cta-arrow">→</span>
+              </Link>
+            </div>
+          </div>
+        </section>
       </div>
+
+      {/* Preloader overlay linked to canvas preload progress */}
+      {mounted && showLoader && (
+        <Preloader
+          isLoaded={isLoaded}
+          progressPercent={progressPercent}
+          onComplete={handlePreloaderComplete}
+        />
+      )}
     </section>
   );
 };

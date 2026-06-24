@@ -61,10 +61,10 @@ export const BrandMeaning: React.FC = () => {
               className="relative aspect-square rounded-[2rem] overflow-hidden shadow-md border border-black/5 hover:scale-[1.02] transition-transform duration-300"
             >
               <Image
-                src="/beach_soccer.png"
+                src="/images/beach_soccer.jpg"
                 alt="Neidhal FC Barefoot Beach Football Practice"
                 fill
-                sizes="(max-w-768px) 50vw, 25vw"
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-[#0d1c10]/10" />
@@ -78,10 +78,10 @@ export const BrandMeaning: React.FC = () => {
               className="relative aspect-square rounded-[2rem] overflow-hidden shadow-md border border-black/5 hover:scale-[1.02] transition-transform duration-300"
             >
               <Image
-                src="/soccer_thumb.png"
+                src="/images/soccer_thumb.jpg"
                 alt="Neidhal FC Kids Beach Soccer Drill"
                 fill
-                sizes="(max-w-768px) 50vw, 25vw"
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-[#0d1c10]/10" />

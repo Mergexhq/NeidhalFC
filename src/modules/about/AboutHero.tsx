@@ -5,16 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
 
 export const AboutHero: React.FC = () => {
   return (
     <section className="bg-[#FAF7F2] px-4 pt-4 md:px-6 md:pt-6 pb-0 relative overflow-hidden">
       {/* Cinematic Rounded Hero Box */}
       <div className="relative w-full min-h-[95vh] rounded-[2.5rem] bg-[#122415] text-white p-6 sm:p-10 md:p-12 lg:p-16 flex flex-col justify-between overflow-hidden shadow-2xl">
+        <Navbar />
         
         {/* Grass Background Image */}
         <Image
-          src="/grass_bg.png"
+          src="/images/grass_bg.jpg"
           alt="Neidhal FC Football Field Turf"
           fill
           sizes="100vw"
@@ -37,7 +39,7 @@ export const AboutHero: React.FC = () => {
             {/* Thumbnail */}
             <div className="relative h-16 w-16 rounded-2xl overflow-hidden shrink-0 bg-white/10">
               <Image
-                src="/soccer_thumb.png"
+                src="/images/soccer_thumb.jpg"
                 alt="Neidhal Beach Training Session"
                 fill
                 sizes="64px"

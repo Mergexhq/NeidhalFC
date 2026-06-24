@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
 
 interface PageHeroProps {
   title: string;
@@ -14,6 +15,7 @@ interface PageHeroProps {
 export const PageHero: React.FC<PageHeroProps> = ({ title, subtitle, crumbs = [] }) => {
   return (
     <section className="relative overflow-hidden pt-36 pb-20 border-b border-white/5 bg-linear-to-b from-primary to-primary-dark">
+      <Navbar />
       {/* Visual Accents */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/10 via-transparent to-transparent pointer-events-none" />
       

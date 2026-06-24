@@ -4,6 +4,7 @@ import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
+import Navbar from "@/components/layout/Navbar";
 
 export const LocationsHero: React.FC = () => {
   const { scrollY } = useScroll();
@@ -13,13 +14,14 @@ export const LocationsHero: React.FC = () => {
 
   return (
     <section className="relative h-screen min-h-[600px] overflow-hidden flex items-end">
+      <Navbar />
       {/* Parallax background (zoomed and padded to prevent corner visible issues) */}
       <motion.div
         style={{ y: heroY, scale: heroScale }}
         className="absolute -top-[10%] -left-[5%] w-[110%] h-[120%] origin-center"
       >
         <Image
-          src="/location.png"
+          src="/images/location.jpg"
           alt="Neidhal FC Training Ground"
           fill
           priority

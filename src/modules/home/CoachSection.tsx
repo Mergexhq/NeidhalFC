@@ -12,14 +12,14 @@ const COACHES = [
     role: "Co-Founder & Head Coach",
     credentials: "AIFF / AFC Licensed • Former Pro Player",
     description: "Specializes in spatial game intelligence, beach-soccer physical conditioning, and structured tactical progression. Guided local Chennai talent to national-level exposure since 2016.",
-    image: "/advanced_match.png",
+    image: "/images/advanced_match.jpg",
   },
   {
     name: "Vijay Balan",
     role: "Co-Founder & Head Coach",
     credentials: "AIFF / AFC Licensed • Technical Director",
     description: "Focuses on technical micro-diagnostics, dribbling mechanics, and street-style creative decision-making. Passionate about youth development and instilling a love for the game.",
-    image: "/coaching_ratio.png",
+    image: "/images/coaching_ratio.jpg",
   },
 ];
 

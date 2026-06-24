@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -11,10 +11,17 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const outfit = Outfit({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  variable: "--font-bebas-neue",
+  weight: "400",
   display: "swap",
 });
 
@@ -58,9 +65,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable} ${bebasNeue.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (sessionStorage.getItem('hasShownPreloader') === 'true') {
+                  var style = document.createElement('style');
+                  style.id = 'preloader-bypass-style';
+                  style.innerHTML = '.preloader-overlay { display: none !important; }';
+                  document.head.appendChild(style);
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="font-sans antialiased bg-[#FAF7F2] text-black flex flex-col min-h-screen">
-        <Navbar />
         <main className="grow">
           {children}
         </main>

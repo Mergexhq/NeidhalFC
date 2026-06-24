@@ -15,7 +15,7 @@ const SEASONAL_PROGRAMS = [
     location: "Kottivakkam Beach Turf",
     price: "₹3,500 / Full Camp",
     description: "Our signature annual camp covering street football styles, beach sand physical conditioning, and 1v1 skill mastery. Open for U6 to U16.",
-    image: "/beach_soccer.png"
+    image: "/images/beach_soccer.jpg"
   },
   {
     id: "annual-reg",
@@ -26,7 +26,7 @@ const SEASONAL_PROGRAMS = [
     location: "Kottivakkam, Injambakkam & Nandanam",
     price: "₹2,500 / Monthly Fee",
     description: "Join our main academy training structure. Includes official Neidhal kit bag, customized coaching diagnostics, and participation in coastal leagues.",
-    image: "/coaching_ratio.png"
+    image: "/images/coaching_ratio.jpg"
   },
 ];
 

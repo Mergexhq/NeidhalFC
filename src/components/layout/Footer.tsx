@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
         <div 
           className="absolute inset-0 z-0 bg-[#0B1F3A]"
           style={{
-            backgroundImage: "url('/footer.png')",
+            backgroundImage: "url('/images/footer.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             maskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",

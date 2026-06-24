@@ -16,7 +16,7 @@ const SETS = [
         year: "2016",
         title: "A ball and the sea breeze.",
         description: "Two friends met on the Bay of Bengal shoreline. No training kits, no permission slips, no boundary lines. Just a ball, heavy ECR sand, and a love for the game. We played because we had to.",
-        image: "/images/about/backstory_2016.png",
+        image: "/images/about/backstory_2016.jpg",
         tag: "Chapter 03 &mdash; The Start",
         icon: Compass,
       },
@@ -25,7 +25,7 @@ const SETS = [
         year: "2017",
         title: "They kept showing up.",
         description: "More players joined the beach circle. What was a morning kickabout became a tribe forming around a shared belief that football is about freedom, not systems.",
-        image: "/images/about/going_roots.png",
+        image: "/images/about/going_roots.jpg",
         tag: "The Tribe",
       },
       {
@@ -33,7 +33,7 @@ const SETS = [
         year: "2018",
         title: "Spotted in the waves.",
         description: "Dolphins would surface just thirty feet from our beach training. They became our mascot—quick, fluid, and belonging to the sea.",
-        image: "/images/about/slider_dolphins.png",
+        image: "/images/about/slider_dolphins.jpg",
         tag: "The Mascot",
       }
     ]
@@ -47,7 +47,7 @@ const SETS = [
         year: "2020",
         title: "From the sand to a structure.",
         description: "We built a training academy to give Chennai's youth a real alternative. Locations opened along the ECR coast. The beach drills became a structured methodology.",
-        image: "/images/about/beach_soccer_legal.png",
+        image: "/images/about/beach_soccer_legal.jpg",
         tag: "Chapter 03 &mdash; Evolution",
         icon: Trophy,
       },
@@ -56,7 +56,7 @@ const SETS = [
         year: "Present",
         title: "The raw beach touch.",
         description: "No matter how large we grow, we never forget the shoreline. Every drill carries the unscripted energy of the beach.",
-        image: "/images/about/slider_coaching.png",
+        image: "/images/about/slider_coaching.jpg",
         tag: "The Spirit",
       },
       {
@@ -64,7 +64,7 @@ const SETS = [
         year: "Join",
         title: "Start your chapter.",
         description: "Bring your child to experience the Neidhal wave at Kottivakkam, Injambakkam, or Nandanam. Let them play.",
-        image: "/advanced_match.png",
+        image: "/images/advanced_match.jpg",
         tag: "Free Trial",
       }
     ]

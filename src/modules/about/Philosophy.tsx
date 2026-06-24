@@ -17,7 +17,7 @@ const PHILOSOPHIES = [
     quote: "Modern football trains the joy out of kids. Tactical systems, strict shapes, repetitive drills. We focus on the player who dribbles because it delights them, who tries the impossible trick, who makes the sidelines hold their breath.",
     author: "Senior Coach, Coastal Facility",
     role: "AFC 'B' Licensed Pedigree",
-    image: "/soccer_thumb.png",
+    image: "/images/soccer_thumb.jpg",
   },
   {
     id: "decisions",
@@ -25,7 +25,7 @@ const PHILOSOPHIES = [
     quote: "We believe in confidence in 1v1 situations. We don't scream directions from the touchline. We teach kids to see the field, read the defender, and make their own decisions in the moment.",
     author: "Vijay Balan",
     role: "Co-Founder & Chief Instructor",
-    image: "/neidhal testimonial.png",
+    image: "/images/neidhal testimonial.jpg",
   },
   {
     id: "agility",
@@ -33,7 +33,7 @@ const PHILOSOPHIES = [
     quote: "Standard turf is easy. Sand is challenging. Running in sand builds ankle strength, explosive power, and barefoot touch. It creates a player who is light on their feet and adapts to any pitch.",
     author: "Pradeep Ramesh",
     role: "Co-Founder & Lead Coach",
-    image: "/beach_soccer.png",
+    image: "/images/beach_soccer.jpg",
   },
   {
     id: "robotfree",
@@ -41,7 +41,7 @@ const PHILOSOPHIES = [
     quote: "We do not build tactical robots. We build creative thinkers. A child who trains with us will learn to express themselves, make mistakes without fear, and fall in love with the game.",
     author: "Parent of U-12 Academy Player",
     role: "Kottivakkam Hub Member",
-    image: "/coaching_ratio.png",
+    image: "/images/coaching_ratio.jpg",
   }
 ];
 
