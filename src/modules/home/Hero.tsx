@@ -143,6 +143,8 @@ export const Hero: React.FC = () => {
           pin: heroRef.current,
           scrub: 0.15, // Smooth interpolation
           anticipatePin: 1,
+          refreshPriority: 1,       // Processed FIRST — spacer committed before CoachSection refresh
+          invalidateOnRefresh: true,
         },
       });
 

@@ -14,151 +14,295 @@ if (typeof window !== "undefined") {
 
 const COACHES = [
   {
+    id: "01",
     name: "Pradeep Ramesh",
     role: "Co-Founder & Head Coach",
-    credentials: "AIFF / AFC Licensed • Former Pro Player",
-    description: "Specializes in spatial game intelligence, beach-soccer physical conditioning, and structured tactical progression. Guided local Chennai talent to national-level exposure since 2016.",
+    credentials: "AIFF / AFC Licensed · Former Pro Player",
+    description:
+      "Specializes in spatial game intelligence, beach-soccer physical conditioning, and structured tactical progression. Guided local Chennai talent to national-level exposure since 2016.",
     image: "/images/advanced_match.jpg",
   },
   {
+    id: "02",
     name: "Vijay Balan",
     role: "Co-Founder & Head Coach",
-    credentials: "AIFF / AFC Licensed • Technical Director",
-    description: "Focuses on technical micro-diagnostics, dribbling mechanics, and street-style creative decision-making. Passionate about youth development and instilling a love for the game.",
+    credentials: "AIFF / AFC Licensed · Technical Director",
+    description:
+      "Focuses on technical micro-diagnostics, dribbling mechanics, and street-style creative decision-making. Passionate about youth development and instilling a love for the game.",
     image: "/images/coaching_ratio.jpg",
   },
 ];
 
 export const CoachSection: React.FC = () => {
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
+  const runwayRef = useRef<HTMLDivElement>(null);
+  const pinnedRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Horizontal scroll animation only on desktop screens
       const isMobile = window.innerWidth < 768;
+      const runway = runwayRef.current;
+      const pinned = pinnedRef.current;
+      const track = trackRef.current;
+      if (!runway || !pinned || !track) return;
       if (isMobile) return;
 
-      const track = trackRef.current;
-      if (!track) return;
+      const cardWidth = window.innerWidth;
+      const scrollDist = cardWidth * (COACHES.length - 1);
 
-      // Calculate translation amount (total scrollable width minus visible width of track container)
-      const scrollAmount = track.scrollWidth - track.clientWidth;
-
-      gsap.to(track, {
-        x: -scrollAmount,
-        ease: "none",
+      // Create a timeline that handles both pinning and horizontal scroll
+      // with a pause before and after the horizontal movement.
+      const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: triggerRef.current,
+          trigger: runway,
           start: "top top",
-          end: () => `+=${scrollAmount}`,
-          pin: true,
-          scrub: 0.15,
+          end: "bottom bottom",
+          pin: pinned,
+          anticipatePin: 1,
+          scrub: 0.25,
+          refreshPriority: -1,
           invalidateOnRefresh: true,
         },
       });
+
+      // 1st card rest state: no movement for 0.6 relative duration
+      tl.to({}, { duration: 0.6 });
+
+      // Slide track to show next card: 1.0 relative duration
+      tl.to(track, {
+        x: -scrollDist,
+        ease: "power2.inOut",
+        duration: 1.0,
+      });
+
+      // 2nd card rest state: no movement for 0.4 relative duration before unpinning
+      tl.to({}, { duration: 0.4 });
+
+      // After one animation frame the Hero spacer element is fully committed;
+      // force a global recalculation so our start position is correct.
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
     },
-    { scope: triggerRef }
+    { scope: outerRef }
   );
 
   return (
-    <section ref={triggerRef} className="w-full bg-[#FAF7F2] text-primary relative overflow-hidden border-b border-black/5">
-      {/* Decorative subtle background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,31,58,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,31,58,0.012)_1px,transparent_1px)] bg-[size:5rem_5rem] pointer-events-none z-0" />
+    /* ── Outer wrapper — both sections live here ── */
+    <div ref={outerRef} className="relative w-full bg-[#FAF7F2]">
 
-      {/* Grid wrapper: Left (Static Title block), Right (Horizontal Coach track) */}
-      <div className="flex flex-col md:flex-row relative z-10 w-full min-h-screen">
-        
-        {/* --- LEFT SIDE: Static Title and Philosophy --- */}
-        <div className="w-full md:w-[40%] md:h-screen sticky top-0 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-16 md:py-0 border-r border-black/5 bg-[#FAF7F2] z-20">
-          <div className="flex flex-col items-start gap-4 text-left max-w-md">
+      {/* ══════════════════════════════════════════════
+          SECTION 1 — Header: natural flow, scrolls away
+          ══════════════════════════════════════════════ */}
+      <div className="w-full px-6 sm:px-10 md:px-16 pt-24 pb-20 md:pt-28 md:pb-24">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-8 md:gap-20">
+
+          {/* Left: eyebrow + title */}
+          <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <span className="font-sans text-xs font-bold text-primary/40 tracking-wider">(01)</span>
-              <span className="text-[10px] uppercase tracking-widest font-extrabold text-accent bg-sand/15 px-2.5 py-1 rounded-full">
+              <span className="text-[11px] font-bold text-[#0B1F3A]/35 tracking-widest font-sans">
+                (01)
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.2em] font-extrabold text-[#C8A96B] bg-[#C8A96B]/10 px-3 py-1 rounded-full font-sans">
                 The Mentors
               </span>
             </div>
-            
-            <h2 className="text-3xl sm:text-5xl font-semibold font-display tracking-wide leading-tight text-primary font-sans mt-2">
-              Two Coaches. Every Session.
+            <h2
+              className="font-sans font-semibold text-[#0B1F3A] tracking-tight leading-tight"
+              style={{ fontSize: "clamp(30px, 3.8vw, 52px)" }}
+            >
+              Two Coaches.<br />Every Session.
             </h2>
-            
-            <p className="text-[#5A6E85] text-xs sm:text-sm font-sans font-light leading-relaxed mt-2">
-              Every session runs with a strict 2:1 coaching ratio cap. One lead coach directing play, and one assistant tracking touch metrics.
-            </p>
-            
-            <p className="text-sm sm:text-base font-sans font-light leading-relaxed text-[#5A6E85] mt-4 pt-4 border-t border-black/5">
-              Our training is driven by a deep passion for developing fearless, creative decision-makers with street-style touches and structured coaching.
-            </p>
           </div>
-        </div>
 
-        {/* --- RIGHT SIDE: Horizontal Scrollable Coach Track --- */}
-        <div className="w-full md:w-[60%] md:h-screen flex items-center overflow-x-auto md:overflow-x-hidden px-6 md:px-12 py-12 md:py-0 z-10 scrollbar-none">
-          <div 
-            ref={trackRef} 
-            className="flex gap-8 md:gap-12 flex-nowrap pr-12 md:pr-24"
+          {/* Right: description — ~3 lines */}
+          <p
+            className="font-sans font-light text-[#5A6E85] leading-relaxed max-w-md md:max-w-[400px] md:text-right md:pt-8"
+            style={{ fontSize: "clamp(14px, 1.5vw, 17px)" }}
+          >
+            Our training is driven by a deep passion for<br className="hidden md:inline" />{" "}
+            developing fearless, creative decision-makers<br className="hidden md:inline" />{" "}
+            with street-style touches and structured coaching.
+          </p>
+
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════
+          SECTION 2 — Scroll runway + Pinned card area
+          Each coach card = 1 viewport of scroll space
+          ══════════════════════════════════════════════ */}
+      <div
+        ref={runwayRef}
+        /* 300vh gives plenty of scrolling time for the pin, transition, and pauses */
+        style={{ height: "300vh" }}
+        className="relative w-full"
+      >
+        {/* Pinned element: full viewport card area */}
+        <div
+          ref={pinnedRef}
+          className="w-full overflow-hidden bg-[#FAF7F2]"
+          style={{ height: "100vh" }}
+        >
+          {/* Subtle grid texture */}
+          <div
+            className="absolute inset-0 pointer-events-none z-0"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right,rgba(11,31,58,0.012) 1px,transparent 1px),linear-gradient(to bottom,rgba(11,31,58,0.012) 1px,transparent 1px)",
+              backgroundSize: "5rem 5rem",
+            }}
+          />
+
+          {/* Horizontal track — GSAP slides this left */}
+          <div
+            ref={trackRef}
+            className="flex flex-row flex-nowrap h-full will-change-transform"
+            style={{ width: `${COACHES.length * 100}vw` }}
           >
             {COACHES.map((coach) => (
               <div
-                key={coach.name}
-                className="coach-card w-[80vw] md:w-[45vw] lg:w-[38vw] h-[65vh] md:h-[70vh] relative rounded-[2.5rem] overflow-hidden shrink-0 shadow-2xl bg-[#0B1F3A] flex flex-col justify-between"
+                key={coach.id}
+                className="flex flex-row h-full shrink-0"
+                style={{ width: "100vw" }}
               >
-                {/* Background Coach Portrait Image */}
-                <Image
-                  src={coach.image}
-                  alt={coach.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 600px"
-                  className="object-cover transition-transform duration-700 hover:scale-[1.03] z-0"
-                />
+                {/* ── LEFT COLUMN: Coach info ── */}
+                <div
+                  className="flex flex-col justify-center h-full text-left"
+                  style={{
+                    width: "50vw",
+                    paddingLeft: "clamp(40px, 6vw, 100px)",
+                    paddingRight: "clamp(32px, 4vw, 72px)",
+                    paddingTop: "clamp(56px, 7vh, 96px)",
+                    paddingBottom: "clamp(56px, 7vh, 96px)",
+                  }}
+                >
+                  {/* Coach index */}
+                  <span
+                    className="font-sans font-bold text-[#0B1F3A]/20 tracking-widest mb-5"
+                    style={{ fontSize: "11px", letterSpacing: "0.25em" }}
+                  >
+                    ({coach.id})
+                  </span>
 
-                {/* Dark Gradients to ensure text readability */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/85 z-10" />
+                  {/* Role */}
+                  <span
+                    className="font-sans font-bold uppercase tracking-[0.2em] text-[#C8A96B] mb-4"
+                    style={{ fontSize: "11px" }}
+                  >
+                    {coach.role}
+                  </span>
 
-                {/* Card Content Layout */}
-                <div className="absolute inset-0 z-20 p-8 sm:p-10 flex flex-col justify-between box-border">
-                  {/* Top Content (Credentials) */}
-                  <div className="flex flex-col items-start gap-1">
-                    <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#C8A96B]">
-                      {coach.role}
-                    </span>
-                    <span className="text-[9px] sm:text-[10px] text-white/70 font-sans font-semibold uppercase tracking-widest bg-white/10 px-2.5 py-0.5 rounded border border-white/10 w-fit mt-1">
-                      {coach.credentials}
-                    </span>
-                  </div>
+                  {/* Coach name */}
+                  <h3
+                    className="font-sans font-semibold text-[#0B1F3A] tracking-tight leading-[1.1] mb-5"
+                    style={{ fontSize: "clamp(34px, 4.2vw, 58px)" }}
+                  >
+                    {coach.name}
+                  </h3>
 
-                  {/* Bottom Content (Biography & CTA) */}
-                  <div className="flex flex-col items-start gap-4">
-                    <h3 className="font-sans font-semibold text-2xl sm:text-4xl text-white tracking-wide">
-                      {coach.name}
-                    </h3>
-                    
-                    <p className="text-white/70 text-xs sm:text-sm leading-relaxed font-sans font-light max-w-md">
-                      {coach.description}
-                    </p>
+                  {/* Credentials pill */}
+                  <span
+                    className="inline-block font-sans font-semibold uppercase tracking-widest text-[#0B1F3A]/50 bg-[#0B1F3A]/5 border border-[#0B1F3A]/8 px-3 py-1.5 rounded-md w-fit mb-8"
+                    style={{ fontSize: "10px" }}
+                  >
+                    {coach.credentials}
+                  </span>
 
-                    {/* Custom Styled Learn More CTA */}
-                    <Link
-                      href="/about"
-                      className="inline-flex items-center gap-2 group cursor-pointer mt-1"
+                  {/* Description */}
+                  <p
+                    className="font-sans font-light text-[#5A6E85] leading-relaxed max-w-[420px] mb-10"
+                    style={{ fontSize: "clamp(14px, 1.4vw, 16px)" }}
+                  >
+                    {coach.description}
+                  </p>
+
+                  {/* CTA */}
+                  <Link
+                    href="/about"
+                    className="inline-flex items-center gap-3 group cursor-pointer w-fit"
+                  >
+                    <span
+                      className="font-sans font-bold uppercase tracking-widest border border-[#0B1F3A]/20 hover:border-[#0B1F3A]/60 text-[#0B1F3A] px-7 py-3 rounded-full transition-colors duration-300"
+                      style={{ fontSize: "10px" }}
                     >
-                      <span className="font-sans font-bold text-[10px] tracking-widest uppercase border border-white/20 hover:border-white/60 text-white px-5 py-2 rounded-full transition-colors duration-300">
-                        Learn More
-                      </span>
-                      <span className="h-8 w-8 rounded-full bg-white text-[#0B1F3A] flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-md">
-                        <ArrowUpRight size={13} />
-                      </span>
-                    </Link>
+                      Learn More
+                    </span>
+                    <span className="h-10 w-10 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-md">
+                      <ArrowUpRight size={15} />
+                    </span>
+                  </Link>
+                </div>
+
+                {/* ── RIGHT COLUMN: Coach image ── */}
+                <div
+                  className="flex items-center justify-start h-full"
+                  style={{
+                    width: "50vw",
+                    padding: "20px",
+                  }}
+                >
+                  <div
+                    className="relative w-full h-full overflow-hidden bg-[#0B1F3A]"
+                    style={{ borderRadius: "2rem" }}
+                  >
+                    <Image
+                      src={coach.image}
+                      alt={coach.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 44vw"
+                      className="object-cover transition-transform duration-700 hover:scale-[1.025]"
+                    />
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-
       </div>
-    </section>
+
+      {/* ── MOBILE LAYOUT — stacked cards, no GSAP ── */}
+      <div className="md:hidden flex flex-col gap-0 pb-16">
+        {COACHES.map((coach) => (
+          <div
+            key={coach.id}
+            className="flex flex-col gap-6 px-6 py-10 border-t border-[#0B1F3A]/8 first:border-0"
+          >
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C8A96B]">
+              {coach.role}
+            </span>
+            <h3 className="font-sans font-semibold text-[#0B1F3A] text-3xl tracking-tight leading-tight">
+              {coach.name}
+            </h3>
+            <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-xl bg-[#0B1F3A]">
+              <Image
+                src={coach.image}
+                alt={coach.name}
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
+            <p className="font-sans font-light text-[#5A6E85] leading-relaxed text-sm">
+              {coach.description}
+            </p>
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2.5 group cursor-pointer w-fit"
+            >
+              <span className="font-sans font-bold text-[10px] uppercase tracking-widest border border-[#0B1F3A]/20 text-[#0B1F3A] px-6 py-2.5 rounded-full">
+                Learn More
+              </span>
+              <span className="h-9 w-9 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center shadow-md">
+                <ArrowUpRight size={14} />
+              </span>
+            </Link>
+          </div>
+        ))}
+      </div>
+
+    </div>
   );
 };
 

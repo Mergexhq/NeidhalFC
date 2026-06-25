@@ -7,18 +7,18 @@ import { Camera } from "lucide-react";
 import Lenis from "lenis";
 
 const IMAGES = [
-  "/images/beach_soccer.jpg",
-  "/images/advanced_match.jpg",
-  "/images/coaching_ratio.jpg",
-  "/images/foundation_drill.jpg",
-  "/images/soccer_thumb.jpg",
-  "/images/location.jpg",
-  "/images/about/backstory_2016.jpg",
-  "/images/about/beach_soccer_legal.jpg",
-  "/images/about/going_roots.jpg",
-  "/images/about/slider_coaching.jpg",
-  "/images/about/slider_dolphins.jpg",
-  "/images/home/coach_ratio.jpg",
+  "/Gallery/_12A3901.JPG",
+  "/Gallery/_12A3910.JPG",
+  "/Gallery/_12A3942.JPG",
+  "/Gallery/_12A4002.JPG",
+  "/Gallery/_12A4014.JPG",
+  "/Gallery/_12A4048.JPG",
+  "/Gallery/_12A4066.JPG",
+  "/Gallery/_12A4077.JPG",
+  "/Gallery/_12A3901.JPG",
+  "/Gallery/_12A3910.JPG",
+  "/Gallery/_12A3942.JPG",
+  "/Gallery/_12A4002.JPG",
 ];
 
 export const LifeAtNeidhal: React.FC = () => {
