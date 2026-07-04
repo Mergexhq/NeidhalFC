@@ -7,7 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
-import { Preloader } from "@/components/common/Preloader";
 import "@/styles/home-hero.css";
 
 // Register GSAP ScrollTrigger plugin
@@ -30,27 +29,22 @@ export const Hero: React.FC = () => {
   const aboutRef = useRef<HTMLElement>(null);
 
   const [images, setImages] = useState<HTMLImageElement[]>([]);
-  const [loadedCount, setLoadedCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [showLoader, setShowLoader] = useState(true);
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
 
   // Preload frames on mount
   useEffect(() => {
     setMounted(true);
 
-    // Check if the preloader has already been completed in this session
-    const hasShown = sessionStorage.getItem("hasShownPreloader") === "true";
-    if (hasShown) {
-      setShowLoader(false);
-    }
+    const isMob = window.innerWidth < 768;
+    setIsMobileDevice(isMob);
 
     let loaded = 0;
     const loadedImages: HTMLImageElement[] = [];
 
     const handleImageLoad = () => {
       loaded++;
-      setLoadedCount(loaded);
       if (loaded === TOTAL_FRAMES) {
         setIsLoaded(true);
       }
@@ -60,16 +54,17 @@ export const Hero: React.FC = () => {
       console.error("Failed to load frame:", e);
       // Count as loaded anyway to prevent getting stuck in loading screen
       loaded++;
-      setLoadedCount(loaded);
       if (loaded === TOTAL_FRAMES) {
         setIsLoaded(true);
       }
     };
 
+    const folder = isMob ? "hero-mobile" : "hero";
+
     // Preload all 145 frames
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = `/hero/frame_${String(i).padStart(4, "0")}.webp`;
+      img.src = `/${folder}/frame_${String(i).padStart(4, "0")}.webp`;
       img.onload = handleImageLoad;
       img.onerror = handleImageError;
       loadedImages.push(img);
@@ -77,11 +72,6 @@ export const Hero: React.FC = () => {
 
     setImages(loadedImages);
   }, []);
-
-  const handlePreloaderComplete = () => {
-    sessionStorage.setItem("hasShownPreloader", "true");
-    setShowLoader(false);
-  };
 
   // Helper to draw a specific frame to the canvas
   const drawFrame = (index: number) => {
@@ -116,13 +106,11 @@ export const Hero: React.FC = () => {
 
   // Staggered text delays on initial load
   useEffect(() => {
-    if (!showLoader) {
-      const items = containerRef.current?.querySelectorAll(".hh-animate");
-      items?.forEach((el, i) => {
-        (el as HTMLElement).style.animationDelay = `${0.1 + i * 0.15}s`;
-      });
-    }
-  }, [showLoader]);
+    const items = containerRef.current?.querySelectorAll(".hh-animate");
+    items?.forEach((el, i) => {
+      (el as HTMLElement).style.animationDelay = `${0.1 + i * 0.15}s`;
+    });
+  }, []);
 
   // Run scroll animation when images are fully preloaded
   useGSAP(
@@ -265,8 +253,6 @@ export const Hero: React.FC = () => {
     { scope: containerRef, dependencies: [isLoaded, images] }
   );
 
-  const progressPercent = Math.min(100, Math.round((loadedCount / TOTAL_FRAMES) * 100));
-
   return (
     <section ref={containerRef} className="home-hero-scroll-wrapper">
       {/* Pinned Hero Card Container */}
@@ -276,8 +262,8 @@ export const Hero: React.FC = () => {
         {/* Dynamic Background Canvas Layer */}
         <canvas
           ref={canvasRef}
-          width={1920}
-          height={1080}
+          width={isMobileDevice ? 720 : 1920}
+          height={isMobileDevice ? 1280 : 1080}
           style={{
             position: "absolute",
             top: 0,
@@ -285,7 +271,9 @@ export const Hero: React.FC = () => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            backgroundImage: "url('/hero/frame_0001.webp')",
+            backgroundImage: isMobileDevice
+              ? "url('/hero-mobile/frame_0001.webp')"
+              : "url('/hero/frame_0001.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -296,44 +284,42 @@ export const Hero: React.FC = () => {
         <div ref={overlayRef} className="hh-overlay" />
 
         {/* Stage 1: Pinned Hero Title/Intro Content */}
-        {!showLoader && (
-          <div ref={contentRef} className="hh-content">
-            <div className="hh-top-content">
-              {/* Pinned animation ref preserved inside empty div */}
-              <div ref={eyebrowRef} />
+        <div ref={contentRef} className="hh-content">
+          <div className="hh-top-content">
+            {/* Pinned animation ref preserved inside empty div */}
+            <div ref={eyebrowRef} />
 
-              <h1 ref={headingRef} className="hh-heading">
-                <span className="hh-heading-line hh-animate">Build Fearless,</span>
-                <span className="hh-heading-accent hh-animate">Creative Footballers.</span>
-              </h1>
+            <h1 ref={headingRef} className="hh-heading">
+              <span className="hh-heading-line hh-animate">Build Fearless,</span>
+              <span className="hh-heading-accent hh-animate">Creative Footballers.</span>
+            </h1>
+          </div>
+
+          <div>
+            <div ref={subRef}>
+              <p className="hh-sub hh-animate">
+                Combining the freedom of Chennai&apos;s street-style touch with world-class structured coaching. Training on the ECR coast since 2016.
+              </p>
             </div>
 
-            <div>
-              <div ref={subRef}>
-                <p className="hh-sub hh-animate">
-                  Combining the freedom of Chennai&apos;s street-style touch with world-class structured coaching. Training on the ECR coast since 2016.
-                </p>
-              </div>
-
-              <div ref={actionsRef} className="hh-actions hh-animate">
-                <Link
-                  href="/book-trial"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-sand hover:bg-white text-primary font-sans font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:scale-[1.02] active:scale-95 cursor-pointer"
-                >
-                  Book a Free Trial
-                  <ArrowRight size={13} />
-                </Link>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-sand hover:text-white transition-colors group cursor-pointer"
-                >
-                  <span>Read Our Story</span>
-                  <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
-                </Link>
-              </div>
+            <div ref={actionsRef} className="hh-actions hh-animate">
+              <Link
+                href="/book-trial"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-sand hover:bg-white text-primary font-sans font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:scale-[1.02] active:scale-95 cursor-pointer"
+              >
+                Book a Free Trial
+                <ArrowRight size={13} />
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-sand hover:text-white transition-colors group cursor-pointer"
+              >
+                <span>Read Our Story</span>
+                <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+              </Link>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Stage 2: Backstory / About Glimpse Section inside pin */}
         <section ref={aboutRef} className="about-section opacity-0 pointer-events-none">
@@ -362,14 +348,6 @@ export const Hero: React.FC = () => {
         </section>
       </div>
 
-      {/* Preloader overlay linked to canvas preload progress */}
-      {mounted && showLoader && (
-        <Preloader
-          isLoaded={isLoaded}
-          progressPercent={progressPercent}
-          onComplete={handlePreloaderComplete}
-        />
-      )}
     </section>
   );
 };

@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 const fadeInUpVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -29,34 +29,16 @@ const staggerContainer = {
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end end"]
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
-  const borderRadius = useTransform(scrollYProgress, [0.6, 1], ["40px", "0px"]);
-  const paddingX = useTransform(scrollYProgress, [0.6, 1], ["1.5rem", "0rem"]);
-  const paddingBottom = useTransform(scrollYProgress, [0.6, 1], ["1.5rem", "0rem"]);
 
   return (
-    <motion.footer 
+    <footer 
       ref={containerRef}
-      style={{
-        paddingLeft: paddingX,
-        paddingRight: paddingX,
-        paddingBottom: paddingBottom,
-      }}
       className="bg-[#FAF7F2] pt-0 relative overflow-hidden w-full"
     >
-      <motion.div 
-        style={{
-          scale,
-          borderRadius,
-        }}
-        className="relative w-full overflow-hidden text-white px-6 pt-10 pb-8 sm:px-10 sm:pt-12 sm:pb-10 md:px-12 md:pt-16 md:pb-12 lg:px-16 lg:pt-20 lg:pb-14 bg-transparent origin-bottom"
+      <div 
+        className="relative w-full overflow-hidden text-white px-6 pt-12 pb-8 sm:px-10 sm:pt-16 sm:pb-10 md:px-12 md:pt-20 md:pb-12 lg:px-16 lg:pt-24 lg:pb-14 bg-transparent"
       >
-        {/* Background Image with top smudge/fade */}
+        {/* Crisp Background Image with top smudge/fade */}
         <div 
           className="absolute inset-0 z-0 bg-[#0B1F3A]"
           style={{
@@ -65,6 +47,17 @@ export const Footer: React.FC = () => {
             backgroundPosition: "center",
             maskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
             WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
+          }}
+        />
+
+
+        {/* Grain Overlay at the bottom */}
+        <div 
+          className="absolute inset-0 z-[1] pointer-events-none opacity-40"
+          style={{
+            filter: "url(#grain-noise)",
+            maskImage: "linear-gradient(to top, black 0%, transparent 50%)",
+            WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 50%)",
           }}
         />
 
@@ -130,101 +123,117 @@ export const Footer: React.FC = () => {
           </motion.div>
 
           {/* Middle Section: Links, Locations, Contact Details */}
-          <motion.div 
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-12 py-12 border-t border-b border-[#0B1F3A]/10 mb-4 md:pl-16 lg:pl-24"
-          >
-            {/* Quick Links Column */}
-            <motion.div variants={fadeInUpVariants} className="flex flex-col gap-6">
-              <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#0B1F3A]/40 pl-3">
-                Explore
-              </h4>
-              <ul className="space-y-3.5 text-sm text-[#0B1F3A]/80">
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "About Club", href: "/about" },
-                  { label: "Locations", href: "/locations" },
-                  { label: "Book a Trial", href: "/book-trial" },
-                ].map((link) => (
-                  <li key={link.href}>
-                    <Link 
-                      href={link.href}
-                      className="hover:text-[#0077b6] transition-colors duration-200 flex items-center gap-1.5 group cursor-pointer"
-                    >
-                      <ArrowRight size={10} className="opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#0077b6]" />
-                      {link.label}
-                    </Link>
+          <div className="relative mb-8 border-t border-b border-[#0B1F3A]/10 py-12">
+            {/* 2-Color Background Blur Blobs */}
+            <div className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-[#D9C3A5]/15 blur-[120px] pointer-events-none z-0" />
+
+            <motion.div 
+              variants={staggerContainer}
+              className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12 md:pl-16 lg:pl-24"
+            >
+              {/* Quick Links Column */}
+              <motion.div 
+                variants={fadeInUpVariants} 
+                className="flex flex-col gap-6"
+              >
+                <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#BCA688] pl-3">
+                  Explore
+                </h4>
+                <ul className="space-y-7 text-sm text-[#0B1F3A]/80">
+                  {[
+                    { label: "Home", href: "/" },
+                    { label: "About", href: "/about" },
+                    { label: "Locations", href: "/locations" },
+                    { label: "Book a Trial", href: "/book-trial" },
+                  ].map((link) => (
+                    <li key={link.href}>
+                      <Link 
+                        href={link.href}
+                        className="hover:text-[#0B1F3A] transition-colors duration-200 flex items-center gap-1.5 group cursor-pointer font-medium"
+                      >
+                        <ArrowRight size={10} className="opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#BCA688]" />
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Locations Column */}
+              <motion.div 
+                variants={fadeInUpVariants} 
+                className="flex flex-col gap-6"
+              >
+                <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#BCA688] pl-3">
+                  Our Locations
+                </h4>
+                <ul className="space-y-4 text-sm font-normal">
+                  <li className="flex gap-2">
+                    <MapPin size={21} className="text-[#BCA688] shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold text-[#0B1F3A] block">Kottivakkam</span>
+                      <span className="text-[#BCA688] text-xs font-semibold">Near RTO Office, ECR, Chennai</span>
+                    </div>
                   </li>
-                ))}
-              </ul>
-            </motion.div>
+                  <li className="flex gap-2">
+                    <MapPin size={21} className="text-[#BCA688] shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold text-[#0B1F3A] block">Injambakkam</span>
+                      <span className="text-[#BCA688] text-xs font-semibold">ECR Coastal Road, Chennai</span>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <MapPin size={21} className="text-[#BCA688] shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold text-[#0B1F3A] block">Nandanam</span>
+                      <span className="text-[#BCA688] text-xs font-semibold">Central Coaching Facility, Chennai</span>
+                    </div>
+                  </li>
+                </ul>
+              </motion.div>
 
-            {/* Locations Column */}
-            <motion.div variants={fadeInUpVariants} className="flex flex-col gap-6">
-              <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#0B1F3A]/40 pl-3">
-                Our Locations
-              </h4>
-              <ul className="space-y-4 text-sm text-[#0B1F3A]/80 font-normal">
-                <li className="flex gap-2">
-                  <MapPin size={18} className="text-[#0B1F3A]/50 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold text-[#0B1F3A] block">Kottivakkam</span>
-                    Near RTO Office, ECR, Chennai
-                  </div>
-                </li>
-                <li className="flex gap-2">
-                  <MapPin size={18} className="text-[#0B1F3A]/50 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold text-[#0B1F3A] block">Injambakkam</span>
-                    ECR Coastal Road, Chennai
-                  </div>
-                </li>
-                <li className="flex gap-2">
-                  <MapPin size={18} className="text-[#0B1F3A]/50 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold text-[#0B1F3A] block">Nandanam</span>
-                    Central Coaching Facility, Chennai
-                  </div>
-                </li>
-              </ul>
+              {/* Contact Column */}
+              <motion.div 
+                variants={fadeInUpVariants} 
+                className="flex flex-col gap-6"
+              >
+                <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#BCA688] pl-3">
+                  Get in Touch
+                </h4>
+                <ul className="space-y-5 text-sm">
+                  <li className="flex gap-3">
+                    <Mail size={16} className="text-[#BCA688] shrink-0 mt-1" />
+                    <div className="flex flex-col">
+                      <a href="mailto:contact@neidhalfc.com" className="hover:text-[#0077b6] transition-colors duration-200 text-[#0B1F3A] font-semibold">
+                        contact@neidhalfc.com
+                      </a>
+                      <span className="text-[10px] text-[#BCA688] font-bold uppercase tracking-wider">Official Enquiries</span>
+                    </div>
+                  </li>
+                  <li className="flex gap-3">
+                    <Phone size={18} className="text-[#BCA688] shrink-0 mt-1" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="font-semibold text-[#0B1F3A] text-sm leading-tight">Pradeep Ramesh</span>
+                      <span className="text-[10px] text-[#BCA688] font-bold uppercase tracking-wider">Co-Founder</span>
+                      <a href="tel:+919962916597" className="hover:text-[#0077b6] transition-colors duration-200 text-[#0B1F3A] font-bold text-sm">
+                        99629 16597
+                      </a>
+                    </div>
+                  </li>
+                  <li className="flex gap-3">
+                    <Phone size={18} className="text-[#BCA688] shrink-0 mt-1" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="font-semibold text-[#0B1F3A] text-sm leading-tight">Vijay Balan</span>
+                      <span className="text-[10px] text-[#BCA688] font-bold uppercase tracking-wider">Co-Founder</span>
+                      <a href="tel:+919962103566" className="hover:text-[#0077b6] transition-colors duration-200 text-[#0B1F3A] font-bold text-sm">
+                        99621 03566
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </motion.div>
             </motion.div>
-
-            {/* Contact Column */}
-            <motion.div variants={fadeInUpVariants} className="flex flex-col gap-6">
-              <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#0B1F3A]/40 pl-3">
-                Get in Touch
-              </h4>
-              <ul className="space-y-4 text-sm text-[#0B1F3A]/80">
-                <li className="flex gap-3">
-                  <Mail size={16} className="text-[#0B1F3A]/50 shrink-0 mt-1" />
-                  <div className="flex flex-col">
-                    <a href="mailto:contact@neidhalfc.com" className="hover:text-[#0077b6] transition-colors duration-200 text-[#0B1F3A] font-semibold">
-                      contact@neidhalfc.com
-                    </a>
-                    <span className="text-[11px] text-[#0B1F3A]/65">Official Enquiries</span>
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <Phone size={16} className="text-[#0B1F3A]/50 shrink-0 mt-1" />
-                  <div className="flex flex-col">
-                    <a href="tel:+919962916597" className="hover:text-[#0077b6] transition-colors duration-200 text-[#0B1F3A] font-semibold">
-                      99629 16597
-                    </a>
-                    <span className="text-[10px] text-[#0B1F3A]/65">Pradeep Ramesh (Co-Founder)</span>
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <Phone size={16} className="text-[#0B1F3A]/50 shrink-0 mt-1" />
-                  <div className="flex flex-col">
-                    <a href="tel:+919962103566" className="hover:text-[#0077b6] transition-colors duration-200 text-[#0B1F3A] font-semibold">
-                      99621 03566
-                    </a>
-                    <span className="text-[10px] text-[#0B1F3A]/65">Vijay Balan (Co-Founder)</span>
-                  </div>
-                </li>
-              </ul>
-            </motion.div>
-          </motion.div>
+          </div>
 
           <motion.div 
             variants={staggerContainer}
@@ -235,7 +244,14 @@ export const Footer: React.FC = () => {
               variants={fadeInUpVariants}
               className="font-sans select-none w-full text-center mt-2 mb-6 pl-[0.05em]"
             >
-              <div className="font-bold text-[11vw] sm:text-[12vw] md:text-[12.5vw] lg:text-[13vw] xl:text-[11rem] leading-none text-white tracking-[0.05em] uppercase whitespace-nowrap opacity-90">
+              <div 
+                className="font-bold text-[11vw] sm:text-[12vw] md:text-[12.5vw] lg:text-[13vw] xl:text-[11rem] leading-none tracking-[0.05em] uppercase whitespace-nowrap select-none text-white"
+                style={{
+                  opacity: 0.42,
+                  maskImage: "linear-gradient(to bottom, black 40%, rgba(0, 0, 0, 0.3) 75%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 40%, rgba(0, 0, 0, 0.3) 75%, transparent 100%)",
+                }}
+              >
                 NEIDHAL FC
               </div>
             </motion.div>
@@ -246,18 +262,32 @@ export const Footer: React.FC = () => {
               className="flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-white/40 font-normal w-full border-t border-white/10 pt-8 mt-4"
             >
               <p>© {currentYear} Neidhal Football Club. All rights reserved.</p>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                <Link href="/book-trial" className="hover:text-white transition-colors duration-200">Register</Link>
-                <Link href="/utility/privacy-policy" className="hover:text-white transition-colors duration-200">Privacy Policy</Link>
-                <Link href="/utility/terms-and-conditions" className="hover:text-white transition-colors duration-200">Terms & Conditions</Link>
-                <a href="https://wa.me/919962916597" className="hover:text-white transition-colors duration-200">WhatsApp support</a>
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
+                <Link href="/utility/privacy-policy" className="hover:text-white transition-colors duration-200">Privacy</Link>
+                <Link href="/utility/terms-and-conditions" className="hover:text-white transition-colors duration-200">Terms</Link>
+                <a href="mailto:contact@neidhalfc.com" className="hover:text-white transition-colors duration-200">Contact</a>
+                <a href="https://www.instagram.com/neidhalfc" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200">Instagram</a>
               </div>
             </motion.div>
           </motion.div>
 
         </motion.div>
-      </motion.div>
-    </motion.footer>
+      </div>
+
+      {/* Hidden SVG filters for wave texture and grain */}
+      <svg style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }} aria-hidden="true">
+        <defs>
+          <filter id="wave-texture">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.03" numOctaves="2" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter id="grain-noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.05 0" />
+          </filter>
+        </defs>
+      </svg>
+    </footer>
   );
 };
 

@@ -66,22 +66,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable} ${bebasNeue.variable}`} suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (sessionStorage.getItem('hasShownPreloader') === 'true') {
-                  var style = document.createElement('style');
-                  style.id = 'preloader-bypass-style';
-                  style.innerHTML = '.preloader-overlay { display: none !important; }';
-                  document.head.appendChild(style);
-                }
-              } catch (e) {}
-            `,
-          }}
-        />
-      </head>
       <body className="font-sans antialiased bg-[#FAF7F2] text-black flex flex-col min-h-screen">
         <main className="grow">
           {children}
