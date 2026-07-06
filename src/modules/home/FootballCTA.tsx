@@ -24,7 +24,7 @@ const GameModal = dynamic(
 export const FootballCTA: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpen  = useCallback(() => setIsOpen(true),  []);
+  const handleOpen = useCallback(() => setIsOpen(true), []);
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   const dragX = useMotionValue(0);
@@ -102,7 +102,7 @@ export const FootballCTA: React.FC = () => {
           >
             {/* Illustration container */}
             <div className="relative overflow-hidden rounded-2xl">
-              {/* Illustration image (scaled to crop the baked-in border frame) */}
+              {/* Illustration image */}
               <Image
                 src="/Tap to play illustration.png"
                 alt="Player about to take a beach penalty — tap to play the game"
@@ -110,9 +110,6 @@ export const FootballCTA: React.FC = () => {
                 height={896}
                 priority
                 className="w-full h-auto object-contain transition-all duration-500 scale-[1.06] group-hover:brightness-[1.04]"
-                style={{
-                  filter: "drop-shadow(0 14px 44px rgba(100,65,10,0.16))",
-                }}
               />
             </div>
 
@@ -127,31 +124,31 @@ export const FootballCTA: React.FC = () => {
           </motion.button>
           {/* Slide-to-Play Capsule Button (above overlay, z-30) */}
           <motion.div
-            className="relative h-[60px] w-[320px] mx-auto bg-white border border-[#0B1F3A]/10 rounded-full flex items-center p-1.5 shadow-[0_6px_24px_rgba(11,31,58,0.08)] select-none z-30 overflow-hidden"
+            className="relative h-[60px] w-[280px] mx-auto bg-[#0B1F3A] border border-[#0B1F3A] rounded-full flex items-center p-[5px] shadow-[0_6px_24px_rgba(11,31,58,0.18)] select-none z-30 overflow-hidden"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.32 }}
           >
-            {/* Background Track Text (Gray/Navy) */}
-            <span className="absolute inset-x-1.5 inset-y-1.5 flex items-center justify-center font-sans font-bold text-[12px] uppercase tracking-[0.25em] text-[#0B1F3A]/40 pointer-events-none select-none">
+            {/* Background Track Text (White/Soft) */}
+            <span className="absolute inset-x-[5px] inset-y-[5px] flex items-center justify-center font-sans font-bold text-[12px] uppercase tracking-[0.25em] text-white/40 pointer-events-none select-none">
               Slide to Play
             </span>
 
-            {/* Subtle arrow helper in background */}
-            <div className="absolute right-5 text-[#0B1F3A]/25 pointer-events-none flex items-center">
+            {/* Subtle arrow helper in background (White/Soft) */}
+            <div className="absolute right-5 text-white/25 pointer-events-none flex items-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="animate-pulse">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </div>
 
-            {/* Slide color change overlay — dynamic width behind the ball with inset padding */}
+            {/* Slide color change overlay — dynamic width behind the ball (White Fill) */}
             <motion.div
               style={{ width: fillWidth }}
-              className="absolute left-1.5 top-1.5 bottom-1.5 bg-[#0B1F3A] rounded-full overflow-hidden pointer-events-none"
+              className="absolute left-[5px] top-[5px] bottom-[5px] bg-white rounded-full overflow-hidden pointer-events-none"
             >
-              {/* White text aligned exactly in place (width matches container minus padding) */}
-              <span className="absolute inset-y-0 left-0 w-[308px] flex items-center justify-center font-sans font-bold text-[12px] uppercase tracking-[0.25em] text-white select-none">
+              {/* Dark Navy text aligned exactly in place (width matches container minus padding) */}
+              <span className="absolute inset-y-0 left-0 w-[270px] flex items-center justify-center font-sans font-bold text-[12px] uppercase tracking-[0.25em] text-[#0B1F3A] select-none">
                 Slide to Play
               </span>
             </motion.div>
@@ -159,17 +156,17 @@ export const FootballCTA: React.FC = () => {
             {/* Football Handle */}
             <motion.div
               drag="x"
-              dragConstraints={{ left: 0, right: 260 }}
+              dragConstraints={{ left: 0, right: 220 }}
               dragElastic={0.05}
               dragMomentum={false}
               style={{ x: dragX, rotate: dragRotate }}
               onDragEnd={() => {
-                if (dragX.get() >= 240) {
+                if (dragX.get() >= 200) {
                   handleOpen();
                 }
                 animate(dragX, 0, { type: "spring", stiffness: 320, damping: 28 });
               }}
-              className="h-[48px] w-[48px] rounded-full cursor-grab active:cursor-grabbing flex items-center justify-center bg-white shadow-[0_2px_8px_rgba(0,0,0,0.12)] z-40 shrink-0"
+              className="h-[50px] w-[50px] rounded-full cursor-grab active:cursor-grabbing flex items-center justify-center bg-white shadow-[0_2px_8px_rgba(0,0,0,0.12)] z-40 shrink-0"
             >
               <Image
                 src="/1380575802.svg"
