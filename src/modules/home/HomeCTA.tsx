@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export const HomeCTA: React.FC = () => {
   return (
-    <section className="py-24 bg-[#FAF7F2] relative overflow-hidden border-t border-black/5">
+    <section className="py-24 bg-[#FAF7F2] relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
         <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-accent mb-4 block">
           Get Started

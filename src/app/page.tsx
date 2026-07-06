@@ -7,6 +7,7 @@ import PhotoStrip from "@/modules/home/InstagramStrip";
 import TestimonialBoard from "@/modules/home/TestimonialBoard";
 import SeasonalEvents from "@/modules/home/SeasonalEvents";
 import HomeCTA from "@/modules/home/HomeCTA";
+import FootballCTA from "@/modules/home/FootballCTA";
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
       <TestimonialBoard />
       <SeasonalEvents />
       <HomeCTA />
+      <FootballCTA />
     </>
   );
 }
