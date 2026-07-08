@@ -1,19 +1,9 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
-import dynamic from "next/dynamic";
+import React, { useCallback } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
-
-/**
- * Lazy-load the game modal — Matter.js, Howler, and all game code
- * are dynamically imported only after the user clicks "Take The Shot".
- * Zero impact on homepage performance.
- */
-const GameModal = dynamic(
-  () => import("@/components/game/GameModal"),
-  { ssr: false }
-);
+import { useRouter } from "next/navigation";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 /**
  * FootballCTA — idle section placed between HomeCTA and Footer.
@@ -22,10 +12,11 @@ const GameModal = dynamic(
  * Entire illustration is clickable; opens the fullscreen penalty experience.
  */
 export const FootballCTA: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
-  const handleOpen = useCallback(() => setIsOpen(true), []);
-  const handleClose = useCallback(() => setIsOpen(false), []);
+  const handlePlay = useCallback(() => {
+    router.push("/play");
+  }, [router]);
 
   const dragX = useMotionValue(0);
   const dragRotate = useTransform(dragX, [0, 256], [0, 360]);
@@ -92,7 +83,7 @@ export const FootballCTA: React.FC = () => {
 
           {/* ── Illustration — main clickable hero ──────────────────────────────── */}
           <motion.button
-            onClick={handleOpen}
+            onClick={handlePlay}
             className="relative w-full max-w-3xl mx-auto block cursor-pointer focus-visible:outline-none mb-8 group"
             aria-label="Open penalty kick experience"
             initial={{ opacity: 0, y: 24 }}
@@ -148,7 +139,7 @@ export const FootballCTA: React.FC = () => {
               className="absolute left-[5px] top-[5px] bottom-[5px] bg-white rounded-full overflow-hidden pointer-events-none"
             >
               {/* Dark Navy text aligned exactly in place (width matches container minus padding) */}
-              <span className="absolute inset-y-0 left-0 w-[270px] flex items-center justify-center font-sans font-bold text-[12px] uppercase tracking-[0.25em] text-[#0B1F3A] select-none">
+              <span className="absolute inset-y-0 left-0 w-[268px] flex items-center justify-center font-sans font-bold text-[12px] uppercase tracking-[0.25em] text-[#0B1F3A] select-none">
                 Slide to Play
               </span>
             </motion.div>
@@ -162,17 +153,17 @@ export const FootballCTA: React.FC = () => {
               style={{ x: dragX, rotate: dragRotate }}
               onDragEnd={() => {
                 if (dragX.get() >= 200) {
-                  handleOpen();
+                  handlePlay();
                 }
                 animate(dragX, 0, { type: "spring", stiffness: 320, damping: 28 });
               }}
-              className="h-[50px] w-[50px] rounded-full cursor-grab active:cursor-grabbing flex items-center justify-center bg-white shadow-[0_2px_8px_rgba(0,0,0,0.12)] z-40 shrink-0"
+              className="h-[48px] w-[48px] rounded-full cursor-grab active:cursor-grabbing flex items-center justify-center bg-white shadow-[0_2px_8px_rgba(0,0,0,0.12)] z-40 shrink-0"
             >
               <Image
                 src="/1380575802.svg"
                 alt="Football handle"
-                width={34}
-                height={34}
+                width={40}
+                height={40}
                 className="pointer-events-none select-none"
               />
             </motion.div>
@@ -189,10 +180,6 @@ export const FootballCTA: React.FC = () => {
         />
       </section>
 
-      {/* ── Game modal — lazy loaded ─────────────────────────────────────────────── */}
-      <AnimatePresence>
-        {isOpen && <GameModal key="penalty-modal" onClose={handleClose} />}
-      </AnimatePresence>
     </>
   );
 };

@@ -54,7 +54,7 @@ export function useGame() {
 
   // ── Open / countdown complete ──────────────────────────────────────────────
   const openGame = useCallback(async () => {
-    setPhase("countdown");
+    setPhase("ready");
     setShotResult(null);
     setAim(null);
     aimRef.current     = null;
@@ -63,10 +63,13 @@ export function useGame() {
     shotFiredRef.current = false;
     isPressingRef.current = false;
 
+    startKeeperSway();
+    setTimeout(() => setPhase("aiming"), 600);
+
     const { initSounds, playCrowd } = await import("@/lib/sounds");
     await initSounds();
     playCrowd();
-  }, []);
+  }, [startKeeperSway]);
 
   const onCountdownComplete = useCallback(() => {
     setPhase("ready");
@@ -180,7 +183,7 @@ export function useGame() {
     shotFiredRef.current  = false;
     isPressingRef.current = false;
     aimRef.current        = null;
-    setPhase("countdown");
+    setPhase("ready");
     setShotResult(null);
     setAim(null);
     setKeeperPos("center");
@@ -188,9 +191,12 @@ export function useGame() {
     setShootT(0);
     setAimTarget({ x: 0, y: 0.5 });
 
+    startKeeperSway();
+    setTimeout(() => setPhase("aiming"), 600);
+
     const { playCrowd } = await import("@/lib/sounds");
     playCrowd();
-  }, [stopKeeperSway]);
+  }, [stopKeeperSway, startKeeperSway]);
 
   const handleClose = useCallback(() => {
     cancelAnimationFrame(shotRAFRef.current);

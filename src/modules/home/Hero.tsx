@@ -14,7 +14,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const TOTAL_FRAMES = 145;
+const TOTAL_FRAMES = 193;
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,12 +59,10 @@ export const Hero: React.FC = () => {
       }
     };
 
-    const folder = isMob ? "hero-mobile" : "hero";
-
-    // Preload all 145 frames
+    // Preload all frames from the unified hero directory (which scales to cover canvas sizes for both mobile and desktop)
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = `/${folder}/frame_${String(i).padStart(4, "0")}.webp`;
+      img.src = `/hero/frame_${String(i).padStart(4, "0")}.webp`;
       img.onload = handleImageLoad;
       img.onerror = handleImageError;
       loadedImages.push(img);
@@ -74,17 +72,11 @@ export const Hero: React.FC = () => {
   }, []);
 
   // Helper to draw a specific frame to the canvas
-  const drawFrame = (index: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas || images.length === 0 || !images[index]) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw image maintaining cover aspect ratio
-    const img = images[index];
+  const drawSingleImage = (
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement,
+    img: HTMLImageElement
+  ) => {
     const canvasRatio = canvas.width / canvas.height;
     const imgRatio = img.width / img.height;
     
@@ -104,6 +96,55 @@ export const Hero: React.FC = () => {
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   };
 
+  const drawFrame = (index: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas || images.length === 0 || !images[index]) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawSingleImage(ctx, canvas, images[index]);
+  };
+
+  // Cross-fades between the custom 1st frame and the video's start frame during initial scroll progress
+  const drawFrameMapped = (progress: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas || images.length === 0) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const fadeLimit = 0.15; // The first 15% of scroll progress is dedicated to the cross-fade
+
+    if (progress <= fadeLimit) {
+      const alpha = progress / fadeLimit;
+
+      // Draw the static custom frame (index 0) at full opacity
+      if (images[0]) {
+        drawSingleImage(ctx, canvas, images[0]);
+      }
+      
+      // Cross-fade the video starting frame (index 1) on top
+      if (images[1]) {
+        ctx.globalAlpha = alpha;
+        drawSingleImage(ctx, canvas, images[1]);
+        ctx.globalAlpha = 1.0;
+      }
+    } else {
+      // Scale remaining progress to play the video (index 1 to 192)
+      const videoProgress = (progress - fadeLimit) / (1 - fadeLimit);
+      const frameIndex = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.max(1, Math.round(1 + videoProgress * (TOTAL_FRAMES - 2)))
+      );
+
+      if (images[frameIndex]) {
+        drawSingleImage(ctx, canvas, images[frameIndex]);
+      }
+    }
+  };
+
   // Staggered text delays on initial load
   useEffect(() => {
     const items = containerRef.current?.querySelectorAll(".hh-animate");
@@ -118,9 +159,9 @@ export const Hero: React.FC = () => {
       if (!isLoaded || images.length === 0 || !canvasRef.current) return;
 
       // Draw the first frame immediately
-      drawFrame(0);
+      drawFrameMapped(0);
 
-      const frameObj = { val: 0 };
+      const animObj = { progress: 0 };
 
       // Create main GSAP timeline linked to page scroll
       const tl = gsap.timeline({
@@ -136,16 +177,15 @@ export const Hero: React.FC = () => {
         },
       });
 
-      // 1. Play video frames across the entire timeline (0% -> 100%)
+      // 1. Smoothly transition progress across the entire timeline (0% -> 100%)
       tl.to(
-        frameObj,
+        animObj,
         {
-          val: TOTAL_FRAMES - 1,
-          roundProps: "val",
+          progress: 1.0,
           ease: "none",
           duration: 1.0,
           onUpdate: () => {
-            drawFrame(frameObj.val);
+            drawFrameMapped(animObj.progress);
           },
         },
         0
@@ -271,9 +311,7 @@ export const Hero: React.FC = () => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            backgroundImage: isMobileDevice
-              ? "url('/hero-mobile/frame_0001.webp')"
-              : "url('/hero/frame_0001.webp')",
+            backgroundImage: "url('/hero/frame_0001.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -288,36 +326,13 @@ export const Hero: React.FC = () => {
           <div className="hh-top-content">
             {/* Pinned animation ref preserved inside empty div */}
             <div ref={eyebrowRef} />
-
-            <h1 ref={headingRef} className="hh-heading">
-              <span className="hh-heading-line hh-animate">Build Fearless,</span>
-              <span className="hh-heading-accent hh-animate">Creative Footballers.</span>
-            </h1>
+            <div ref={headingRef} />
           </div>
 
           <div>
-            <div ref={subRef}>
-              <p className="hh-sub hh-animate">
-                Combining the freedom of Chennai&apos;s street-style touch with world-class structured coaching. Training on the ECR coast since 2016.
-              </p>
-            </div>
+            <div ref={subRef} />
 
-            <div ref={actionsRef} className="hh-actions hh-animate">
-              <Link
-                href="/book-trial"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-sand hover:bg-white text-primary font-sans font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:scale-[1.02] active:scale-95 cursor-pointer"
-              >
-                Book a Free Trial
-                <ArrowRight size={13} />
-              </Link>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-sand hover:text-white transition-colors group cursor-pointer"
-              >
-                <span>Read Our Story</span>
-                <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
-              </Link>
-            </div>
+            <div ref={actionsRef} />
           </div>
         </div>
 

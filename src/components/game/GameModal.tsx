@@ -19,7 +19,6 @@ import { X } from "lucide-react";
 import { useGame }     from "@/hooks/useGame";
 import { Scene3D }     from "./Scene3D";
 import { AimOverlay }  from "./AimOverlay";
-import { Countdown }   from "./Countdown";
 import { Result }      from "./Result";
 
 interface GameModalProps {
@@ -96,12 +95,7 @@ export default function GameModal({ onClose }: GameModalProps) {
           </span>
         </div>
 
-        {/* ── Countdown overlay ── */}
-        <AnimatePresence>
-          {phase === "countdown" && (
-            <Countdown onComplete={onCountdownComplete} />
-          )}
-        </AnimatePresence>
+
 
         {/* ── Phase label (READY / AIM) ── */}
         <AnimatePresence>
@@ -142,24 +136,7 @@ export default function GameModal({ onClose }: GameModalProps) {
           )}
         </AnimatePresence>
 
-        {/* ── Ball in flight label ── */}
-        <AnimatePresence>
-          {phase === "shooting" && (
-            <motion.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ duration: 0.8, times: [0, 0.3, 1] }}
-            >
-              <span
-                className="text-white/70 text-[11px] tracking-[0.5em] uppercase"
-                style={{ fontFamily: "var(--font-primary, sans-serif)" }}
-              >
-                Shoot!
-              </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+
 
         {/* ── Result overlay ── */}
         <AnimatePresence>
