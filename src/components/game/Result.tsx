@@ -55,16 +55,16 @@ export function Result({ result, onTryAgain, onClose }: ResultProps) {
         {/* ── Main result word ─────────────────────────────────────────────── */}
         <motion.h2
           variants={item}
-          className="font-condensed leading-[0.9] uppercase tracking-wide select-none"
+          className="font-condensed leading-[0.95] uppercase tracking-wide select-none text-center"
           style={{
-            fontSize:   "clamp(80px, 22vw, 200px)",
+            fontSize:   "clamp(48px, 11vw, 120px)",
             color:      isGoal ? "#FFFFFF" : "rgba(255,255,255,0.75)",
             textShadow: isGoal
               ? "0 0 120px rgba(255,255,255,0.12)"
               : "none",
           }}
         >
-          {isGoal ? "GOAL." : result === "saved" ? "SAVED." : "MISSED."}
+          {isGoal ? "GOAL." : result === "saved" ? "SAVED" : "MISSED"}
         </motion.h2>
 
         {/* ── Sub-copy ─────────────────────────────────────────────────────── */}

@@ -12,9 +12,9 @@
   --color-accent-light: #00b4d8;
   --color-accent-dark: #005f73;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-condensed: var(--font-bebas-neue), sans-serif;
+  --font-sans: var(--font-friends), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-friends), ui-sans-serif, system-ui, sans-serif;
+  --font-condensed: var(--font-friends), sans-serif;
   
   --animate-fade-in-up: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-wave: wave 10s linear infinite;
@@ -34,6 +34,12 @@
     50% { transform: translateX(-25%); }
     100% { transform: translateX(-50%); }
   }
+}
+
+:root {
+  --font-inter: var(--font-friends);
+  --font-plus-jakarta-sans: var(--font-friends);
+  --font-bebas-neue: var(--font-friends);
 }
 
 /* Custom base styles */

@@ -87,10 +87,6 @@ export const PhotoStrip: React.FC = () => {
       {/* 3D Scroll-Driven Circular Gallery */}
       <CircularGallery
         items={galleryItems}
-        radius={820}
-        mobileRadius={360}
-        itemWidth={290}
-        itemHeight={400}
         scrollDistance={1600}
         rotationTotal={-360}
         className="py-12 md:py-24"

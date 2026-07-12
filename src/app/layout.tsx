@@ -1,28 +1,102 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Inter, Bebas_Neue } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-plus-jakarta-sans",
-  weight: ["300", "400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  display: "swap",
-});
-
-const bebasNeue = Bebas_Neue({
-  subsets: ["latin"],
-  variable: "--font-bebas-neue",
-  weight: "400",
-  display: "swap",
+const friendsFont = localFont({
+  src: [
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Thin.ttf",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-ThinItalic.ttf",
+      weight: "100",
+      style: "italic",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-UltraLight.ttf",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-UltraLightItalic.ttf",
+      weight: "200",
+      style: "italic",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Regular.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Italic.ttf",
+      weight: "300",
+      style: "italic",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Italic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Regular.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Italic.ttf",
+      weight: "500",
+      style: "italic",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-SemiBoldItalic.ttf",
+      weight: "600",
+      style: "italic",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-UltraBold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-UltraBoldItalic.ttf",
+      weight: "700",
+      style: "italic",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Black.ttf",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-BlackItalic.ttf",
+      weight: "800",
+      style: "italic",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Black.ttf",
+      weight: "900",
+      style: "normal",
+    },
+    {
+      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-BlackItalic.ttf",
+      weight: "900",
+      style: "italic",
+    },
+  ],
 });
 
 export const viewport: Viewport = {
@@ -65,7 +139,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable} ${bebasNeue.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${(friendsFont as any).variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased bg-[#FAF7F2] text-black flex flex-col min-h-screen">
         <main className="grow">
           {children}

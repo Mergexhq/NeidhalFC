@@ -4,7 +4,8 @@ import React, {
   useRef,
   forwardRef,
   useImperativeHandle,
-  CSSProperties,
+  useState,
+  useEffect,
 } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
@@ -45,11 +46,6 @@ interface CircularGalleryProps extends React.HTMLAttributes<HTMLDivElement> {
   ariaLabel?: string;
 }
 
-interface CustomCSSProperties extends CSSProperties {
-  "--radius-desktop"?: string;
-  "--radius-mobile"?: string;
-}
-
 /**
  * A 3D circular gallery component that rotates elements around a central Y-axis
  * based on the user's vertical scroll position.
@@ -80,7 +76,40 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
 
     useImperativeHandle(ref, () => containerRef.current!);
 
-    const actualMobileRadius = mobileRadius ?? radius * 0.5;
+    const [dimensions, setDimensions] = useState({
+      itemWidth: 290,
+      itemHeight: 516, // 9:16 fallback
+      radius: 560,
+    });
+
+    useEffect(() => {
+      if (typeof window === "undefined") return;
+
+      const handleResize = () => {
+        const w = window.innerWidth;
+        const isMobile = w < 768;
+
+        // Desktop: w * 0.21 (flanked by 2 partially visible cards to get 8 visible cards)
+        // Mobile: w * 0.45
+        const width = isMobile ? w * 0.45 : w * 0.21;
+        const height = width * (16 / 9);
+
+        // Radius formula to ensure minimal padding (almost edge-to-edge polygon configuration)
+        const angleIncrement = 360 / items.length;
+        const rad = (180 / items.length) * (Math.PI / 180);
+        const calculatedRadius = (width / (2 * Math.sin(rad))) * 0.96;
+
+        setDimensions({
+          itemWidth: width,
+          itemHeight: height,
+          radius: calculatedRadius,
+        });
+      };
+
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, [items.length]);
 
     const rotationRef = useRef(0);
     const isScrollingRef = useRef(false);
@@ -119,17 +148,6 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
           });
         };
 
-        // Auto-rotation ticker loop — runs continuously, pauses while user is scrolling
-        const tick = () => {
-          if (!isScrollingRef.current) {
-            rotationRef.current += 0.08 * direction;
-            gsap.set(carouselRef.current, { rotationY: rotationRef.current });
-            updateVideos();
-          }
-        };
-
-        gsap.ticker.add(tick);
-
         const handleWheel = (e: WheelEvent) => {
           // Only intercept scroll when the cursor is directly over a card <li> element.
           // Title zone, CTA button, and any other non-card area pass scroll through normally.
@@ -144,7 +162,9 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
 
           // Rotate the carousel proportional to the wheel delta
           const scrollSpeed = 0.15;
-          rotationRef.current += e.deltaY * scrollSpeed * direction;
+          const scrollDelta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+          // Invert scroll direction physics
+          rotationRef.current -= scrollDelta * scrollSpeed * direction;
 
           gsap.to(carouselRef.current, {
             rotationY: rotationRef.current,
@@ -153,7 +173,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
             onUpdate: updateVideos,
           });
 
-          // Resume auto-scroll 1.5 s after last wheel event
+          // Reset scrolling flag after gesture finishes
           scrollTimeoutRef.current = setTimeout(() => {
             isScrollingRef.current = false;
           }, 1500);
@@ -183,7 +203,6 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
         setTimeout(updateVideos, 100);
 
         return () => {
-          gsap.ticker.remove(tick);
           container.removeEventListener("wheel", handleWheel);
           container.removeEventListener("mousemove", handleMouseMove);
           container.removeEventListener("mouseleave", handleMouseLeave);
@@ -214,22 +233,18 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
           className="relative flex w-full items-center justify-center translate-y-20 md:translate-y-24 z-30 pointer-events-auto"
           style={{ 
             perspective: `${perspective}px`,
-            height: `${itemHeight + 80}px`
+            height: `${dimensions.itemHeight + 80}px`
           }}
         >
           <ul
             ref={carouselRef}
-            className={cn(
-              "group relative flex h-0 w-0 items-center justify-center will-change-transform",
-              "[--radius:var(--radius-mobile)] md:[--radius:var(--radius-desktop)]"
-            )}
-            style={
-              {
-                transformStyle: "preserve-3d",
-                "--radius-desktop": `${radius}px`,
-                "--radius-mobile": `${actualMobileRadius}px`,
-              } as CustomCSSProperties
-            }
+            className="group absolute flex h-0 w-0 items-center justify-center will-change-transform"
+            style={{
+              transformStyle: "preserve-3d",
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+            }}
             role="list"
             aria-label={ariaLabel}
           >
@@ -254,18 +269,17 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
                     "absolute overflow-hidden rounded-xl border border-black/5 bg-[#FAF7F2] shadow-sm",
                     "transition-all duration-700 ease-[cubic-bezier(0.25,0.4,0.25,1)]",
                     isInteractive ? "cursor-pointer" : "cursor-default",
-                    // Group hover logic (SatisUI style)
-                    "group-hover:opacity-25 group-hover:blur-[2px] group-hover:grayscale-[40%]",
-                    // Active logic
-                    "hover:!opacity-100 hover:!blur-none hover:!grayscale-0 hover:border-accent hover:ring-4 hover:ring-accent/20",
                     "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2"
                   )}
                   style={{
-                    width: `${itemWidth}px`,
-                    height: `${itemHeight}px`,
-                    marginLeft: `-${itemWidth / 2}px`,
-                    marginTop: `-${itemHeight / 2}px`,
-                    transform: `rotateY(${angle}deg) translateZ(var(--radius)) rotateY(-180deg)`,
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    width: `${dimensions.itemWidth}px`,
+                    height: `${dimensions.itemHeight}px`,
+                    marginLeft: `-${dimensions.itemWidth / 2}px`,
+                    marginTop: `-${dimensions.itemHeight / 2}px`,
+                    transform: `rotateY(${angle}deg) translateZ(${dimensions.radius}px) rotateY(-180deg)`,
                     backfaceVisibility: "hidden",
                   }}
                 >
@@ -294,7 +308,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
                     )}
                     {/* Vignette overlay */}
                     <div
-                      className="absolute inset-0 bg-[#0B1F3A]/5 transition-colors duration-700 hover:bg-transparent"
+                      className="absolute inset-0 bg-[#0B1F3A]/5"
                       aria-hidden="true"
                     />
                   </div>

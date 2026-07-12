@@ -124,9 +124,16 @@ export function useGame() {
     overlayRect: DOMRect,
   ) => {
     if (phase !== "aiming") return;
-    isPressingRef.current = true;
     const x = e.clientX - overlayRect.left;
     const y = e.clientY - overlayRect.top;
+
+    // Ball sits at 50% x, 76% y — only allow drag from near the ball
+    const ballX = overlayRect.width  * 0.50;
+    const ballY = overlayRect.height * 0.76;
+    const distToBall = Math.sqrt((x - ballX) ** 2 + (y - ballY) ** 2);
+    if (distToBall > 72) return;          // outside hit-zone → ignore
+
+    isPressingRef.current = true;
     const drag: AimDrag = { startX: x, startY: y, currentX: x, currentY: y };
     aimRef.current = drag;
     setAim(drag);
