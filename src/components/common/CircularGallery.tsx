@@ -62,7 +62,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
       rotationTotal = -360,
       itemWidth = 256,
       itemHeight = 384,
-      perspective = 1100,
+      perspective = 650,
       ariaLabel = "3D Circular Gallery",
       className,
       children,
@@ -89,15 +89,15 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
         const w = window.innerWidth;
         const isMobile = w < 768;
 
-        // Desktop: w * 0.17 (flanked by 2 partially visible cards to get 8 visible cards)
-        // Mobile: w * 0.45
-        const width = isMobile ? w * 0.45 : w * 0.17;
-        const height = width * 1.55;
+        // Desktop: w * 0.12 (tighter spacing, closer to reference)
+        // Mobile: w * 0.40
+        const width = isMobile ? w * 0.40 : w * 0.12;
+        const height = width * 2.0;
 
         // Radius formula to ensure correct card padding and spacing
         const angleIncrement = 360 / items.length;
         const rad = (180 / items.length) * (Math.PI / 180);
-        const calculatedRadius = (width / (2 * Math.sin(rad))) * 1.35;
+        const calculatedRadius = (width / (2 * Math.sin(rad))) * 1.15;
 
         setDimensions({
           itemWidth: width,
@@ -223,7 +223,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
       <div
         ref={containerRef}
         className={cn(
-          "relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-transparent py-12 z-10",
+          "relative flex min-h-screen w-full flex-col items-center justify-center bg-transparent z-10",
           className
         )}
         {...rest}
@@ -234,7 +234,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
           className="relative flex w-full items-center justify-center translate-y-20 md:translate-y-24 z-30 pointer-events-auto"
           style={{ 
             perspective: `${perspective}px`,
-            height: `${dimensions.itemHeight + 80}px`
+            height: `${dimensions.itemHeight + 120}px`
           }}
         >
           <ul
@@ -281,7 +281,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
                     height: `${dimensions.itemHeight}px`,
                     marginLeft: `-${dimensions.itemWidth / 2}px`,
                     marginTop: `-${dimensions.itemHeight / 2}px`,
-                    transform: `rotateY(${angle}deg) translateZ(-${dimensions.radius}px)`,
+                    transform: `rotateY(${angle}deg) translateZ(-${dimensions.radius * 1.08}px)`,
                     backfaceVisibility: "hidden",
                   }}
                 >

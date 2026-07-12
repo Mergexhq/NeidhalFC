@@ -66,7 +66,27 @@ const FIELD_SNAPSHOTS = [
     id: 12,
     image: "/images/home/coach_ratio.jpg",
     caption: "Dedicated focus. Mentorship program linking experienced senior players with academy youth.",
-  }
+  },
+  {
+    id: 13,
+    image: "/images/about/about_ghibli_hero.jpg",
+    caption: "Creative vision meets coastal football culture — the Neidhal story.",
+  },
+  {
+    id: 14,
+    image: "/images/advanced_match.jpg",
+    caption: "Match intensity — players pushing limits in competitive turf sessions.",
+  },
+  {
+    id: 15,
+    image: "/images/foundation_drill.jpg",
+    caption: "Foundation first — instilling discipline and technique from day one.",
+  },
+  {
+    id: 16,
+    image: "/images/about/slider_coaching.jpg",
+    caption: "Hands-on coaching — every player gets individual attention and guidance.",
+  },
 ];
 
 export const PhotoStrip: React.FC = () => {
@@ -80,7 +100,7 @@ export const PhotoStrip: React.FC = () => {
   }));
 
   return (
-    <section className="bg-[#FAF7F2] relative overflow-hidden">
+    <section className="bg-[#FAF7F2] relative pb-40 md:pb-64">
       {/* Background accents */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-80 h-80 rounded-full bg-sand/5 blur-[100px] pointer-events-none" />
 
