@@ -62,7 +62,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
       rotationTotal = -360,
       itemWidth = 256,
       itemHeight = 384,
-      perspective = 1000,
+      perspective = 1100,
       ariaLabel = "3D Circular Gallery",
       className,
       children,
@@ -78,7 +78,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
 
     const [dimensions, setDimensions] = useState({
       itemWidth: 290,
-      itemHeight: 516, // 9:16 fallback
+      itemHeight: 450, // ~9:14 fallback
       radius: 560,
     });
 
@@ -89,15 +89,15 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
         const w = window.innerWidth;
         const isMobile = w < 768;
 
-        // Desktop: w * 0.21 (flanked by 2 partially visible cards to get 8 visible cards)
+        // Desktop: w * 0.17 (flanked by 2 partially visible cards to get 8 visible cards)
         // Mobile: w * 0.45
-        const width = isMobile ? w * 0.45 : w * 0.21;
-        const height = width * (16 / 9);
+        const width = isMobile ? w * 0.45 : w * 0.17;
+        const height = width * 1.55;
 
-        // Radius formula to ensure minimal padding (almost edge-to-edge polygon configuration)
+        // Radius formula to ensure correct card padding and spacing
         const angleIncrement = 360 / items.length;
         const rad = (180 / items.length) * (Math.PI / 180);
-        const calculatedRadius = (width / (2 * Math.sin(rad))) * 0.96;
+        const calculatedRadius = (width / (2 * Math.sin(rad))) * 1.35;
 
         setDimensions({
           itemWidth: width,
@@ -111,7 +111,8 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
       return () => window.removeEventListener("resize", handleResize);
     }, [items.length]);
 
-    const rotationRef = useRef(0);
+    const initialRotation = 180 / items.length;
+    const rotationRef = useRef(initialRotation);
     const isScrollingRef = useRef(false);
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     // Tracks whether the cursor is hovering over the card belt (not header/footer)
@@ -133,8 +134,8 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
             const worldAngle = (currentRotation + cardAngle) % 360;
             const normalized = ((worldAngle + 180) % 360) - 180;
 
-            // Only play the front-most ~4 cards (facing angle > 110 or < -110)
-            const isVisible = Math.abs(normalized) > 110;
+            // Only play the cards facing the camera (angle near 0, i.e. < 90)
+            const isVisible = Math.abs(normalized) < 90;
 
             if (isVisible) {
               if (video.paused) {
@@ -244,6 +245,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
               position: "absolute",
               left: "50%",
               top: "50%",
+              transform: `rotateY(${rotationRef.current}deg)`,
             }}
             role="list"
             aria-label={ariaLabel}
@@ -279,7 +281,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
                     height: `${dimensions.itemHeight}px`,
                     marginLeft: `-${dimensions.itemWidth / 2}px`,
                     marginTop: `-${dimensions.itemHeight / 2}px`,
-                    transform: `rotateY(${angle}deg) translateZ(${dimensions.radius}px) rotateY(-180deg)`,
+                    transform: `rotateY(${angle}deg) translateZ(-${dimensions.radius}px)`,
                     backfaceVisibility: "hidden",
                   }}
                 >

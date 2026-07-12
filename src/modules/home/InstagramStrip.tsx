@@ -99,14 +99,10 @@ export const PhotoStrip: React.FC = () => {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-primary font-sans tracking-wide leading-tight">
             Latest from the Field
           </h2>
-          <p className="text-[#6F6F6F] text-xs md:text-sm leading-relaxed mt-4 max-w-lg mx-auto font-normal">
+          <p className="text-[#6F6F6F] text-xs md:text-sm leading-relaxed mt-4 max-w-lg mx-auto font-normal mb-6">
             A real-time snapshot of training pods, barefoot conditioning, and turf league play.
           </p>
-        </div>
-
-        {/* Pinned Bottom CTA (overlaid at the bottom of the gallery, clear of cards and bottom navigation) */}
-        <div className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full flex justify-center">
-          <div className="pointer-events-auto">
+          <div className="inline-flex justify-center pointer-events-auto">
             <a
               href="https://www.instagram.com/neidhalfc"
               target="_blank"
