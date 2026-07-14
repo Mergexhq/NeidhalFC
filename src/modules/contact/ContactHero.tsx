@@ -39,7 +39,7 @@ const LOCATIONS_DATA: Record<string, LocationData> = {
     email: "contact@neidhalfc.com",
     mapLink: "https://maps.google.com/?q=Neidhal+FC+Turf+Injambakkam",
     calCom: "https://cal.com/neidhalfc/injambakkam-trial",
-    image: "/FOOTBAL TURF/Neidhal FC Injambakkam.webp",
+    image: "/football-turf/injambakkam-4.webp",
     hours: "Monday – Sunday: 5:00 AM – 9:00 PM",
   },
   Palavakkam: {
@@ -52,7 +52,7 @@ const LOCATIONS_DATA: Record<string, LocationData> = {
     email: "contact@neidhalfc.com",
     mapLink: "https://maps.google.com/?q=Palavakkam+Chennai",
     calCom: "https://cal.com/neidhalfc/palavakkam-trial",
-    image: "/FOOTBAL TURF/Neidhal FC Kottivakkam.jpg",
+    image: "/football-turf/kottivakkam-3.webp",
     hours: "Monday – Sunday: 5:00 AM – 9:00 PM",
   },
   Thoraipakkam: {
@@ -65,7 +65,7 @@ const LOCATIONS_DATA: Record<string, LocationData> = {
     email: "contact@neidhalfc.com",
     mapLink: "https://maps.google.com/?q=Thoraipakkam+Chennai",
     calCom: "https://cal.com/neidhalfc/thoraipakkam-trial",
-    image: "/FOOTBAL TURF/Neidhal FC Nandanam.webp",
+    image: "/football-turf/nandanam-3.webp",
     hours: "Monday – Sunday: 5:00 AM – 9:00 PM",
   },
 };

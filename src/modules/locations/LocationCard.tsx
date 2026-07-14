@@ -5,6 +5,8 @@ import { motion, useScroll, useTransform, AnimatePresence, MotionValue } from "f
 import { MapPin, Calendar, Clock, User, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import Autoplay from "embla-carousel-autoplay";
+import { Carousel, SliderContainer, Slider, SliderDotButton } from "@/components/carousel";
 
 export interface LocationData {
   chapter: string;
@@ -28,32 +30,24 @@ interface LocationCardProps {
    PARALLAX CAROUSEL BACKGROUND
  ───────────────────────────────────────────── */
 function ParallaxCarousel({ images, y }: { images: string[]; y: MotionValue<string> }) {
-  const [current, setCurrent] = useState(0);
+  const autoplayPlugin = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
+  );
 
-  useEffect(() => {
-    if (images.length <= 1) return;
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [images.length]);
+  if (images.length === 0) {
+    return <div className="w-full h-full bg-[#03070E]" />;
+  }
 
-  return (
-    <motion.div 
-      style={{ y }} 
-      className="absolute inset-0 -top-[15%] -bottom-[15%] w-full h-[130%] z-0"
-    >
-      <AnimatePresence mode="wait">
+  // If there's only a single image, skip the carousel setup completely
+  if (images.length === 1) {
+    return (
+      <div className="w-full h-full relative overflow-hidden">
         <motion.div
-          key={current}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8 }}
-          className="absolute inset-0"
+          style={{ y }}
+          className="absolute inset-0 -top-[15%] -bottom-[15%] w-full h-[130%] z-0"
         >
           <Image
-            src={images[current]}
+            src={images[0]}
             alt="Training Ground View"
             fill
             sizes="100vw"
@@ -61,10 +55,48 @@ function ParallaxCarousel({ images, y }: { images: string[]; y: MotionValue<stri
             priority
           />
         </motion.div>
-      </AnimatePresence>
-      {/* Subtle vignette/dark overlay for visual depth */}
-      <div className="absolute inset-0 bg-black/15" />
-    </motion.div>
+        {/* Subtle vignette/dark overlay for visual depth */}
+        <div className="absolute inset-0 bg-black/15 pointer-events-none z-[1]" />
+      </div>
+    );
+  }
+
+  // If there are multiple images, show the interactive autostart carousel
+  return (
+    <Carousel
+      options={{ loop: true }}
+      plugins={[autoplayPlugin.current]}
+      className="w-full h-full relative"
+    >
+      <SliderContainer className="w-full h-full">
+        {images.map((img, idx) => (
+          <Slider key={idx} className="relative w-full h-full flex-[0_0_100%] min-w-0 overflow-hidden">
+            {/* The parallax layer is isolated inside the slide */}
+            <motion.div
+              style={{ y }}
+              className="absolute inset-0 -top-[15%] -bottom-[15%] w-full h-[130%] z-0"
+            >
+              <Image
+                src={img}
+                alt="Training Ground View"
+                fill
+                sizes="100vw"
+                className="object-cover object-center select-none pointer-events-none"
+                priority={idx === 0}
+              />
+            </motion.div>
+          </Slider>
+        ))}
+      </SliderContainer>
+
+      {/* Dots overlay for slide control - always visible at the bottom of the main frame */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+        <SliderDotButton activeClass="bg-white dark:bg-white" className="gap-2" />
+      </div>
+
+      {/* Subtle vignette/dark overlay for visual depth - positioned over the slider container but below the dots */}
+      <div className="absolute inset-0 bg-black/15 pointer-events-none z-[1]" />
+    </Carousel>
   );
 }
 
@@ -179,7 +211,7 @@ export const LocationCard: React.FC<LocationCardProps> = ({ loc }) => {
                 <div className="text-left pt-2">
                   <Link
                     href="/contact"
-                    className="group inline-flex items-center gap-2.5 justify-center px-6 py-4 rounded-xl bg-[#0B1F3A] hover:bg-[#0077b6] text-white font-semibold text-xs uppercase tracking-widest transition-all duration-300 shadow-md hover:shadow-xl shrink-0 cursor-pointer"
+                    className="group inline-flex items-center gap-2.5 justify-center px-6 py-4 rounded-xl bg-[#0B1F3A] hover:bg-white text-white hover:text-[#0B1F3A] border border-[#0B1F3A] font-semibold text-xs uppercase tracking-widest transition-all duration-300 shadow-md hover:shadow-xl shrink-0 cursor-pointer"
                   >
                     Contact Us / Book Trial
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-200" />

@@ -20,9 +20,10 @@ const LOCATIONS = [
     times: "Evening: 4:30 PM – 6:30 PM",
     coach: "Pradeep Ramesh",
     images: [
-      "/images/beach_soccer.jpg",
-      "/images/soccer_thumb.jpg",
-      "/images/location.jpg",
+      "/football-turf/kottivakkam-1.webp",
+      "/football-turf/kottivakkam-2.webp",
+      "/football-turf/kottivakkam-3.webp",
+      "/football-turf/kottivakkam-4.webp",
     ],
     embedUrl:
       "https://maps.google.com/maps?q=Neidhal%20Football%20Club%20Kottivakkam&z=16&output=embed",
@@ -39,9 +40,11 @@ const LOCATIONS = [
     times: "Evening: 4:00 PM – 7:00 PM",
     coach: "Vijay Balan",
     images: [
-      "/images/coaching_ratio.jpg",
-      "/images/beach_soccer.jpg",
-      "/images/location.jpg",
+      "/football-turf/injambakkam-1.webp",
+      "/football-turf/injambakkam-2.webp",
+      "/football-turf/injambakkam-3.webp",
+      "/football-turf/injambakkam-4.webp",
+      "/football-turf/injambakkam-5.webp",
     ],
     embedUrl:
       "https://maps.google.com/maps?q=Neidhal%20Football%20Club%20Injambakkam&z=16&output=embed",
@@ -58,9 +61,11 @@ const LOCATIONS = [
     times: "Evening: 4:00 PM – 7:00 PM",
     coach: "Vijay Balan",
     images: [
-      "/images/soccer_thumb.jpg",
-      "/images/coaching_ratio.jpg",
-      "/images/beach_soccer.jpg",
+      "/football-turf/nandanam-1.webp",
+      "/football-turf/nandanam-2.webp",
+      "/football-turf/nandanam-3.webp",
+      "/football-turf/nandanam-4.webp",
+      "/football-turf/nandanam-5.webp",
     ],
     embedUrl:
       "https://maps.google.com/maps?q=Neidhal%20Football%20Club%20Nandanam&z=16&output=embed",

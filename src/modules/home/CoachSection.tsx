@@ -20,7 +20,8 @@ const COACHES = [
     credentials: "AIFF / AFC Licensed · Former Pro Player",
     description:
       "Specializes in spatial game intelligence, beach-soccer physical conditioning, and structured tactical progression. Guided local Chennai talent to national-level exposure since 2016.",
-    image: "/images/advanced_match.jpg",
+    image: "/coaches/coach-1.webp",
+    hoverImage: "/coaches/coach-1.1.webp",
   },
   {
     id: "02",
@@ -29,7 +30,38 @@ const COACHES = [
     credentials: "AIFF / AFC Licensed · Technical Director",
     description:
       "Focuses on technical micro-diagnostics, dribbling mechanics, and street-style creative decision-making. Passionate about youth development and instilling a love for the game.",
-    image: "/images/coaching_ratio.jpg",
+    image: "/coaches/coach-2.webp",
+    hoverImage: "/coaches/coach-2.2.webp",
+  },
+  {
+    id: "03",
+    name: "Dharun Raj",
+    role: "Lead Academy Coach",
+    credentials: "AIFF D Licensed · Youth Specialist",
+    description:
+      "Focuses on grassroots talent acquisition, physical agility programs, and spatial awareness drills for our sub-junior development squads.",
+    image: "/coaches/coach-3.webp",
+    hoverImage: "/coaches/coach-3.3.webp",
+  },
+  {
+    id: "04",
+    name: "Sanjivi Kumar",
+    role: "Youth Development Coach",
+    credentials: "AIFF C Licensed · Technical Coach",
+    description:
+      "Specializes in ball mastery, passing execution under pressure, and micro-positioning dynamics for high-intensity match situations.",
+    image: "/coaches/coach-4.webp",
+    hoverImage: "/coaches/coach-4.4.webp",
+  },
+  {
+    id: "05",
+    name: "Karthik S",
+    role: "Goalkeeping Coach",
+    credentials: "AIFF D Licensed · GK Trainer",
+    description:
+      "Dedicated to developing reflex agility, positioning, and aerial control for our goalkeepers across all age groups.",
+    image: "/coaches/coach-5.webp",
+    hoverImage: "/coaches/coach-5.webp",
   },
 ];
 
@@ -135,8 +167,8 @@ export const CoachSection: React.FC = () => {
           ══════════════════════════════════════════════ */}
       <div
         ref={runwayRef}
-        /* 300vh gives plenty of scrolling time for the pin, transition, and pauses */
-        style={{ height: "300vh" }}
+        /* Dynamic height based on number of coaches to preserve scrolling speed */
+        style={{ height: `${(COACHES.length + 1) * 100}vh` }}
         className="relative w-full"
       >
         {/* Pinned element: full viewport card area */}
@@ -244,15 +276,24 @@ export const CoachSection: React.FC = () => {
                   }}
                 >
                   <div
-                    className="relative w-full h-full overflow-hidden bg-[#0B1F3A]"
+                    className="relative w-full h-full overflow-hidden bg-[#0B1F3A] group/image"
                     style={{ borderRadius: "2rem" }}
                   >
+                    {/* Main Image */}
                     <Image
                       src={coach.image}
                       alt={coach.name}
                       fill
                       sizes="(max-width: 768px) 100vw, 44vw"
-                      className="object-cover transition-transform duration-700 hover:scale-[1.025]"
+                      className="object-cover transition-all duration-700 ease-in-out group-hover/image:scale-[1.025] group-hover/image:opacity-0"
+                    />
+                    {/* Hover Image */}
+                    <Image
+                      src={coach.hoverImage}
+                      alt={`${coach.name} hover`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 44vw"
+                      className="object-cover absolute inset-0 transition-all duration-700 ease-in-out opacity-0 group-hover/image:opacity-100 group-hover/image:scale-[1.025]"
                     />
                   </div>
                 </div>
@@ -275,13 +316,22 @@ export const CoachSection: React.FC = () => {
             <h3 className="font-sans font-semibold text-[#0B1F3A] text-3xl tracking-tight leading-tight">
               {coach.name}
             </h3>
-            <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-xl bg-[#0B1F3A]">
+            <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-xl bg-[#0B1F3A] group/image">
+              {/* Main Image */}
               <Image
                 src={coach.image}
                 alt={coach.name}
                 fill
                 sizes="100vw"
-                className="object-cover"
+                className="object-cover transition-all duration-700 ease-in-out group-hover/image:opacity-0"
+              />
+              {/* Hover Image */}
+              <Image
+                src={coach.hoverImage}
+                alt={`${coach.name} hover`}
+                fill
+                sizes="100vw"
+                className="object-cover absolute inset-0 transition-all duration-700 ease-in-out opacity-0 group-hover/image:opacity-100"
               />
             </div>
             <p className="font-sans font-light text-[#5A6E85] leading-relaxed text-sm">
