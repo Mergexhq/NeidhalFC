@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * useGame.ts — R3F game state machine (no physics engine).
+ * useGame.ts - R3F game state machine (no physics engine).
  *
  * Ball movement is driven by parabolic arc math (ballTrajectory.ts).
  * Keeper sways on a timer; commits to a dive direction when ball is shot.
- * All game state is plain React state — no WebWorker, no Matter.js.
+ * All game state is plain React state - no WebWorker, no Matter.js.
  */
 
 import { useCallback, useRef, useState } from "react";
@@ -18,25 +18,25 @@ const KEEPER_STEP_MS = 1300;
 
 export function useGame() {
   // ── State ──────────────────────────────────────────────────────────────────
-  const [phase,       setPhase]       = useState<GamePhase>("idle");
-  const [shotResult,  setShotResult]  = useState<ShotResult | null>(null);
-  const [aim,         setAim]         = useState<AimDrag | null>(null);
-  const [keeperPos,   setKeeperPos]   = useState<KeeperAction>("center");
+  const [phase, setPhase] = useState<GamePhase>("idle");
+  const [shotResult, setShotResult] = useState<ShotResult | null>(null);
+  const [aim, setAim] = useState<AimDrag | null>(null);
+  const [keeperPos, setKeeperPos] = useState<KeeperAction>("center");
   const [cameraShake, setCameraShake] = useState(false);
 
   // Shoot progress: 0 → 1, drives ball arc in Scene3D
-  const [shootT,      setShootT]      = useState(0);
+  const [shootT, setShootT] = useState(0);
 
   // Committed aim target (set when shot is fired)
-  const [aimTarget,   setAimTarget]   = useState<AimTarget>({ x: 0, y: 0.5 });
+  const [aimTarget, setAimTarget] = useState<AimTarget>({ x: 0, y: 0.5 });
 
   // ── Refs (never stale inside callbacks) ───────────────────────────────────
-  const keeperTimerRef    = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
-  const keeperCycleIdx    = useRef(0);
-  const isPressingRef     = useRef(false);
-  const aimRef            = useRef<AimDrag | null>(null);
-  const shotFiredRef      = useRef(false);
-  const shotRAFRef        = useRef(0);
+  const keeperTimerRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
+  const keeperCycleIdx = useRef(0);
+  const isPressingRef = useRef(false);
+  const aimRef = useRef<AimDrag | null>(null);
+  const shotFiredRef = useRef(false);
+  const shotRAFRef = useRef(0);
 
   // ── Keeper sway ────────────────────────────────────────────────────────────
   const startKeeperSway = useCallback(() => {
@@ -57,7 +57,7 @@ export function useGame() {
     setPhase("ready");
     setShotResult(null);
     setAim(null);
-    aimRef.current     = null;
+    aimRef.current = null;
     setCameraShake(false);
     setShootT(0);
     shotFiredRef.current = false;
@@ -102,7 +102,7 @@ export function useGame() {
         return;
       }
 
-      // Flight complete — determine result
+      // Flight complete - determine result
       const result = determineOutcome(target.x, target.y, keeperAction);
       setShotResult(result);
 
@@ -127,8 +127,8 @@ export function useGame() {
     const x = e.clientX - overlayRect.left;
     const y = e.clientY - overlayRect.top;
 
-    // Ball sits at 50% x, 76% y — only allow drag from near the ball
-    const ballX = overlayRect.width  * 0.50;
+    // Ball sits at 50% x, 76% y - only allow drag from near the ball
+    const ballX = overlayRect.width * 0.50;
     const ballY = overlayRect.height * 0.76;
     const distToBall = Math.sqrt((x - ballX) ** 2 + (y - ballY) ** 2);
     if (distToBall > 72) return;          // outside hit-zone → ignore
@@ -164,8 +164,8 @@ export function useGame() {
     if (phase !== "aiming" || !drag) return;
 
     // dx/dy are reversed (slingshot: drag down → shoot up)
-    const dx   = drag.startX - drag.currentX;
-    const dy   = drag.startY - drag.currentY;
+    const dx = drag.startX - drag.currentX;
+    const dy = drag.startY - drag.currentY;
     const dist = Math.sqrt(dx * dx + dy * dy);
     if (dist < 12) return;
 
@@ -187,9 +187,9 @@ export function useGame() {
   const handleTryAgain = useCallback(async () => {
     cancelAnimationFrame(shotRAFRef.current);
     stopKeeperSway();
-    shotFiredRef.current  = false;
+    shotFiredRef.current = false;
     isPressingRef.current = false;
-    aimRef.current        = null;
+    aimRef.current = null;
     setPhase("ready");
     setShotResult(null);
     setAim(null);
@@ -208,9 +208,9 @@ export function useGame() {
   const handleClose = useCallback(() => {
     cancelAnimationFrame(shotRAFRef.current);
     stopKeeperSway();
-    shotFiredRef.current  = false;
+    shotFiredRef.current = false;
     isPressingRef.current = false;
-    aimRef.current        = null;
+    aimRef.current = null;
     setPhase("idle");
     setShotResult(null);
     setAim(null);

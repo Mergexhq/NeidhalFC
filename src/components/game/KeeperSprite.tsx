@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * KeeperSprite.tsx — PNG-based goalkeeper with 4 image states.
+ * KeeperSprite.tsx - PNG-based goalkeeper with 4 image states.
  *
  * FIX 1: Paths with spaces ("/keeper rest.png") were not reliably loaded.
  *         Now URL-encoded ("/keeper%20rest.png" etc.).
@@ -24,31 +24,31 @@ interface KeeperSpriteProps {
 }
 
 // URL-encoded paths (spaces → %20)
-const IMG_REST  = "/keeper%20rest.png";
-const IMG_LEFT  = "/left%20catch.png";
+const IMG_REST = "/keeper%20rest.png";
+const IMG_LEFT = "/left%20catch.png";
 const IMG_RIGHT = "/rigth%20catch.png";  // matches actual filename "rigth"
 
 function getKeeperImage(keeperPos: KeeperAction, isShooting: boolean): string {
   if (isShooting) {
-    if (keeperPos === "left")  return IMG_LEFT;
+    if (keeperPos === "left") return IMG_LEFT;
     if (keeperPos === "right") return IMG_RIGHT;
   }
   return IMG_REST;
 }
 
-// Dive translation in pixels — expressed as vw so it scales with viewport
+// Dive translation in pixels - expressed as vw so it scales with viewport
 function getDiveX(keeperPos: KeeperAction, isShooting: boolean): string {
   if (isShooting) {
-    if (keeperPos === "left")  return "-15vw";
+    if (keeperPos === "left") return "-15vw";
     if (keeperPos === "right") return "15vw";
   }
   // Gentle sway during aiming
-  if (keeperPos === "left")  return "-2vw";
+  if (keeperPos === "left") return "-2vw";
   if (keeperPos === "right") return "2vw";
   return "0vw";
 }
 
-// Keeper stays at ground level — no upward movement on dive
+// Keeper stays at ground level - no upward movement on dive
 function getDiveY(): string {
   return "0vw";
 }
@@ -63,10 +63,10 @@ function getDiveScale(): number {
 
 export function KeeperSprite({ keeperPos, phase }: KeeperSpriteProps) {
   const isShooting = phase === "shooting" || phase === "result";
-  const imgSrc     = getKeeperImage(keeperPos, isShooting);
-  const spring     = isShooting
+  const imgSrc = getKeeperImage(keeperPos, isShooting);
+  const spring = isShooting
     ? { type: "spring" as const, stiffness: 200, damping: 20 }
-    : { type: "spring" as const, stiffness: 40,  damping: 12 };
+    : { type: "spring" as const, stiffness: 40, damping: 12 };
 
   return (
     <div
@@ -78,7 +78,7 @@ export function KeeperSprite({ keeperPos, phase }: KeeperSpriteProps) {
         width: "24%",
       }}
     >
-      {/* Animated wrapper — handles dive/sway */}
+      {/* Animated wrapper - handles dive/sway */}
       <motion.div
         className="w-full origin-bottom"
         animate={{

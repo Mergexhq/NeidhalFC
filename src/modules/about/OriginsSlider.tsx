@@ -32,7 +32,7 @@ const SETS = [
         type: "medium",
         year: "2018",
         title: "Spotted in the waves.",
-        description: "Dolphins would surface just thirty feet from our beach training. They became our mascot—quick, fluid, and belonging to the sea.",
+        description: "Dolphins would surface just thirty feet from our beach training. They became our mascot-quick, fluid, and belonging to the sea.",
         image: "/images/about/slider_dolphins.jpg",
         tag: "The Mascot",
       }
@@ -110,7 +110,7 @@ export const OriginsSlider: React.FC = () => {
       className="py-20 md:py-28 bg-[#FAF7F2] text-[#0B1F3A] relative overflow-hidden border-b border-black/5"
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
+
         {/* Header Block with Navigation Arrows on the right (Image 1 Style) */}
         <div className="flex items-end justify-between mb-12">
           <div className="text-left">
@@ -194,7 +194,7 @@ export const OriginsSlider: React.FC = () => {
                         </div>
 
                         <Link
-                          href="/book-trial"
+                          href="/contact"
                           className="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#D9C3A5] hover:text-white transition-colors duration-200 mt-6"
                         >
                           <span>Learn more</span>
@@ -219,7 +219,7 @@ export const OriginsSlider: React.FC = () => {
                       />
                       {/* Deep dark gradient overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-[1]" />
-                      
+
                       {/* Card Content Overlay */}
                       <div className="relative z-10 p-6 text-left">
                         <span className="inline-block px-3 py-1 rounded-full bg-[#0077b6]/85 border border-[#0077b6]/30 text-[9px] font-bold uppercase tracking-widest text-white mb-3">

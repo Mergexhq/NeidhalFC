@@ -89,11 +89,11 @@ export const CoachSection: React.FC = () => {
   );
 
   return (
-    /* ── Outer wrapper — both sections live here ── */
+    /* ── Outer wrapper - both sections live here ── */
     <div ref={outerRef} className="relative w-full bg-[#FAF7F2]">
 
       {/* ══════════════════════════════════════════════
-          SECTION 1 — Header: natural flow, scrolls away
+          SECTION 1 - Header: natural flow, scrolls away
           ══════════════════════════════════════════════ */}
       <div className="w-full px-6 sm:px-10 md:px-16 pt-24 pb-20 md:pt-28 md:pb-24">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-8 md:gap-20">
@@ -116,7 +116,7 @@ export const CoachSection: React.FC = () => {
             </h2>
           </div>
 
-          {/* Right: description — ~3 lines */}
+          {/* Right: description - ~3 lines */}
           <p
             className="font-sans font-light text-[#5A6E85] leading-relaxed max-w-md md:max-w-[400px] md:text-right md:pt-8"
             style={{ fontSize: "clamp(14px, 1.5vw, 17px)" }}
@@ -130,7 +130,7 @@ export const CoachSection: React.FC = () => {
       </div>
 
       {/* ══════════════════════════════════════════════
-          SECTION 2 — Scroll runway + Pinned card area
+          SECTION 2 - Scroll runway + Pinned card area
           Each coach card = 1 viewport of scroll space
           ══════════════════════════════════════════════ */}
       <div
@@ -155,7 +155,7 @@ export const CoachSection: React.FC = () => {
             }}
           />
 
-          {/* Horizontal track — GSAP slides this left */}
+          {/* Horizontal track - GSAP slides this left */}
           <div
             ref={trackRef}
             className="flex flex-row flex-nowrap h-full will-change-transform"
@@ -262,7 +262,7 @@ export const CoachSection: React.FC = () => {
         </div>
       </div>
 
-      {/* ── MOBILE LAYOUT — stacked cards, no GSAP ── */}
+      {/* ── MOBILE LAYOUT - stacked cards, no GSAP ── */}
       <div className="md:hidden flex flex-col gap-0 pb-16">
         {COACHES.map((coach) => (
           <div

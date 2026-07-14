@@ -6,39 +6,75 @@ import Image from "next/image";
 
 const TESTIMONIALS = [
   {
-    quote: "My son's technical growth exploded after we switched to Neidhal FC. The 2:1 ratio is a game changer—the assistant coach corrects his body shape and touch while the main coach handles the play structure. He's playing with a level of confidence I've never seen before.",
-    parent: "Arun Krishnan",
-    role: "Parent of U12 Player (Kottivakkam Center)",
+    quote: "Neidhal FC is an exceptional football academy that has made a significant impact on my 6 and-a-half year old son's development in the sport. Their dedication, knowledge, and passion for coaching are truly inspiring. They offer a unique training experience.",
+    parent: "Dheeban M",
+    role: "Kottivakkam Center",
     stars: 5,
   },
   {
-    quote: "Unlike other Chennai academies that prioritize winning local matches by playing long balls, Neidhal FC forces the kids to keep the ball on the ground, take players on 1v1, and play with authentic flair. It is a breath of fresh air.",
-    parent: "Dr. Deepa Rajan",
-    role: "Parent of U9 Player (YMCA Nandanam)",
+    quote: "My son started his football journey here.. its been 8 months now and im able to see good improvement in his way of playing and had to mention the coach team is amazing and kids friendly that the kids completely enjoy the session everytime.",
+    parent: "Keetz Subash",
+    role: "Kottivakkam Center",
     stars: 5,
   },
   {
-    quote: "Their beach roots training on ECR is incredible. Playing on sand developed my daughter's physical strength, balance, and quick feet. She looks forward to every session, and the community of parents here is extremely supportive.",
-    parent: "Suresh Mukund",
-    role: "Parent of U14 Player (Injambakkam Center)",
+    quote: "My grandson looks forward to coming for football coaching classes. He enjoys it and I personally feel it is a good decision to have enrolled him at Neidhal football club.",
+    parent: "Ranjini Jayaraman",
+    role: "Kottivakkam Center",
     stars: 5,
   },
   {
-    quote: "The individual attention at Neidhal FC is unlike any other club in Chennai. My daughter has learned to make smart technical decisions under pressure. They don't just teach football; they nurture intelligence on the field.",
-    parent: "Priya Sundar",
-    role: "Parent of U10 Player (Kottivakkam Center)",
+    quote: "Appreciate the response and immediate attention been given on our needs. Kids thoroughly enjoy being a part of Neidhal Football Club... looking forward for more memorable moments with them Keep it up .",
+    parent: "Adline Ady",
+    role: "Kottivakkam Center",
     stars: 5,
   },
   {
-    quote: "We chose Neidhal FC because we wanted our son to learn structured football without losing his natural style. The focus on street-style touch, barefoot agility, and creative play has been absolutely fantastic.",
-    parent: "Karthik Chander",
-    role: "Parent of U13 Player (YMCA Nandanam)",
+    quote: "Very good coaching and a great atmosphere for learning football. The training drills are professional and help players improve quickly. Happy to see young talents developing here.",
+    parent: "Hsh Hsh",
+    role: "Nandanam Center",
     stars: 5,
   },
   {
-    quote: "My 8-year-old daughter used to be shy during matches, but the positive reinforcement from coaches Pradeep and Vijay has transformed her. She now demands the ball and plays with zero fear.",
-    parent: "Meera Sen",
-    role: "Parent of U8 Player (Injambakkam Center)",
+    quote: "Good teaching.",
+    parent: "Benghar Benghar",
+    role: "Nandanam Center",
+    stars: 5,
+  },
+  {
+    quote: "People are good.",
+    parent: "Daryl Dixon",
+    role: "Nandanam Center",
+    stars: 5,
+  },
+  {
+    quote: "My child loves coming to training every week. The coaches are patient and motivating, and they create a positive environment for kids to learn football. Great academy for young players.",
+    parent: "Hsh Hsh",
+    role: "Kottivakkam Center",
+    stars: 5,
+  },
+  {
+    quote: "Coaches are knowledge in fenominal.",
+    parent: "Benghar Benghar",
+    role: "Kottivakkam Center",
+    stars: 5,
+  },
+  {
+    quote: "Good environment",
+    parent: "Daryl Dixon",
+    role: "Kottivakkam Center",
+    stars: 5,
+  },
+  {
+    quote: "Amazing football academy! The coaches are very knowledgeable and give personal attention to every player. Training sessions are well structured and focus on fitness, technique, and game understanding. Perfect place for kids to develop their football talent.",
+    parent: "Daryl Dixon",
+    role: "Injambakkam Center",
+    stars: 5,
+  },
+  {
+    quote: "Excellent service.",
+    parent: "Benghar Benghar",
+    role: "Injambakkam Center",
     stars: 5,
   },
 ];
@@ -102,7 +138,7 @@ export const TestimonialBoard: React.FC = () => {
     const timer = setInterval(() => {
       setIsTransitionEnabled(true);
       setCurrentIndex((prev) => prev + 1);
-    }, 10000); 
+    }, 10000);
     return () => clearInterval(timer);
   }, []);
 
@@ -119,8 +155,8 @@ export const TestimonialBoard: React.FC = () => {
   return (
     <section className="bg-[#FAF7F2] px-4 py-4 md:px-6 md:py-6 relative overflow-hidden">
       {/* Cinematic Rounded Testimonial Box */}
-      <div className="relative w-full min-h-[70vh] rounded-[2.5rem] bg-primary text-white py-20 flex flex-col items-center justify-center overflow-hidden border border-white/5">
-        
+      <div className="relative w-full min-h-[70vh] rounded-3xl bg-primary text-white py-20 flex flex-col items-center justify-center overflow-hidden border border-white/5">
+
         {/* Background visual image matching reference */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -135,7 +171,7 @@ export const TestimonialBoard: React.FC = () => {
         </div>
 
         <div className="relative z-10 w-full flex flex-col items-center">
-          
+
           {/* Header - Kept centered */}
           <div className="text-center max-w-3xl mx-auto mb-16 px-6">
             <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-sand mb-4 block">
@@ -152,7 +188,7 @@ export const TestimonialBoard: React.FC = () => {
           {/* Carousel Viewport Container - Edge-to-Edge with no padding */}
           <div className="relative overflow-hidden w-full px-0">
             {/* Card slider track */}
-            <div 
+            <div
               className={`flex gap-6 ${isTransitionEnabled ? "transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
               style={{
                 transform: `translateX(-${currentIndex * (100 / extendedItems.length)}%)`,
@@ -160,13 +196,13 @@ export const TestimonialBoard: React.FC = () => {
               }}
             >
               {extendedItems.map((t, idx) => (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   style={{ width: `calc(${100 / extendedItems.length}% - ${(24 * (cardsPerPage - 1)) / cardsPerPage}px)` }}
                   className="shrink-0"
                 >
                   {/* Premium Glassmorphic Card matching mockup */}
-                  <div className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl py-8 px-4 md:py-10 md:px-5 flex flex-col justify-between hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-xl min-h-[350px] text-left">
+                  <div className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl py-8 px-4 md:py-10 md:px-5 flex flex-col justify-between hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-xl min-h-[350px] text-left">
                     <div>
                       {/* 5-Star Rating stack matching the mockup */}
                       <div className="flex gap-1.5 mb-4 text-[#FFF] pl-1">
@@ -217,9 +253,8 @@ export const TestimonialBoard: React.FC = () => {
                       setIsTransitionEnabled(true);
                       setCurrentIndex(idx + TESTIMONIALS.length);
                     }}
-                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                      activeDotIndex === idx ? "w-6 bg-sand" : "w-2 bg-white/30 hover:bg-white/50"
-                    }`}
+                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${activeDotIndex === idx ? "w-6 bg-sand" : "w-2 bg-white/30 hover:bg-white/50"
+                      }`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
                 );

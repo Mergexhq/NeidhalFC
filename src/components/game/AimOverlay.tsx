@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * AimOverlay.tsx — Full-screen drag layer for aiming.
+ * AimOverlay.tsx - Full-screen drag layer for aiming.
  *
  * The drag can only START from within ~72px of the ball (enforced in useGame).
  * All aim-guide graphics are drawn FROM the ball centre, regardless of where
- * the user first touched — so the arrow always appears to come out of the ball.
+ * the user first touched - so the arrow always appears to come out of the ball.
  *
  * Ball is anchored at 50% x, 76% y of the overlay (matches Scene2D idle position).
  */
@@ -13,16 +13,16 @@
 import { useRef, useCallback } from "react";
 import type { AimDrag } from "@/types/game";
 
-// Ball position as fractions of the overlay size — must match Scene2D getBallPos()
+// Ball position as fractions of the overlay size - must match Scene2D getBallPos()
 const BALL_X_PCT = 0.50;
 const BALL_Y_PCT = 0.76;
 
 interface AimOverlayProps {
-  active:  boolean;
-  aim:     AimDrag | null;
+  active: boolean;
+  aim: AimDrag | null;
   onPointerDown: (e: React.PointerEvent, rect: DOMRect) => void;
   onPointerMove: (e: React.PointerEvent, rect: DOMRect) => void;
-  onPointerUp:   (w: number, h: number) => void;
+  onPointerUp: (w: number, h: number) => void;
 }
 
 export function AimOverlay({
@@ -50,32 +50,32 @@ export function AimOverlay({
     onPointerUp(el?.clientWidth ?? 400, el?.clientHeight ?? 600);
   }, [onPointerUp]);
 
-  // ── Guide geometry — always anchored to the ball centre ──────────────────
-  const w = divRef.current?.clientWidth  ?? 400;
+  // ── Guide geometry - always anchored to the ball centre ──────────────────
+  const w = divRef.current?.clientWidth ?? 400;
   const h = divRef.current?.clientHeight ?? 600;
 
   // Ball screen position in overlay coordinates
   const ballX = w * BALL_X_PCT;
   const ballY = h * BALL_Y_PCT;
 
-  // Drag delta — how far / which direction the user has dragged
+  // Drag delta - how far / which direction the user has dragged
   const dx = aim ? aim.currentX - aim.startX : 0;
   const dy = aim ? aim.currentY - aim.startY : 0;
   const dist = Math.sqrt(dx * dx + dy * dy);
   const showGuide = aim !== null && dist > 8;
 
   // Shot direction = opposite of drag (slingshot mechanic)
-  const normDist  = dist || 1;
-  const arrowLen  = Math.min(dist * 1.4, 130);
-  // Arrow endpoint — from ball centre in shot direction
+  const normDist = dist || 1;
+  const arrowLen = Math.min(dist * 1.4, 130);
+  // Arrow endpoint - from ball centre in shot direction
   const arrowEndX = ballX - (dx / normDist) * arrowLen;
   const arrowEndY = ballY - (dy / normDist) * arrowLen;
 
-  // Finger dot — where the user is actually touching
+  // Finger dot - where the user is actually touching
   const fingerX = aim?.currentX ?? 0;
   const fingerY = aim?.currentY ?? 0;
 
-  // Power ring radius — grows with drag distance, capped
+  // Power ring radius - grows with drag distance, capped
   const ringR = Math.min(dist * 0.45, 50);
 
   return (
@@ -117,7 +117,7 @@ export function AimOverlay({
         </div>
       )}
 
-      {/* ── Aim slingshot guide — all anchored to ball centre ── */}
+      {/* ── Aim slingshot guide - all anchored to ball centre ── */}
       {showGuide && aim && (
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
@@ -133,7 +133,7 @@ export function AimOverlay({
             fill="none"
           />
 
-          {/* Pull-back line — ball to finger */}
+          {/* Pull-back line - ball to finger */}
           <line
             x1={ballX} y1={ballY}
             x2={fingerX} y2={fingerY}
@@ -142,7 +142,7 @@ export function AimOverlay({
             strokeDasharray="4 4"
           />
 
-          {/* Shot direction line — ball toward goal */}
+          {/* Shot direction line - ball toward goal */}
           <line
             x1={ballX} y1={ballY}
             x2={arrowEndX} y2={arrowEndY}

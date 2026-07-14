@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 
 const friendsFont = localFont({
   src: [
@@ -140,7 +143,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${(friendsFont as any).variable}`} suppressHydrationWarning>
-      <body className="font-sans antialiased bg-[#FAF7F2] text-black flex flex-col min-h-screen">
+      <body className="font-sans antialiased bg-[#FAF7F2] text-black flex flex-col">
         <main className="grow">
           {children}
         </main>

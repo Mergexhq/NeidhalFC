@@ -172,10 +172,10 @@ export const SeasonalEvents: React.FC = () => {
             {/* Register button */}
             <div className="shrink-0 text-left">
               <Link
-                href={`/book-trial?program=${SEASONAL_PROGRAMS[activeIndex].id}`}
+                href="/contact"
                 className="inline-flex items-center gap-2 bg-white hover:bg-sand text-primary hover:text-primary font-sans font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl shadow-lg transition-transform hover:scale-[1.02] cursor-pointer group"
               >
-                <span>Register Now</span>
+                <span>Enquire Now</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

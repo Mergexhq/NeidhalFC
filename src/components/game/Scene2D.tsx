@@ -1,13 +1,13 @@
 "use client";
 
 /**
- * Scene2D.tsx — 2D game backdrop + layered R3F ball + PNG sprites.
+ * Scene2D.tsx - 2D game backdrop + layered R3F ball + PNG sprites.
  *
  * Layers (bottom → top):
  *   1. Environment image background (with warm overlay)
  *   2. KeeperSprite (PNG, z-10)
- *   3. Ball3D — R3F canvas overlay (z-10)
- *   4. PlayerSprite — kicker PNG (z-20)
+ *   3. Ball3D - R3F canvas overlay (z-10)
+ *   4. PlayerSprite - kicker PNG (z-20)
  *
  * Shadows: removed per request.
  */
@@ -72,14 +72,14 @@ export function Scene2D({
       animate={
         cameraShake
           ? {
-              x: [0, -6, 6, -5, 5, -3, 3, 0],
-              y: [0, 4, -4, 3, -3, 1, -1, 0],
-            }
+            x: [0, -6, 6, -5, 5, -3, 3, 0],
+            y: [0, 4, -4, 3, -3, 1, -1, 0],
+          }
           : {}
       }
       transition={{ duration: 0.5, ease: "easeInOut" as const }}
     >
-      {/* Desktop background — hidden on mobile */}
+      {/* Desktop background - hidden on mobile */}
       <div
         className="absolute inset-0 hidden md:block"
         style={{
@@ -89,7 +89,7 @@ export function Scene2D({
           backgroundRepeat: "no-repeat",
         }}
       />
-      {/* Mobile background — hidden on desktop */}
+      {/* Mobile background - hidden on desktop */}
       <div
         className="absolute inset-0 block md:hidden"
         style={{

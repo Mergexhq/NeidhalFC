@@ -5,13 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Locations", href: "/locations" },
+  { label: "Contact", href: "/contact" },
 ];
 
 interface NavbarProps {
@@ -25,10 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ disableDock = false, forceWhiteT
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (disableDock) {
-      setIsDockActive(false);
-      return;
-    }
+    if (disableDock) return;
 
     const handleScroll = () => {
       // Transition to bottom dock when scrolled past 180px
@@ -48,14 +46,17 @@ export const Navbar: React.FC<NavbarProps> = ({ disableDock = false, forceWhiteT
 
   // Close mobile menu on route change
   useEffect(() => {
-    setIsMobileMenuOpen(false);
+    const timer = setTimeout(() => {
+      setIsMobileMenuOpen(false);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   // Determine if the current page's hero has a dark background
   const isDarkHero =
     forceWhiteText ||
     pathname === "/about" ||
-    pathname === "/locations" ||
+    pathname === "/contact" ||
     pathname.startsWith("/utility") ||
     pathname === "/not-found" ||
     pathname === "/404";
@@ -106,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({ disableDock = false, forceWhiteT
             {/* Main Nav Items Container */}
             <div className="flex items-center gap-4 md:gap-8 pointer-events-auto">
               {/* Desktop Nav Links */}
-              <div className="hidden md:flex items-center gap-8">
+              <div className="hidden md:flex items-center">
                 <nav className="flex items-center gap-1">
                   {NAV_LINKS.map((link) => {
                     const isActive = pathname === link.href;
@@ -138,26 +139,10 @@ export const Navbar: React.FC<NavbarProps> = ({ disableDock = false, forceWhiteT
                     );
                   })}
                 </nav>
-
-                <Link
-                  href="/book-trial"
-                  className="inline-flex items-center gap-1.5 bg-sand text-primary hover:bg-[#FAF7F2] text-xs font-sans font-bold uppercase tracking-wider px-4.5 py-2.5 rounded-full transition-transform active:scale-95 hover:scale-[1.03] cursor-pointer"
-                >
-                  Join Neidhal
-                  <ArrowRight size={12} className="shrink-0" />
-                </Link>
               </div>
 
               {/* Mobile Controls */}
               <div className="md:hidden flex items-center gap-2 pointer-events-auto">
-                <Link
-                  href="/book-trial"
-                  className="inline-flex items-center gap-1 bg-sand text-primary hover:bg-[#FAF7F2] text-[10px] font-sans font-bold uppercase tracking-wider px-3.5 py-2 rounded-full transition-transform active:scale-95 hover:scale-[1.03] cursor-pointer"
-                >
-                  Join
-                  <ArrowRight size={10} className="shrink-0" />
-                </Link>
-                
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   className={cn(
@@ -212,7 +197,7 @@ export const Navbar: React.FC<NavbarProps> = ({ disableDock = false, forceWhiteT
           animate={{ y: 0, x: "-50%", opacity: 1 }}
           exit={{ y: 80, x: "-50%", opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="fixed bottom-6 left-1/2 z-50 flex items-center gap-2.5 md:gap-4 p-1.5 pl-4 pr-2 bg-[#0B1528]/85 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_-8px_32px_rgba(0,0,0,0.3)] pointer-events-auto whitespace-nowrap"
+          className="fixed bottom-6 left-1/2 z-50 flex items-center gap-2.5 md:gap-4 p-2.5 px-5 bg-[#0B1528]/85 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_-8px_32px_rgba(0,0,0,0.3)] pointer-events-auto whitespace-nowrap"
         >
           {/* Links */}
           <nav className="flex items-center gap-0.5 md:gap-1">
@@ -239,18 +224,6 @@ export const Navbar: React.FC<NavbarProps> = ({ disableDock = false, forceWhiteT
               );
             })}
           </nav>
-
-          <div className="h-4 w-px bg-white/15" />
-
-          {/* Join CTA */}
-          <Link
-            href="/book-trial"
-            className="inline-flex items-center gap-1 bg-sand text-primary hover:bg-[#FAF7F2] text-[9px] md:text-[11px] font-sans font-bold uppercase tracking-wider px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-transform active:scale-95 hover:scale-[1.03] cursor-pointer mr-0.5"
-          >
-            <span className="hidden sm:inline">Join Neidhal</span>
-            <span className="sm:hidden">Join</span>
-            <ArrowRight size={10} className="shrink-0" />
-          </Link>
         </motion.div>
       )}
     </AnimatePresence>

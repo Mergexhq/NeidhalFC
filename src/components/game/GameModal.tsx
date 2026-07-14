@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * GameModal.tsx — Fullscreen 2D penalty mini-game.
+ * GameModal.tsx - Fullscreen 2D penalty mini-game.
  *
  * Hierarchy:
  *   GameModal
- *   ├── Scene2D (2D canvas — fills viewport)
+ *   ├── Scene2D (2D canvas - fills viewport)
  *   ├── AimOverlay (2D SVG drag layer + UI hints)
  *   └── Result   (GOAL / SAVED / MISSED)
  *
@@ -15,10 +15,10 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { useGame }     from "@/hooks/useGame";
-import { Scene2D }     from "./Scene2D";
-import { AimOverlay }  from "./AimOverlay";
-import { Result }      from "./Result";
+import { useGame } from "@/hooks/useGame";
+import { Scene2D } from "./Scene2D";
+import { AimOverlay } from "./AimOverlay";
+import { Result } from "./Result";
 
 interface GameModalProps {
   onClose: () => void;
@@ -38,9 +38,9 @@ export default function GameModal({ onClose }: GameModalProps) {
 
   const close = () => { handleClose(); onClose(); };
 
-  const isAiming   = phase === "aiming";
+  const isAiming = phase === "aiming";
   const isShooting = phase === "shooting" || phase === "result";
-  const netShake   = shotResult === "goal" && phase === "result";
+  const netShake = shotResult === "goal" && phase === "result";
 
   return (
     <AnimatePresence>

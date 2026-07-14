@@ -1,12 +1,12 @@
 "use client";
 
 /**
- * PlayerSprite.tsx — PNG-based kicker.
+ * PlayerSprite.tsx - PNG-based kicker.
  *
  * During aiming:       /player1.png         (standing, bottom-left)
  * During/after kick:   /player 1 kick.png   (follow-through pose)
  *
- * No movement animation — only a quick image crossfade on kick.
+ * No movement animation - only a quick image crossfade on kick.
  * The player image itself already shows the kick pose; no lunge needed.
  */
 

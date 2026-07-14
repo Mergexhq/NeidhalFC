@@ -70,22 +70,22 @@ const FIELD_SNAPSHOTS = [
   {
     id: 13,
     image: "/images/about/about_ghibli_hero.jpg",
-    caption: "Creative vision meets coastal football culture — the Neidhal story.",
+    caption: "Creative vision meets coastal football culture - the Neidhal story.",
   },
   {
     id: 14,
     image: "/images/advanced_match.jpg",
-    caption: "Match intensity — players pushing limits in competitive turf sessions.",
+    caption: "Match intensity - players pushing limits in competitive turf sessions.",
   },
   {
     id: 15,
     image: "/images/foundation_drill.jpg",
-    caption: "Foundation first — instilling discipline and technique from day one.",
+    caption: "Foundation first - instilling discipline and technique from day one.",
   },
   {
     id: 16,
     image: "/images/about/slider_coaching.jpg",
-    caption: "Hands-on coaching — every player gets individual attention and guidance.",
+    caption: "Hands-on coaching - every player gets individual attention and guidance.",
   },
 ];
 

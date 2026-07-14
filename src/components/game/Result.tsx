@@ -5,13 +5,13 @@ import Link from "next/link";
 import type { ShotResult } from "@/types/game";
 
 interface ResultProps {
-  result:      ShotResult;
-  onTryAgain:  () => void;
-  onClose:     () => void;
+  result: ShotResult;
+  onTryAgain: () => void;
+  onClose: () => void;
 }
 
 /**
- * Result screen — editorial, minimal.
+ * Result screen - editorial, minimal.
  *
  * GOAL   → "GOAL."   + brand copy + Book Trial
  * SAVED  → "SAVED."  + miss copy  + Try Again + Book Trial
@@ -21,15 +21,15 @@ export function Result({ result, onTryAgain, onClose }: ResultProps) {
   const isGoal = result === "goal";
 
   const container = {
-    hidden:  {},
+    hidden: {},
     visible: { transition: { staggerChildren: 0.12 } },
   };
 
   const item = {
-    hidden:  { opacity: 0, y: 28 },
+    hidden: { opacity: 0, y: 28 },
     visible: {
       opacity: 1,
-      y:       0,
+      y: 0,
       transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
@@ -57,8 +57,8 @@ export function Result({ result, onTryAgain, onClose }: ResultProps) {
           variants={item}
           className="font-condensed leading-[0.95] uppercase tracking-wide select-none text-center"
           style={{
-            fontSize:   "clamp(48px, 11vw, 120px)",
-            color:      isGoal ? "#FFFFFF" : "rgba(255,255,255,0.75)",
+            fontSize: "clamp(48px, 11vw, 120px)",
+            color: isGoal ? "#FFFFFF" : "rgba(255,255,255,0.75)",
             textShadow: isGoal
               ? "0 0 120px rgba(255,255,255,0.12)"
               : "none",
@@ -97,9 +97,9 @@ export function Result({ result, onTryAgain, onClose }: ResultProps) {
           variants={item}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          {/* Book Trial — always present */}
+          {/* Book Trial - always present */}
           <Link
-            href="/book-trial"
+            href="/contact"
             onClick={onClose}
             className="
               inline-flex items-center gap-2
@@ -112,10 +112,10 @@ export function Result({ result, onTryAgain, onClose }: ResultProps) {
               focus-visible:outline focus-visible:outline-2 focus-visible:outline-white
             "
           >
-            Book a Free Trial
+            Contact Us
           </Link>
 
-          {/* Try Again — only on miss */}
+          {/* Try Again - only on miss */}
           {!isGoal && (
             <button
               onClick={onTryAgain}
@@ -136,8 +136,8 @@ export function Result({ result, onTryAgain, onClose }: ResultProps) {
                 strokeLinecap="round" strokeLinejoin="round"
                 aria-hidden="true"
               >
-                <path d="M23 4v6h-6"/>
-                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                <path d="M23 4v6h-6" />
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
               </svg>
               Try Again
             </button>

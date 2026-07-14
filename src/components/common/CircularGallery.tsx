@@ -62,7 +62,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
       rotationTotal = -360,
       itemWidth = 256,
       itemHeight = 384,
-      perspective = 650,
+      perspective = 900,
       ariaLabel = "3D Circular Gallery",
       className,
       children,
@@ -89,15 +89,15 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
         const w = window.innerWidth;
         const isMobile = w < 768;
 
-        // Desktop: w * 0.12 (tighter spacing, closer to reference)
-        // Mobile: w * 0.40
-        const width = isMobile ? w * 0.40 : w * 0.12;
+        // Desktop: w * 0.24 (slightly larger cards filling viewport)
+        // Mobile: w * 0.50
+        const width = isMobile ? w * 0.50 : w * 0.24;
         const height = width * 2.0;
 
-        // Radius formula to ensure correct card padding and spacing
+        // Radius formula - lower multiplier = tighter spacing between cards
         const angleIncrement = 360 / items.length;
         const rad = (180 / items.length) * (Math.PI / 180);
-        const calculatedRadius = (width / (2 * Math.sin(rad))) * 1.15;
+        const calculatedRadius = (width / (2 * Math.sin(rad))) * 1.25;
 
         setDimensions({
           itemWidth: width,
@@ -139,7 +139,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
 
             if (isVisible) {
               if (video.paused) {
-                video.play().catch(() => {});
+                video.play().catch(() => { });
               }
             } else {
               if (!video.paused) {
@@ -181,7 +181,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
         };
 
         // Use mousemove + DOM hit-testing so the flag is only true when the
-        // cursor is literally over a card <li> face — not the title, CTA, or
+        // cursor is literally over a card <li> face - not the title, CTA, or
         // any gap between cards.
         const handleMouseMove = (e: MouseEvent) => {
           const target = e.target as HTMLElement;
@@ -223,7 +223,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
       <div
         ref={containerRef}
         className={cn(
-          "relative flex min-h-screen w-full flex-col items-center justify-center bg-transparent z-10",
+          "relative flex min-h-screen w-full flex-col items-center justify-center bg-transparent z-10 overflow-hidden",
           className
         )}
         {...rest}
@@ -232,7 +232,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
         <div
           ref={wrapperRef}
           className="relative flex w-full items-center justify-center translate-y-20 md:translate-y-24 z-30 pointer-events-auto"
-          style={{ 
+          style={{
             perspective: `${perspective}px`,
             height: `${dimensions.itemHeight + 120}px`
           }}
@@ -286,10 +286,10 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
                   }}
                 >
                   <div className="relative h-full w-full bg-sand/10">
-                    {item.src.match(/\.(mp4|webm|ogg)/i) || 
-                     item.src.includes("assets.mixkit.co") || 
-                     item.src.includes("/video-files/") || 
-                     item.src.includes("/download/video/") ? (
+                    {item.src.match(/\.(mp4|webm|ogg)/i) ||
+                      item.src.includes("assets.mixkit.co") ||
+                      item.src.includes("/video-files/") ||
+                      item.src.includes("/download/video/") ? (
                       <video
                         src={item.src}
                         autoPlay

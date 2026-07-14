@@ -144,7 +144,7 @@ export const Footer: React.FC = () => {
                     { label: "Home", href: "/" },
                     { label: "About", href: "/about" },
                     { label: "Locations", href: "/locations" },
-                    { label: "Book a Trial", href: "/book-trial" },
+                    { label: "Contact Us", href: "/contact" },
                   ].map((link) => (
                     <li key={link.href}>
                       <Link 
@@ -172,21 +172,21 @@ export const Footer: React.FC = () => {
                     <MapPin size={21} className="text-[#BCA688] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-semibold text-[#0B1F3A] block">Kottivakkam</span>
-                      <span className="text-[#BCA688] text-xs font-semibold">Near RTO Office, ECR, Chennai</span>
+                      <span className="text-[#BCA688] text-xs font-semibold">Valmiki Nagar, ECR, Chennai</span>
                     </div>
                   </li>
                   <li className="flex gap-2">
                     <MapPin size={21} className="text-[#BCA688] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-semibold text-[#0B1F3A] block">Injambakkam</span>
-                      <span className="text-[#BCA688] text-xs font-semibold">ECR Coastal Road, Chennai</span>
+                      <span className="text-[#BCA688] text-xs font-semibold">Akkarai, ECR, Chennai</span>
                     </div>
                   </li>
                   <li className="flex gap-2">
                     <MapPin size={21} className="text-[#BCA688] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-semibold text-[#0B1F3A] block">Nandanam</span>
-                      <span className="text-[#BCA688] text-xs font-semibold">Central Coaching Facility, Chennai</span>
+                      <span className="text-[#BCA688] text-xs font-semibold">Lotus Colony, Nandanam, Chennai</span>
                     </div>
                   </li>
                 </ul>
@@ -265,7 +265,7 @@ export const Footer: React.FC = () => {
               <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
                 <Link href="/utility/privacy-policy" className="hover:text-white transition-colors duration-200">Privacy</Link>
                 <Link href="/utility/terms-and-conditions" className="hover:text-white transition-colors duration-200">Terms</Link>
-                <a href="mailto:contact@neidhalfc.com" className="hover:text-white transition-colors duration-200">Contact</a>
+                <Link href="/contact" className="hover:text-white transition-colors duration-200">Contact</Link>
                 <a href="https://www.instagram.com/neidhalfc" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200">Instagram</a>
               </div>
             </motion.div>

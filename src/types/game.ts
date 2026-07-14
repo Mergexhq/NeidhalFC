@@ -1,6 +1,6 @@
 /**
- * game.ts — Type definitions for the R3F penalty mini-game.
- * No physics-engine types — ball movement is pure parabolic arc math.
+ * game.ts - Type definitions for the R3F penalty mini-game.
+ * No physics-engine types - ball movement is pure parabolic arc math.
  */
 
 export type GamePhase =
@@ -21,8 +21,8 @@ export interface AimTarget {
 
 /** Current pointer drag state (pixels in overlay coords) */
 export interface AimDrag {
-  startX:   number;
-  startY:   number;
+  startX: number;
+  startY: number;
   currentX: number;
   currentY: number;
 }

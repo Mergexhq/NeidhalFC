@@ -57,7 +57,7 @@ export const Philosophy: React.FC = () => {
     const pinnedGrid = pinnedGridRef.current;
     if (!pinRunway || !pinnedGrid) return;
 
-    // Pin the grid while the runway scrolls past — trigger starts when the runway hits the top
+    // Pin the grid while the runway scrolls past - trigger starts when the runway hits the top
     ScrollTrigger.create({
       trigger: pinRunway,
       start: "top top",
@@ -92,7 +92,7 @@ export const Philosophy: React.FC = () => {
       {/* ── Outer wrapper: heading + pinned grid together ── */}
       <div ref={pinContainerRef} className="relative bg-[#FAF7F2] w-full">
 
-        {/* ── Section 1: Heading — natural flow, scrolls away before pin kicks in ── */}
+        {/* ── Section 1: Heading - natural flow, scrolls away before pin kicks in ── */}
         <div className="w-full pt-20 pb-16 text-center">
           <div className="max-w-5xl mx-auto px-6">
             <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-extrabold text-[#0077b6] mb-4">
@@ -111,7 +111,7 @@ export const Philosophy: React.FC = () => {
 
         {/* ── Section 2: Scroll runway for pin (400vh tall) ── */}
         <div ref={pinRunwayRef} className="relative h-[400vh] w-full">
-          {/* The pinned element — only the grid, vertically centered */}
+          {/* The pinned element - only the grid, vertically centered */}
           <div
             ref={pinnedGridRef}
             className="h-screen w-full flex items-center justify-center"
@@ -131,16 +131,14 @@ export const Philosophy: React.FC = () => {
                       >
                         {/* Active indicator line */}
                         <span
-                          className={`h-[2px] bg-[#0b1f3a] shrink-0 transition-all duration-300 ${
-                            isActive ? "w-6 opacity-100" : "w-0 opacity-0"
-                          }`}
+                          className={`h-[2px] bg-[#0b1f3a] shrink-0 transition-all duration-300 ${isActive ? "w-6 opacity-100" : "w-0 opacity-0"
+                            }`}
                         />
                         <span
-                          className={`font-display text-2xl sm:text-3xl md:text-4xl tracking-tight transition-all duration-300 ${
-                            isActive
+                          className={`font-display text-2xl sm:text-3xl md:text-4xl tracking-tight transition-all duration-300 ${isActive
                               ? "text-[#0B1F3A] font-extrabold"
                               : "text-[#5A6E85]/40 font-semibold group-hover:text-[#5A6E85]/70"
-                          }`}
+                            }`}
                         >
                           {p.title}
                         </span>

@@ -7,18 +7,18 @@ You are a typography consultant. Analyze the user's project to understand its pu
 
 ## Steps
 
-1. **Analyze the project** — Read key files to understand:
-   - `package.json` — framework, dependencies, project type
-   - `README.md` or landing page — what the project does
-   - Existing styles — current design language, color scheme
-   - Component structure — UI complexity level
+1. **Analyze the project** - Read key files to understand:
+   - `package.json` - framework, dependencies, project type
+   - `README.md` or landing page - what the project does
+   - Existing styles - current design language, color scheme
+   - Component structure - UI complexity level
 
 2. **Determine characteristics**:
    - **Type**: SaaS, blog, portfolio, e-commerce, documentation, dashboard, marketing site
    - **Mood**: clean, elegant, playful, professional, technical, creative, minimal
    - **Audience**: developers, designers, general users, enterprise
 
-3. **Build a recommendation** — Compose a brief profile:
+3. **Build a recommendation** - Compose a brief profile:
    ```
    Project: [name]
    Type: [type]
@@ -26,7 +26,7 @@ You are a typography consultant. Analyze the user's project to understand its pu
    Audience: [target audience]
    ```
 
-4. **Find the best pairing** — If the Fonttrio MCP server is available:
+4. **Find the best pairing** - If the Fonttrio MCP server is available:
    - Call `search_pairings` with the identified mood and use case
    - Call `preview_pairing` on the top 2-3 results
    - Compare and recommend the best match with reasoning
@@ -39,7 +39,7 @@ You are a typography consultant. Analyze the user's project to understand its pu
      `bunx shadcn@latest add https://www.fonttrio.xyz/r/{pairing-name}.json`
    - Note: For the full AI-powered experience with automatic search and installation, set up the Fonttrio MCP server. See https://www.fonttrio.xyz/ai for setup instructions.
 
-5. **Explain the recommendation** — For the chosen pairing, explain:
+5. **Explain the recommendation** - For the chosen pairing, explain:
    - Why it matches the project's mood and audience
    - What each font brings (heading, body, mono)
    - How the typography scale will affect the design

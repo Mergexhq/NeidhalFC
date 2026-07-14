@@ -79,12 +79,12 @@ export const Hero: React.FC = () => {
   ) => {
     const canvasRatio = canvas.width / canvas.height;
     const imgRatio = img.width / img.height;
-    
+
     let drawWidth = canvas.width;
     let drawHeight = canvas.height;
     let offsetX = 0;
     let offsetY = 0;
-    
+
     if (imgRatio > canvasRatio) {
       drawWidth = canvas.height * imgRatio;
       offsetX = (canvas.width - drawWidth) / 2;
@@ -92,7 +92,7 @@ export const Hero: React.FC = () => {
       drawHeight = canvas.width / imgRatio;
       offsetY = (canvas.height - drawHeight) / 2;
     }
-    
+
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   };
 
@@ -101,7 +101,7 @@ export const Hero: React.FC = () => {
     if (!canvas || images.length === 0 || !images[index]) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawSingleImage(ctx, canvas, images[index]);
   };
@@ -124,7 +124,7 @@ export const Hero: React.FC = () => {
       if (images[0]) {
         drawSingleImage(ctx, canvas, images[0]);
       }
-      
+
       // Cross-fade the video starting frame (index 1) on top
       if (images[1]) {
         ctx.globalAlpha = alpha;
@@ -172,7 +172,7 @@ export const Hero: React.FC = () => {
           pin: heroRef.current,
           scrub: 0.15, // Smooth interpolation
           anticipatePin: 1,
-          refreshPriority: 1,       // Processed FIRST — spacer committed before CoachSection refresh
+          refreshPriority: 1,       // Processed FIRST - spacer committed before CoachSection refresh
           invalidateOnRefresh: true,
         },
       });
@@ -349,7 +349,7 @@ export const Hero: React.FC = () => {
             {/* Right Column */}
             <div className="about-right">
               <p className="about-body">
-                Neidhal is the ancient Tamil word for the coastal land where the sea meets the shore. It is the landscape of salt in the air and sand under every step. We did not choose this name for decoration—we chose it because the shore is exactly where our game began.
+                Neidhal is the ancient Tamil word for the coastal land where the sea meets the shore. It is the landscape of salt in the air and sand under every step. We did not choose this name for decoration-we chose it because the shore is exactly where our game began.
               </p>
               <p className="about-body">
                 In 2016, we started training youth along the ECR shoreline with just a football and the open sea breeze. We believe football should be played with street-style touch, barefoot agility, and individual decision-making.

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 /**
- * FootballCTA — idle section placed between HomeCTA and Footer.
+ * FootballCTA - idle section placed between HomeCTA and Footer.
  *
  * Hero visual: beach penalty watercolor illustration.
  * Entire illustration is clickable; opens the fullscreen penalty experience.
@@ -31,7 +31,7 @@ export const FootballCTA: React.FC = () => {
           background:
             "linear-gradient(180deg, #FAF7F2 0%, #FAF2E6 35%, #F3E6CE 65%, #ECDAB9 100%)",
         }}
-        aria-label="Take the penalty — interactive experience"
+        aria-label="Take the penalty - interactive experience"
       >
         {/* Sand texture blobs */}
         <div
@@ -81,7 +81,7 @@ export const FootballCTA: React.FC = () => {
             From the shores of Chennai to the football pitch
           </motion.p>
 
-          {/* ── Illustration — main clickable hero ──────────────────────────────── */}
+          {/* ── Illustration - main clickable hero ──────────────────────────────── */}
           <motion.button
             onClick={handlePlay}
             className="relative w-full max-w-3xl mx-auto block cursor-pointer focus-visible:outline-none mb-8 group"
@@ -96,7 +96,7 @@ export const FootballCTA: React.FC = () => {
               {/* Illustration image */}
               <Image
                 src="/Tap to play illustration.png"
-                alt="Player about to take a beach penalty — tap to play the game"
+                alt="Player about to take a beach penalty - tap to play the game"
                 width={1344}
                 height={896}
                 priority
@@ -133,7 +133,7 @@ export const FootballCTA: React.FC = () => {
               </svg>
             </div>
 
-            {/* Slide color change overlay — dynamic width behind the ball (White Fill) */}
+            {/* Slide color change overlay - dynamic width behind the ball (White Fill) */}
             <motion.div
               style={{ width: fillWidth }}
               className="absolute left-[5px] top-[5px] bottom-[5px] bg-white rounded-full overflow-hidden pointer-events-none"
@@ -171,7 +171,7 @@ export const FootballCTA: React.FC = () => {
 
         </div>
 
-        {/* ── Bottom smudge overlay — fades section into the footer ── */}
+        {/* ── Bottom smudge overlay - fades section into the footer ── */}
         <div
           className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-20"
           style={{

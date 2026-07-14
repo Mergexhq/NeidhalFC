@@ -143,10 +143,10 @@ export const OperationalUSP: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 mt-4">
               {/* Button */}
               <Link
-                href="/book-trial"
+                href="/contact"
                 className="inline-flex items-center gap-2 bg-white text-[#16271c] hover:bg-[#D9C3A5] hover:text-[#16271c] text-xs font-sans font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-95 group shrink-0"
               >
-                <span>Book Now</span>
+                <span>Contact Us</span>
                 <div className="h-5 w-5 rounded-full bg-[#16271c] text-white flex items-center justify-center shrink-0 group-hover:translate-x-0.5 transition-transform duration-300">
                   <ArrowRight size={10} />
                 </div>

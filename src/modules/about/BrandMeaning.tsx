@@ -50,7 +50,7 @@ export const BrandMeaning: React.FC = () => {
 
         {/* Two-Column Assets Row (Image 2 style) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border-t border-black/5 pt-16">
-          
+
           {/* Left: Two Small Images Side-by-Side */}
           <div className="lg:col-span-6 grid grid-cols-2 gap-4">
             <motion.div
@@ -160,10 +160,10 @@ export const BrandMeaning: React.FC = () => {
             </h3>
             <div className="text-slate-600 text-sm sm:text-base leading-relaxed space-y-4">
               <p>
-                Thousands of years ago, Tamil poets categorized the world into five landscapes: mountain, forest, desert, and farmland. The fifth they called <strong className="text-[#0077b6] font-semibold">Neidhal</strong>—the coast where the sea meets the shore.
+                Thousands of years ago, Tamil poets categorized the world into five landscapes: mountain, forest, desert, and farmland. The fifth they called <strong className="text-[#0077b6] font-semibold">Neidhal</strong>-the coast where the sea meets the shore.
               </p>
               <p>
-                We did not choose this name to sound poetic. We chose it because the shore is our teacher. The sea does not ask permission to move, and neither does the kind of football we believe in. We teach kids to play like the ocean—fluid, powerful, and free.
+                We did not choose this name to sound poetic. We chose it because the shore is our teacher. The sea does not ask permission to move, and neither does the kind of football we believe in. We teach kids to play like the ocean-fluid, powerful, and free.
               </p>
             </div>
           </motion.div>
@@ -177,7 +177,7 @@ export const BrandMeaning: React.FC = () => {
             <div className="absolute top-4 right-6 text-7xl font-serif text-[#0077b6]/10 select-none pointer-events-none">
               &ldquo;
             </div>
-            
+
             <p className="font-display italic text-lg sm:text-xl text-[#0B1F3A] leading-relaxed relative z-10">
               &ldquo;The sea does not ask permission to move. Neither does the kind of football we believe in.&rdquo;
             </p>

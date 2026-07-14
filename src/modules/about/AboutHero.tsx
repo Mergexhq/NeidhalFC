@@ -110,10 +110,10 @@ export const AboutHero: React.FC = () => {
 
             {/* CTA Book Now Button */}
             <Link
-              href="/book-trial"
+              href="/contact"
               className="inline-flex items-center gap-3 bg-white text-[#122415] hover:bg-sand hover:text-[#122415] text-sm font-sans font-bold uppercase tracking-widest px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-95 group"
             >
-              <span>Book Now</span>
+              <span>Contact Us</span>
               <div className="h-6 w-6 rounded-full bg-[#122415] text-white flex items-center justify-center shrink-0 group-hover:translate-x-0.5 transition-transform duration-300">
                 <ArrowRight size={14} />
               </div>

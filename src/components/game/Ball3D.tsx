@@ -1,19 +1,19 @@
 "use client";
 
 /**
- * Ball3D.tsx — React Three Fiber 3D football (GLTF model).
+ * Ball3D.tsx - React Three Fiber 3D football (GLTF model).
  *
- * Model: /Ball/ball.gltf (copy of "Ball BLEND.gltf" — space removed for URL safety)
+ * Model: /Ball/ball.gltf (copy of "Ball BLEND.gltf" - space removed for URL safety)
  * Materials: "Bianco" (white panels), "Nero.001" (black patches)
  *
  * Fixes:
- *   1. URL-safe path — no space in filename (was failing to load silently).
+ *   1. URL-safe path - no space in filename (was failing to load silently).
  *   2. Canvas pointer-events explicitly disabled so AimOverlay receives
  *      all drag events across the whole scene, not just the ball area.
  *   3. Environment preset ("park") for PBR reflections → looks like real leather.
  *   4. Higher-quality material settings: slight glossy sheen on white panels.
  *   5. Fixed canvas size + CSS scale for smooth trajectory (no renderer resize).
- *   6. No idle rotation — ball stays still until kicked.
+ *   6. No idle rotation - ball stays still until kicked.
  */
 
 import React, { useRef, useEffect, Suspense } from "react";
@@ -32,7 +32,7 @@ interface BallMeshProps {
 function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
   const groupRef = useRef<THREE.Group>(null!);
 
-  // URL-safe path — no spaces
+  // URL-safe path - no spaces
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { scene, materials } = useGLTF("/Ball/ball.gltf") as unknown as {
     scene: THREE.Group;
@@ -42,19 +42,19 @@ function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
   // Apply polished leather colours once
   useEffect(() => {
     const bianco = materials["Bianco"];
-    const nero   = materials["Nero.001"];
+    const nero = materials["Nero.001"];
 
     if (bianco) {
       bianco.color.set("#F2F2F2");
-      bianco.roughness   = 0.35;   // slightly glossy — like real leather
-      bianco.metalness   = 0.0;
+      bianco.roughness = 0.35;   // slightly glossy - like real leather
+      bianco.metalness = 0.0;
       bianco.envMapIntensity = 0.8;
       bianco.needsUpdate = true;
     }
     if (nero) {
       nero.color.set("#111111");
-      nero.roughness   = 0.45;
-      nero.metalness   = 0.0;
+      nero.roughness = 0.45;
+      nero.metalness = 0.0;
       nero.envMapIntensity = 0.5;
       nero.needsUpdate = true;
     }
@@ -64,7 +64,7 @@ function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
   useFrame(() => {
     if (!groupRef.current || !isShooting) return;
     groupRef.current.rotation.x = -(shootT * Math.PI * 6);
-    groupRef.current.rotation.y =  aimTarget.x * shootT * Math.PI * 2;
+    groupRef.current.rotation.y = aimTarget.x * shootT * Math.PI * 2;
   });
 
   return (
@@ -102,8 +102,8 @@ export function Ball3D({
       className="absolute z-10"
       style={{
         left: `${left}%`,
-        top:  `${top}%`,
-        width:  `${baseSizeVw}vw`,
+        top: `${top}%`,
+        width: `${baseSizeVw}vw`,
         height: `${baseSizeVw}vw`,
         transform: `translate(-50%, -50%) scale(${scale})`,
         transformOrigin: "center center",
@@ -123,7 +123,7 @@ export function Ball3D({
           pointerEvents: "none",
         }}
       >
-        {/* PBR environment — gives the leather panels real reflections */}
+        {/* PBR environment - gives the leather panels real reflections */}
         <Suspense fallback={null}>
           <Environment preset="park" />
           <BallModel
@@ -135,11 +135,11 @@ export function Ball3D({
 
         {/* Bright outdoor sun from top-left */}
         <ambientLight intensity={1.8} />
-        <directionalLight position={[4, 8, 5]}  intensity={2.2} />
+        <directionalLight position={[4, 8, 5]} intensity={2.2} />
         {/* Warm sand bounce */}
-        <directionalLight position={[0, -2, 3]}  intensity={0.8} color="#ffddaa" />
+        <directionalLight position={[0, -2, 3]} intensity={0.8} color="#ffddaa" />
         {/* Cool sky fill */}
-        <directionalLight position={[-3, 2, 2]}  intensity={0.4} color="#b8d4f0" />
+        <directionalLight position={[-3, 2, 2]} intensity={0.4} color="#b8d4f0" />
       </Canvas>
     </div>
   );
