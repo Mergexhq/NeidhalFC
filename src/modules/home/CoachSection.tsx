@@ -12,6 +12,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+/* ── Coach data ──────────────────────────────────────────── */
 const COACHES = [
   {
     id: "01",
@@ -20,8 +21,9 @@ const COACHES = [
     credentials: "AIFF / AFC Licensed · Former Pro Player",
     description:
       "Specializes in spatial game intelligence, beach-soccer physical conditioning, and structured tactical progression. Guided local Chennai talent to national-level exposure since 2016.",
-    image: "/coaches/coach-1.webp",
-    hoverImage: "/coaches/coach-1.1.webp",
+    image: "/coaches-nobg/coach-1.png",
+    image2: "/coaches-nobg/coach-1.1.png",
+    accent: "#C8A96B",
   },
   {
     id: "02",
@@ -30,8 +32,9 @@ const COACHES = [
     credentials: "AIFF / AFC Licensed · Technical Director",
     description:
       "Focuses on technical micro-diagnostics, dribbling mechanics, and street-style creative decision-making. Passionate about youth development and instilling a love for the game.",
-    image: "/coaches/coach-2.webp",
-    hoverImage: "/coaches/coach-2.2.webp",
+    image: "/coaches-nobg/coach-2.png",
+    image2: "/coaches-nobg/coach-2.2.png",
+    accent: "#7BA7BC",
   },
   {
     id: "03",
@@ -40,8 +43,9 @@ const COACHES = [
     credentials: "AIFF D Licensed · Youth Specialist",
     description:
       "Focuses on grassroots talent acquisition, physical agility programs, and spatial awareness drills for our sub-junior development squads.",
-    image: "/coaches/coach-3.webp",
-    hoverImage: "/coaches/coach-3.3.webp",
+    image: "/coaches-nobg/coach-3.png",
+    image2: "/coaches-nobg/coach-3.3.png",
+    accent: "#C8A96B",
   },
   {
     id: "04",
@@ -50,8 +54,9 @@ const COACHES = [
     credentials: "AIFF C Licensed · Technical Coach",
     description:
       "Specializes in ball mastery, passing execution under pressure, and micro-positioning dynamics for high-intensity match situations.",
-    image: "/coaches/coach-4.webp",
-    hoverImage: "/coaches/coach-4.4.webp",
+    image: "/coaches-nobg/coach-4.png",
+    image2: "/coaches-nobg/coach-4.4.png",
+    accent: "#7BA7BC",
   },
   {
     id: "05",
@@ -60,80 +65,68 @@ const COACHES = [
     credentials: "AIFF D Licensed · GK Trainer",
     description:
       "Dedicated to developing reflex agility, positioning, and aerial control for our goalkeepers across all age groups.",
-    image: "/coaches/coach-5.webp",
-    hoverImage: "/coaches/coach-5.webp",
+    image: "/coaches-nobg/coach-5.png",
+    accent: "#C8A96B",
   },
 ];
 
+/* ── How much the photo overflows ABOVE the card bar ── */
+const CARD_H = 130;   // card bar height px
+const OVERFLOW_TOP = 64; // how far image pops above card
+
 export const CoachSection: React.FC = () => {
-  const outerRef = useRef<HTMLDivElement>(null);
-  const runwayRef = useRef<HTMLDivElement>(null);
-  const pinnedRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const isMobile = window.innerWidth < 768;
-      const runway = runwayRef.current;
-      const pinned = pinnedRef.current;
-      const track = trackRef.current;
-      if (!runway || !pinned || !track) return;
-      if (isMobile) return;
+      const cards = gsap.utils.toArray<HTMLElement>(".parallax-card-row");
+      cards.forEach((card) => {
+        const images = card.querySelectorAll(".parallax-coach-img");
+        if (images.length === 0) return;
 
-      const cardWidth = window.innerWidth;
-      const scrollDist = cardWidth * (COACHES.length - 1);
-
-      // Create a timeline that handles both pinning and horizontal scroll
-      // with a pause before and after the horizontal movement.
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: runway,
-          start: "top top",
-          end: "bottom bottom",
-          pin: pinned,
-          anticipatePin: 1,
-          scrub: 0.25,
-          refreshPriority: -1,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      // 1st card rest state: no movement for 0.6 relative duration
-      tl.to({}, { duration: 0.6 });
-
-      // Slide track to show next card: 1.0 relative duration
-      tl.to(track, {
-        x: -scrollDist,
-        ease: "power2.inOut",
-        duration: 1.0,
-      });
-
-      // 2nd card rest state: no movement for 0.4 relative duration before unpinning
-      tl.to({}, { duration: 0.4 });
-
-      // After one animation frame the Hero spacer element is fully committed;
-      // force a global recalculation so our start position is correct.
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
+        gsap.fromTo(
+          images,
+          { y: 35 },
+          {
+            y: -35,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.2,
+            },
+          }
+        );
       });
     },
-    { scope: outerRef }
+    { scope: containerRef }
   );
 
   return (
-    /* ── Outer wrapper - both sections live here ── */
-    <div ref={outerRef} className="relative w-full bg-[#FAF7F2]">
+    <div ref={containerRef} className="relative w-full bg-[#03070E] text-white overflow-x-clip">
 
-      {/* ══════════════════════════════════════════════
-          SECTION 1 - Header: natural flow, scrolls away
-          ══════════════════════════════════════════════ */}
-      <div className="w-full px-6 sm:px-10 md:px-16 pt-24 pb-20 md:pt-28 md:pb-24">
+      {/* Subtle dot-grid texture */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      {/* ═══════════════════════════════════════════════════════
+          SECTION HEADER
+          ═══════════════════════════════════════════════════════ */}
+      <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 pt-24 pb-16 md:pt-28 md:pb-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-8 md:gap-20">
 
-          {/* Left: eyebrow + title */}
+          {/* Left: eyebrow + heading */}
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <span className="text-[11px] font-bold text-[#0B1F3A]/35 tracking-widest font-sans">
+              <span className="text-[11px] font-bold text-white/30 tracking-widest font-sans">
                 (01)
               </span>
               <span className="text-[10px] uppercase tracking-[0.2em] font-extrabold text-[#C8A96B] bg-[#C8A96B]/10 px-3 py-1 rounded-full font-sans">
@@ -141,210 +134,196 @@ export const CoachSection: React.FC = () => {
               </span>
             </div>
             <h2
-              className="font-sans font-semibold text-[#0B1F3A] tracking-tight leading-tight"
+              className="font-sans font-semibold text-white tracking-tight leading-tight"
               style={{ fontSize: "clamp(30px, 3.8vw, 52px)" }}
             >
               Two Coaches.<br />Every Session.
             </h2>
           </div>
 
-          {/* Right: description - ~3 lines */}
+          {/* Right: description */}
           <p
-            className="font-sans font-light text-[#5A6E85] leading-relaxed max-w-md md:max-w-[400px] md:text-right md:pt-8"
+            className="font-sans font-light text-slate-300 leading-relaxed max-w-md md:max-w-[400px] md:text-right md:pt-8"
             style={{ fontSize: "clamp(14px, 1.5vw, 17px)" }}
           >
-            Our training is driven by a deep passion for<br className="hidden md:inline" />{" "}
-            developing fearless, creative decision-makers<br className="hidden md:inline" />{" "}
+            Our training is driven by a deep passion for{" "}
+            <br className="hidden md:inline" />
+            developing fearless, creative decision-makers{" "}
+            <br className="hidden md:inline" />
             with street-style touches and structured coaching.
           </p>
-
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════════
-          SECTION 2 - Scroll runway + Pinned card area
-          Each coach card = 1 viewport of scroll space
-          ══════════════════════════════════════════════ */}
-      <div
-        ref={runwayRef}
-        /* Dynamic height based on number of coaches to preserve scrolling speed */
-        style={{ height: `${(COACHES.length + 1) * 100}vh` }}
-        className="relative w-full"
-      >
-        {/* Pinned element: full viewport card area */}
-        <div
-          ref={pinnedRef}
-          className="w-full overflow-hidden bg-[#FAF7F2]"
-          style={{ height: "100vh" }}
-        >
-          {/* Subtle grid texture */}
-          <div
-            className="absolute inset-0 pointer-events-none z-0"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right,rgba(11,31,58,0.012) 1px,transparent 1px),linear-gradient(to bottom,rgba(11,31,58,0.012) 1px,transparent 1px)",
-              backgroundSize: "5rem 5rem",
-            }}
-          />
+      {/* ═══════════════════════════════════════════════════════
+          5 STACKED HORIZONTAL CARD BARS  (desktop)
+          ═══════════════════════════════════════════════════════ */}
+      <div className="relative z-10 hidden md:block w-full px-6 sm:px-10 md:px-16 pb-28">
+        <div className="max-w-7xl mx-auto flex flex-col gap-4">
 
-          {/* Horizontal track - GSAP slides this left */}
-          <div
-            ref={trackRef}
-            className="flex flex-row flex-nowrap h-full will-change-transform"
-            style={{ width: `${COACHES.length * 100}vw` }}
-          >
-            {COACHES.map((coach) => (
+          {COACHES.map((coach, index) => {
+            /* Odd index = image LEFT, even index = image RIGHT */
+            const imageLeft = index % 2 === 0;
+            const leftImageSrc = imageLeft ? coach.image : coach.image2;
+            const rightImageSrc = imageLeft ? coach.image2 : coach.image;
+
+            return (
               <div
                 key={coach.id}
-                className="flex flex-row h-full shrink-0"
-                style={{ width: "100vw" }}
+                /* overflow-visible — image floats above, card is flush at bottom */
+                className="group relative flex items-end overflow-visible parallax-card-row"
+                style={{ minHeight: `${CARD_H + OVERFLOW_TOP}px` }}
               >
-                {/* ── LEFT COLUMN: Coach info ── */}
+                {/* ── The card bar itself — flush at bottom, inset at top ── */}
                 <div
-                  className="flex flex-col justify-center h-full text-left"
+                  className="
+                    absolute inset-x-0
+                    flex items-center
+                    rounded-2xl
+                    transition-all duration-500
+                  "
                   style={{
-                    width: "50vw",
-                    paddingLeft: "clamp(40px, 6vw, 100px)",
-                    paddingRight: "clamp(32px, 4vw, 72px)",
-                    paddingTop: "clamp(56px, 7vh, 96px)",
-                    paddingBottom: "clamp(56px, 7vh, 96px)",
+                    top: `${OVERFLOW_TOP}px`,
+                    bottom: 0,
+                    background: "#ffffff",
+                    border: "1px solid rgba(11,31,58,0.08)",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
                   }}
                 >
-                  {/* Coach index */}
-                  <span
-                    className="font-sans font-bold text-[#0B1F3A]/20 tracking-widest mb-5"
-                    style={{ fontSize: "11px", letterSpacing: "0.25em" }}
-                  >
-                    ({coach.id})
-                  </span>
+                  {/* Hover glow */}
+                  <div
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      background: `radial-gradient(ellipse at ${imageLeft ? "15%" : "85%"} 50%, ${coach.accent}22 0%, transparent 60%)`,
+                    }}
+                  />
+                </div>
 
-                  {/* Role */}
-                  <span
-                    className="font-sans font-bold uppercase tracking-[0.2em] text-[#C8A96B] mb-4"
-                    style={{ fontSize: "11px" }}
+                {/* ── LEFT PHOTO (overflows TOP only, flush at bottom) ── */}
+                {leftImageSrc && (
+                  <div
+                    className="relative shrink-0 z-20"
+                    style={{
+                      width: "clamp(180px, 20vw, 250px)",
+                      height: `${CARD_H + OVERFLOW_TOP}px`,
+                      marginLeft: "clamp(16px, 2.5vw, 40px)",
+                    }}
                   >
-                    {coach.role}
-                  </span>
+                    <Image
+                      src={leftImageSrc}
+                      alt={`${coach.name} left visual`}
+                      fill
+                      sizes="(max-width: 1280px) 20vw, 250px"
+                      className="
+                        object-contain object-bottom
+                        drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]
+                        transition-transform duration-500
+                        group-hover:scale-[1.04]
+                        parallax-coach-img
+                      "
+                      priority={index < 2}
+                    />
+                  </div>
+                )}
 
-                  {/* Coach name */}
+                {/* ── TEXT & CTA CONTENT WRAPPER ── */}
+                <div
+                  className="relative z-10 flex-1 flex items-center justify-center px-8"
+                  style={{ height: `${CARD_H}px` }}
+                >
                   <h3
-                    className="font-sans font-semibold text-[#0B1F3A] tracking-tight leading-[1.1] mb-5"
-                    style={{ fontSize: "clamp(34px, 4.2vw, 58px)" }}
+                    className="font-sans font-bold uppercase tracking-[0.06em] text-center leading-[1.0]"
+                    style={{ fontSize: "clamp(28px, 3.2vw, 44px)", color: "#0B1F3A" }}
                   >
                     {coach.name}
                   </h3>
 
-                  {/* Credentials pill */}
-                  <span
-                    className="inline-block font-sans font-semibold uppercase tracking-widest text-[#0B1F3A]/50 bg-[#0B1F3A]/5 border border-[#0B1F3A]/8 px-3 py-1.5 rounded-md w-fit mb-8"
-                    style={{ fontSize: "10px" }}
-                  >
-                    {coach.credentials}
-                  </span>
-
-                  {/* Description */}
-                  <p
-                    className="font-sans font-light text-[#5A6E85] leading-relaxed max-w-[420px] mb-10"
-                    style={{ fontSize: "clamp(14px, 1.4vw, 16px)" }}
-                  >
-                    {coach.description}
-                  </p>
-
-                  {/* CTA */}
                   <Link
                     href="/about"
-                    className="inline-flex items-center gap-3 group cursor-pointer w-fit"
+                    className="
+                      absolute right-8
+                      shrink-0 flex items-center justify-center
+                      h-9 w-9 rounded-full
+                      transition-all duration-300
+                      hover:scale-105
+                    "
+                    style={{ background: "#0B1F3A", color: "#ffffff" }}
+                    aria-label={`Learn more about ${coach.name}`}
                   >
-                    <span
-                      className="font-sans font-bold uppercase tracking-widest border border-[#0B1F3A]/20 hover:border-[#0B1F3A]/60 text-[#0B1F3A] px-7 py-3 rounded-full transition-colors duration-300"
-                      style={{ fontSize: "10px" }}
-                    >
-                      Learn More
-                    </span>
-                    <span className="h-10 w-10 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-md">
-                      <ArrowUpRight size={15} />
-                    </span>
+                    <ArrowUpRight size={14} />
                   </Link>
                 </div>
 
-                {/* ── RIGHT COLUMN: Coach image ── */}
-                <div
-                  className="flex items-center justify-start h-full"
-                  style={{
-                    width: "50vw",
-                    padding: "20px",
-                  }}
-                >
+
+                {/* ── RIGHT PHOTO (overflows TOP only, flush at bottom) ── */}
+                {rightImageSrc && (
                   <div
-                    className="relative w-full h-full overflow-hidden bg-[#0B1F3A] group/image"
-                    style={{ borderRadius: "2rem" }}
+                    className="relative shrink-0 z-20"
+                    style={{
+                      width: "clamp(180px, 20vw, 250px)",
+                      height: `${CARD_H + OVERFLOW_TOP}px`,
+                      marginRight: "clamp(16px, 2.5vw, 40px)",
+                    }}
                   >
-                    {/* Main Image */}
                     <Image
-                      src={coach.image}
-                      alt={coach.name}
+                      src={rightImageSrc}
+                      alt={`${coach.name} right visual`}
                       fill
-                      sizes="(max-width: 768px) 100vw, 44vw"
-                      className="object-cover transition-all duration-700 ease-in-out group-hover/image:scale-[1.025] group-hover/image:opacity-0"
-                    />
-                    {/* Hover Image */}
-                    <Image
-                      src={coach.hoverImage}
-                      alt={`${coach.name} hover`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 44vw"
-                      className="object-cover absolute inset-0 transition-all duration-700 ease-in-out opacity-0 group-hover/image:opacity-100 group-hover/image:scale-[1.025]"
+                      sizes="(max-width: 1280px) 20vw, 250px"
+                      className="
+                        object-contain object-bottom
+                        drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]
+                        transition-transform duration-500
+                        group-hover:scale-[1.04]
+                        parallax-coach-img
+                      "
+                      priority={index < 2}
                     />
                   </div>
-                </div>
+                )}
               </div>
-            ))}
-          </div>
+            );
+
+          })}
         </div>
+
+
       </div>
 
-      {/* ── MOBILE LAYOUT - stacked cards, no GSAP ── */}
-      <div className="md:hidden flex flex-col gap-0 pb-16">
-        {COACHES.map((coach) => (
+      {/* ═══════════════════════════════════════════════════════
+          MOBILE — stacked cards
+          ═══════════════════════════════════════════════════════ */}
+      <div className="md:hidden flex flex-col gap-0 pb-16 relative z-10">
+        {COACHES.map((coach, index) => (
           <div
             key={coach.id}
-            className="flex flex-col gap-6 px-6 py-10 border-t border-[#0B1F3A]/8 first:border-0"
+            className="flex flex-col gap-5 px-6 py-10 border-t border-white/10 first:border-0"
           >
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C8A96B]">
-              {coach.role}
-            </span>
-            <h3 className="font-sans font-semibold text-[#0B1F3A] text-3xl tracking-tight leading-tight">
+            <h3 className="font-sans font-bold uppercase tracking-[0.06em] text-white text-3xl tracking-tight leading-tight">
               {coach.name}
             </h3>
-            <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-xl bg-[#0B1F3A] group/image">
-              {/* Main Image */}
+            <div
+              className="relative w-full rounded-2xl overflow-hidden bg-white/4 border border-white/8"
+              style={{ aspectRatio: "4/3" }}
+            >
               <Image
                 src={coach.image}
                 alt={coach.name}
                 fill
                 sizes="100vw"
-                className="object-cover transition-all duration-700 ease-in-out group-hover/image:opacity-0"
-              />
-              {/* Hover Image */}
-              <Image
-                src={coach.hoverImage}
-                alt={`${coach.name} hover`}
-                fill
-                sizes="100vw"
-                className="object-cover absolute inset-0 transition-all duration-700 ease-in-out opacity-0 group-hover/image:opacity-100"
+                className="object-contain object-bottom drop-shadow-[0_16px_32px_rgba(0,0,0,0.5)]"
+                priority={index === 0}
               />
             </div>
-            <p className="font-sans font-light text-[#5A6E85] leading-relaxed text-sm">
-              {coach.description}
-            </p>
+
             <Link
               href="/about"
               className="inline-flex items-center gap-2.5 group cursor-pointer w-fit"
             >
-              <span className="font-sans font-bold text-[10px] uppercase tracking-widest border border-[#0B1F3A]/20 text-[#0B1F3A] px-6 py-2.5 rounded-full">
+              <span className="font-sans font-bold text-[10px] uppercase tracking-widest border border-white/20 text-white px-6 py-2.5 rounded-full">
                 Learn More
               </span>
-              <span className="h-9 w-9 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center shadow-md">
+              <span className="h-9 w-9 rounded-full bg-white text-[#03070E] flex items-center justify-center shadow-md">
                 <ArrowUpRight size={14} />
               </span>
             </Link>

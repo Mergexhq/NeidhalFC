@@ -153,7 +153,7 @@ export const TestimonialBoard: React.FC = () => {
   };
 
   return (
-    <section className="bg-[#FAF7F2] px-4 py-4 md:px-6 md:py-6 relative overflow-hidden">
+    <section className="bg-transparent px-4 py-4 md:px-6 md:py-6 relative overflow-hidden">
       {/* Cinematic Rounded Testimonial Box */}
       <div className="relative w-full min-h-[70vh] rounded-3xl bg-primary text-white py-20 flex flex-col items-center justify-center overflow-hidden border border-white/5">
 

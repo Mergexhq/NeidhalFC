@@ -142,7 +142,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${(friendsFont as any).variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${(friendsFont as any).variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="font-sans antialiased bg-[#FAF7F2] text-black flex flex-col">
         <main className="grow">
           {children}

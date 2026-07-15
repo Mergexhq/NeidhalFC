@@ -43,8 +43,17 @@ function ParallaxCarousel({ images, y }: { images: string[]; y: MotionValue<stri
     return (
       <div className="w-full h-full relative overflow-hidden">
         <motion.div
-          style={{ y }}
-          className="absolute inset-0 -top-[15%] -bottom-[15%] w-full h-[130%] z-0"
+          style={{
+            y,
+            position: "absolute",
+            top: "-15%",
+            bottom: "-15%",
+            left: 0,
+            right: 0,
+            width: "100%",
+            height: "130%",
+          }}
+          className="z-0"
         >
           <Image
             src={images[0]}
@@ -73,8 +82,17 @@ function ParallaxCarousel({ images, y }: { images: string[]; y: MotionValue<stri
           <Slider key={idx} className="relative w-full h-full flex-[0_0_100%] min-w-0 overflow-hidden">
             {/* The parallax layer is isolated inside the slide */}
             <motion.div
-              style={{ y }}
-              className="absolute inset-0 -top-[15%] -bottom-[15%] w-full h-[130%] z-0"
+              style={{
+                y,
+                position: "absolute",
+                top: "-15%",
+                bottom: "-15%",
+                left: 0,
+                right: 0,
+                width: "100%",
+                height: "130%",
+              }}
+              className="z-0"
             >
               <Image
                 src={img}

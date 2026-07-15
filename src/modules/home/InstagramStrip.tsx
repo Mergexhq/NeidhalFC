@@ -100,7 +100,7 @@ export const PhotoStrip: React.FC = () => {
   }));
 
   return (
-    <section className="bg-[#FAF7F2] relative pb-40 md:pb-64">
+    <section className="bg-transparent relative pb-40 md:pb-64">
       {/* Background accents */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-80 h-80 rounded-full bg-sand/5 blur-[100px] pointer-events-none" />
 

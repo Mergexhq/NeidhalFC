@@ -11,7 +11,7 @@ import FootballCTA from "@/modules/home/FootballCTA";
 
 export default function HomePage() {
   return (
-    <>
+    <div className="bg-gradient-to-b from-[#F5EFE6] to-[#FAF7F2]">
       <Hero />
 
       <CoachSection />
@@ -21,7 +21,7 @@ export default function HomePage() {
       <SeasonalEvents />
       <HomeCTA />
       <FootballCTA />
-    </>
+    </div>
   );
 }
 

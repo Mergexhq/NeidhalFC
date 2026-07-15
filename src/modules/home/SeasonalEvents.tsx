@@ -43,7 +43,7 @@ export const SeasonalEvents: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#FAF7F2]">
+    <section className="py-24 relative overflow-hidden bg-transparent">
       {/* Subtle grid pattern to match original aesthetic */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,31,58,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,31,58,0.01)_1px,transparent_1px)] bg-size-[4rem_4rem] pointer-events-none" />
 

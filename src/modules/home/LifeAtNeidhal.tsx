@@ -129,7 +129,7 @@ export const LifeAtNeidhal: React.FC = () => {
 
   return (
     <section
-      className="py-24 bg-[#FAF7F2] relative overflow-hidden"
+      className="py-24 bg-transparent relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,31,58,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,31,58,0.01)_1px,transparent_1px)] bg-[size:6rem_6rem] pointer-events-none" />
 
@@ -177,7 +177,7 @@ export const LifeAtNeidhal: React.FC = () => {
               <SliderContainer className="h-[600px] w-full">
                 {IMAGES.map((src, idx) => (
                   <Slider key={idx} className="h-full w-full" thumbnailSrc={src}>
-                    <div className="relative w-full h-[600px] rounded-2xl overflow-hidden border border-black/5 shadow-md bg-[#FAF7F2]">
+                    <div className="relative w-full h-[600px] rounded-2xl overflow-hidden border border-black/5 shadow-md bg-transparent">
                       <Image
                         src={src}
                         alt={`Life at Neidhal training session ${idx + 1}`}
