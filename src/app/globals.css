@@ -47,13 +47,11 @@
 /* Custom base styles */
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 body {
   background-color: #FAF7F2;
   color: #000000;
-  overflow-x: hidden;
 }
 
 /* Glassmorphism utility */

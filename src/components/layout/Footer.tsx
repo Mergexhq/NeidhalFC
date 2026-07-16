@@ -38,6 +38,18 @@ export const Footer: React.FC = () => {
       <div 
         className="relative w-full overflow-hidden text-white px-6 pt-12 pb-8 sm:px-10 sm:pt-16 sm:pb-10 md:px-12 md:pt-20 md:pb-12 lg:px-16 lg:pt-24 lg:pb-14 bg-transparent"
       >
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: "url('/images/home/footer.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
+          }}
+        />
+
+
         {/* Grain Overlay at the bottom */}
         <div 
           className="absolute inset-0 z-[1] pointer-events-none opacity-40"
@@ -47,6 +59,9 @@ export const Footer: React.FC = () => {
             WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 50%)",
           }}
         />
+
+        {/* Dark overlay at the bottom for text readability */}
+        <div className="absolute bottom-0 left-0 right-0 h-[50%] bg-gradient-to-t from-black/85 via-black/40 to-transparent z-0 pointer-events-none" />
 
         <motion.div 
           variants={staggerContainer}

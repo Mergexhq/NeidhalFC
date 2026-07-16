@@ -8,14 +8,14 @@ import { ArrowUpRight } from "lucide-react";
 
 export const HomeCTA: React.FC = () => {
   return (
-    <section className="py-6 md:py-8 bg-[#FAF7F2] relative overflow-hidden">
+    <section className="py-6 md:py-8 bg-transparent relative overflow-hidden">
       <div className="max-w-[88rem] mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden min-h-[380px] md:min-h-[460px] p-6 sm:p-8 md:p-12 flex flex-col justify-between text-left shadow-2xl group"
+          className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden min-h-[380px] md:min-h-[460px] p-6 sm:p-8 md:p-12 flex flex-col justify-between text-left group"
         >
           {/* Background Image */}
           <Image

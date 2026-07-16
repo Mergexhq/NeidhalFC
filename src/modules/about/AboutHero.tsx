@@ -42,7 +42,7 @@ export const AboutHero: React.FC = () => {
     <section className="w-full h-screen bg-[#FAF7F2] relative overflow-hidden flex flex-col">
       <Navbar forceWhiteText={false} />
 
-      {/* ── Image Banner Container (Cropped like Image 1 with Parallax) ── */}
+      {/* ── Image Banner Container with Parallax ── */}
       <div
         ref={containerRef}
         className="relative w-full h-full overflow-hidden bg-black"
@@ -62,37 +62,32 @@ export const AboutHero: React.FC = () => {
           />
         </motion.div>
 
-        {/* --- MAIN HERO CONTENT (Overlaying the image at bottom-left) --- */}
-        <div className="absolute bottom-8 left-6 md:bottom-12 md:left-12 lg:left-16 z-20 max-w-4xl text-left">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col items-start gap-3"
-          >
-            {/* Massive Heading */}
-            <motion.h1
-              variants={itemVariants}
-              className="text-6xl sm:text-7xl md:text-8xl lg:text-[90px] font-medium tracking-tight leading-none text-[#0B1F3A] uppercase"
+        {/* --- MAIN HERO CONTENT --- */}
+        <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 sm:p-10 md:p-16 lg:p-20">
+          <div className="max-w-7xl mx-auto w-full">
+            
+            {/* Headline and Copy Block (Left side, no floating cards/overlays) */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="max-w-3xl text-left flex flex-col items-start gap-1"
             >
-              OUR STORY
-            </motion.h1>
-
-            {/* Story Subtitle */}
-            <motion.h2
-              variants={itemVariants}
-              className="text-xl sm:text-2xl md:text-3xl font-light text-[#0B1F3A] leading-tight max-w-2xl mt-1 mb-2"
-            >
-              Where Every Great Story Begins
-            </motion.h2>
-
-            {/* Staggered Paragraphs */}
-            <div className="space-y-3 max-w-2xl text-[#0B1F3A]/85 font-light text-xs sm:text-sm md:text-base leading-relaxed font-sans">
-              <motion.p variants={itemVariants}>
-                In 2016, two friends met on the shores of Chennai with nothing but a football and a love for the game.
+              <motion.h1
+                variants={itemVariants}
+                className="text-6xl sm:text-7xl md:text-8xl lg:text-[100px] font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none"
+              >
+                OUR STORY
+              </motion.h1>
+              <motion.p
+                variants={itemVariants}
+                className="text-[#0B1F3A]/90 text-lg sm:text-xl md:text-2xl leading-relaxed font-sans font-light max-w-3xl mt-4"
+              >
+                Every club has an origin. Ours began on the sand.
               </motion.p>
-            </div>
-          </motion.div>
+            </motion.div>
+
+          </div>
         </div>
       </div>
     </section>

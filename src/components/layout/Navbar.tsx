@@ -56,25 +56,27 @@ const HamburgerButton = ({
     <button
       onClick={onClick}
       className={cn(
-        "flex flex-col justify-center items-end w-12 h-12 rounded-full border transition-all pointer-events-auto relative z-50 cursor-pointer group",
-        isScrolled
-          ? "bg-[#FAF7F2]/80 backdrop-blur-md shadow-sm border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-[#0B1F3A]"
-          : isDark
-            ? "bg-transparent border-white/10 hover:border-white/30 text-white"
-            : "bg-transparent border-[#0B1F3A]/10 hover:border-[#0B1F3A]/30 text-[#0B1F3A]"
+        "flex flex-col justify-center items-center w-12 h-12 rounded-full border transition-all pointer-events-auto relative z-50 cursor-pointer group shadow-lg",
+        isOpen
+          ? "bg-[#FAF7F2] border-[#0B1F3A]/15 text-[#0B1F3A]"
+          : isScrolled
+            ? "bg-[#FAF7F2]/90 backdrop-blur-md border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-[#0B1F3A] hover:scale-105"
+            : isDark
+              ? "bg-white/10 backdrop-blur-md border-white/20 hover:border-white/40 text-white hover:scale-105"
+              : "bg-[#FAF7F2]/90 backdrop-blur-md border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-[#0B1F3A] hover:scale-105"
       )}
       aria-label="Toggle menu"
     >
-      <div className="flex flex-col gap-1.5 justify-center items-end w-6 h-3 relative pr-3">
+      <div className="flex flex-col gap-1.5 justify-center items-center w-6 h-3 relative">
         <motion.span
           animate={isOpen ? { rotate: 45, y: 4, width: "24px" } : { rotate: 0, y: 0, width: "24px" }}
           transition={{ duration: 0.2 }}
           className="block h-[2px] bg-current rounded-full"
         />
         <motion.span
-          animate={isOpen ? { rotate: -45, y: -4, width: "24px" } : { rotate: 0, y: 0, width: "16px" }}
+          animate={isOpen ? { rotate: -45, y: -4, width: "24px" } : { rotate: 0, y: 0, width: "24px" }}
           transition={{ duration: 0.2 }}
-          className="block h-[2px] bg-current rounded-full transition-all group-hover:w-6"
+          className="block h-[2px] bg-current rounded-full"
         />
       </div>
     </button>

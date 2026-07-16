@@ -2,7 +2,6 @@
 
 import { FC, ReactNode, useRef } from "react";
 import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
-
 import { cn } from "@/lib/utils";
 
 interface ScrollTextRiseProps {
@@ -10,6 +9,8 @@ interface ScrollTextRiseProps {
   className?: string;
   /** Text size classes */
   textClassName?: string;
+  /** Optional header element to display inside the pinned viewport */
+  header?: ReactNode;
 }
 
 const parseWord = (word: string) => {
@@ -30,7 +31,6 @@ const parseWord = (word: string) => {
   // Neidhal specific highlighting (strip punctuation for match)
   const plain = cleanWord.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
   if (plain === "Neidhal") {
-    isBlue = true;
     isUnderline = true;
   }
 
@@ -41,6 +41,7 @@ const ScrollTextRise: FC<ScrollTextRiseProps> = ({
   text,
   className,
   textClassName,
+  header,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -59,11 +60,12 @@ const ScrollTextRise: FC<ScrollTextRiseProps> = ({
       className={cn("relative h-[180vh] w-full", className)}
     >
       {/* Sticky viewport container (pinned to screen) */}
-      <div className="sticky top-0 left-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden">
+      <div className="sticky top-0 left-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden gap-10 md:gap-14 px-4">
+        {header && <div className="w-full flex justify-center">{header}</div>}
         <p
           className={cn(
-            "flex flex-wrap justify-center text-center text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-light leading-[1.4] tracking-tight text-[#0B1F3A] max-w-4xl px-4",
-            textClassName
+            "flex flex-wrap justify-center text-center leading-[1.5] tracking-tight text-[#0B1F3A] max-w-4xl px-4",
+            textClassName ? textClassName : "text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-light"
           )}
         >
           {words.map((word, i) => {
@@ -123,6 +125,9 @@ const RevealWord: FC<RevealWordProps> = ({
     return 12 - progressRatio * 12;
   });
 
+  const highlightClass = "text-[#0B1F3A] font-bold underline decoration-[#BCA688] decoration-2 underline-offset-4";
+  const ghostHighlightClass = "text-[#0B1F3A]/20 font-bold underline decoration-[#BCA688]/20 decoration-2 underline-offset-4";
+
   return (
     // inline-block relative wrapping ensures the layout bounds match and overflow clips properly
     <span className="relative inline-block mx-1 overflow-hidden lg:mx-2 xl:mx-2.5 my-0.5 align-bottom">
@@ -132,8 +137,8 @@ const RevealWord: FC<RevealWordProps> = ({
           "absolute left-0 top-0 select-none pointer-events-none text-center w-full h-full",
           isBold
             ? "text-[#0B1F3A]/20 font-bold"
-            : isBlue
-            ? "text-[#0077b6]/25 font-bold underline decoration-sand/20 decoration-2 underline-offset-4"
+            : isUnderline || isBlue
+            ? ghostHighlightClass
             : "text-[#0B1F3A]/15 font-light"
         )}
       >
@@ -146,8 +151,8 @@ const RevealWord: FC<RevealWordProps> = ({
           "block text-center w-full",
           isBold
             ? "text-[#0B1F3A] font-bold"
-            : isBlue
-            ? "bg-gradient-to-b from-[#00b4d8] to-[#0077b6] bg-clip-text text-transparent font-bold underline decoration-sand decoration-2 underline-offset-4"
+            : isUnderline || isBlue
+            ? highlightClass
             : "text-[#0B1F3A] font-light"
         )}
       >

@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring, animate } from "framer-motion";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const SEASONAL_PROGRAMS = [
   {
@@ -13,7 +14,8 @@ const SEASONAL_PROGRAMS = [
     dates: "May 10 - June 5, 2026",
     timings: "6:00 AM - 8:00 AM Daily",
     location: "Kottivakkam Beach Turf",
-    price: "₹3,500 / Full Camp",
+    priceAmount: 3500,
+    priceSuffix: " / Full Camp",
     description: "Our signature annual camp covering street football styles, beach sand physical conditioning, and 1v1 skill mastery. Open for U6 to U16.",
     image: "/images/gallery/gallery-09.webp"
   },
@@ -24,11 +26,55 @@ const SEASONAL_PROGRAMS = [
     dates: "June 15 onwards",
     timings: "Scheduled Weekday/Weekend Slots",
     location: "Kottivakkam, Injambakkam & Nandanam",
-    price: "₹2,500 / Monthly Fee",
+    priceAmount: 2500,
+    priceSuffix: " / Monthly Fee",
     description: "Join our main academy training structure. Includes official Neidhal kit bag, customized coaching diagnostics, and participation in coastal leagues.",
     image: "/images/gallery/gallery-04.webp"
   },
 ];
+
+const NumberTicker: React.FC<{ value: number }> = ({ value }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, {
+    damping: 30,
+    stiffness: 80,
+  });
+
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (!hasAnimated) {
+      motionValue.set(0);
+      const controls = animate(motionValue, value, {
+        duration: 1.5,
+        ease: "easeOut",
+        onComplete: () => setHasAnimated(true),
+      });
+      return () => controls.stop();
+    }
+  }, [value, motionValue, hasAnimated]);
+
+  useEffect(() => {
+    if (hasAnimated) {
+      if (ref.current) {
+        ref.current.textContent = Intl.NumberFormat("en-IN", {
+          maximumFractionDigits: 0,
+        }).format(value);
+      }
+    } else {
+      return springValue.on("change", (latest) => {
+        if (ref.current) {
+          ref.current.textContent = Intl.NumberFormat("en-IN", {
+            maximumFractionDigits: 0,
+          }).format(latest);
+        }
+      });
+    }
+  }, [value, springValue, hasAnimated]);
+
+  return <span ref={ref} />;
+};
 
 export const SeasonalEvents: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -78,11 +124,11 @@ export const SeasonalEvents: React.FC = () => {
           ))}
         </div>
 
-        {/* Large Rounded Showcase Card */}
-        <div className="relative w-full aspect-[4/3.2] md:aspect-[2.2/1] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col justify-end p-6 sm:p-10 md:p-14 lg:p-16 text-white group shadow-2xl bg-neutral-950 min-h-[440px] md:min-h-[480px]">
+        {/* Large Rounded Showcase Card - Nested Card Style */}
+        <div className="relative w-full max-w-4xl mx-auto rounded-[2rem] bg-white border border-primary/10 p-2 sm:p-3 md:p-4 shadow-xl group">
           
-          {/* Card Background image with smooth AnimatePresence transition */}
-          <div className="absolute inset-0 z-0">
+          {/* Top Section: Nested Image Container */}
+          <div className="relative w-full aspect-[16/10] md:aspect-[21/9] rounded-[1.5rem] overflow-hidden bg-neutral-950">
             <AnimatePresence mode="wait">
               <motion.img
                 key={activeIndex}
@@ -95,79 +141,53 @@ export const SeasonalEvents: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             </AnimatePresence>
-            {/* Dark black gradient overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
           </div>
 
-          {/* Large Overlaid Text inside Card */}
-          <div className="relative z-10 flex-1 flex items-center justify-center md:justify-end text-center md:text-right mb-6 md:mb-10">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col select-none"
-              >
-                <span className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display leading-[0.85] uppercase text-white font-semibold">
-                  {SEASONAL_PROGRAMS[activeIndex].overlayTitle[0]}
-                </span>
-                <span className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display leading-[0.85] uppercase text-white font-semibold">
-                  {SEASONAL_PROGRAMS[activeIndex].overlayTitle[1]}
-                </span>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+          {/* Bottom Section: Details below the image */}
+          <div className="pt-4 sm:pt-5 flex flex-col gap-4 text-left px-2 pb-2">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-primary/5 pb-4">
+              <div>
+                {/* Title */}
+                <h3 className="font-raleway font-semibold text-2xl sm:text-3xl text-primary uppercase tracking-tight">
+                  {SEASONAL_PROGRAMS[activeIndex].overlayTitle.join(" ")}
+                </h3>
+                
+                {/* Dates & Logistics */}
+                <div className="flex flex-col gap-2.5 text-xs font-semibold text-[#8B6330] mt-3">
+                  <span className="flex items-center gap-2">
+                    <Calendar size={14} className="text-[#8B6330]" />
+                    {SEASONAL_PROGRAMS[activeIndex].dates}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Clock size={14} className="text-[#8B6330]" />
+                    {SEASONAL_PROGRAMS[activeIndex].timings}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <MapPin size={14} className="text-[#8B6330]" />
+                    {SEASONAL_PROGRAMS[activeIndex].location}
+                  </span>
+                </div>
+              </div>
 
-          {/* Bottom Row: Description & Info */}
-          <div className="relative z-10 w-full flex flex-col lg:flex-row lg:items-end justify-between gap-8 mt-auto pt-8 md:pt-10 border-t border-white/15">
-            <div className="max-w-4xl text-left">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4 }}
-                  className="space-y-4"
-                >
-                  <p className="text-white/85 text-xs sm:text-sm md:text-base font-normal leading-relaxed font-sans">
-                    {SEASONAL_PROGRAMS[activeIndex].description}
-                  </p>
-                  
-                  {/* Logistics Grid inside card */}
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold text-slate-300 pt-2">
-                    <span className="flex items-center gap-1.5 whitespace-nowrap">
-                      <Calendar size={13} className="text-sand" />
-                      {SEASONAL_PROGRAMS[activeIndex].dates}
-                    </span>
-                    <span className="text-slate-500 hidden sm:inline">•</span>
-                    <span className="flex items-center gap-1.5 whitespace-nowrap">
-                      <Clock size={13} className="text-sand" />
-                      {SEASONAL_PROGRAMS[activeIndex].timings}
-                    </span>
-                    <span className="text-slate-500 hidden sm:inline">•</span>
-                    <span className="flex items-center gap-1.5 whitespace-nowrap">
-                      <MapPin size={13} className="text-sand" />
-                      {SEASONAL_PROGRAMS[activeIndex].location}
-                    </span>
-                  </div>
-
-                  {/* Fee on a separate line, styled larger */}
-                  <div className="flex items-center gap-2 pt-1">
-                    <span className="text-[10px] sm:text-xs uppercase font-bold tracking-widest text-slate-400">Fee:</span>
-                    <span className="text-sand font-bold text-sm sm:text-base md:text-lg">{SEASONAL_PROGRAMS[activeIndex].price}</span>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+              {/* Fee Block (Right aligned next to logistics) */}
+              <div className="flex flex-col items-start md:items-end shrink-0">
+                <span className="text-[10px] uppercase font-semibold tracking-widest text-[#8B6330]/60 mb-1">
+                  Program Fee
+                </span>
+                <div className="font-sans font-semibold text-3xl sm:text-4xl lg:text-[40px] text-primary leading-none">
+                  ₹<NumberTicker value={SEASONAL_PROGRAMS[activeIndex].priceAmount} />
+                </div>
+                <span className="text-[11px] text-slate-500 font-medium mt-1.5">
+                  {SEASONAL_PROGRAMS[activeIndex].priceSuffix.replace(/^\s*\/\s*/, "")}
+                </span>
+              </div>
             </div>
 
-            {/* Register button */}
-            <div className="shrink-0 text-left">
+            {/* Footer Row inside Card: CTA */}
+            <div className="flex justify-end gap-4 mt-2 pt-2">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-white hover:bg-sand text-primary hover:text-primary font-sans font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl shadow-lg transition-transform hover:scale-[1.02] cursor-pointer group"
+                className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-[#1a355c] text-white font-sans font-bold text-xs uppercase tracking-wider px-8 py-3 sm:py-3.5 rounded-full shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer group"
               >
                 <span>Enquire Now</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />

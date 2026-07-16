@@ -2,8 +2,9 @@ import React from "react";
 import type { Metadata } from "next";
 import AboutHero from "@/modules/about/AboutHero";
 import BrandMeaning from "@/modules/about/BrandMeaning";
-import OriginsSlider from "@/modules/about/OriginsSlider";
-import OperationalUSP from "@/modules/about/OperationalUSP";
+import WhatWeBelieve from "@/modules/about/WhatWeBelieve";
+import HowWeCoach from "@/modules/about/HowWeCoach";
+import JoinNeidhal from "@/modules/about/JoinNeidhal";
 
 export const metadata: Metadata = {
   title: "About Our Story",
@@ -15,8 +16,9 @@ export default function AboutPage() {
     <>
       <AboutHero />
       <BrandMeaning />
-      <OriginsSlider />
-      <OperationalUSP />
+      <WhatWeBelieve />
+      <HowWeCoach />
+      <JoinNeidhal />
     </>
   );
 }
