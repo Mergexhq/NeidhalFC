@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Autoplay from "embla-carousel-autoplay";
+import { Carousel, SliderContainer, Slider } from "@/components/carousel";
+import { Letter3DSwap } from "@/components/ui/letter-3d-swap";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -15,218 +17,321 @@ const NAV_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
+const CAROUSEL_IMAGES = [
+  {
+    src: "/images/locations/injambakkam-14.webp",
+    label: "ECR Injambakkam Turf",
+    tag: "Injambakkam Hub",
+  },
+  {
+    src: "/images/locations/kottivakkam-6.webp",
+    label: "Valmiki Nagar Turf",
+    tag: "Kottivakkam Hub",
+  },
+  {
+    src: "/images/locations/nandanam-7.webp",
+    label: "Lotus Colony Turf",
+    tag: "Nandanam Hub",
+  },
+];
+
 interface NavbarProps {
   disableDock?: boolean;
   forceWhiteText?: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ disableDock = false, forceWhiteText = false }) => {
+// Custom animated asymmetric 2-line Hamburger Button
+const HamburgerButton = ({
+  isOpen,
+  onClick,
+  isDark,
+  isScrolled,
+}: {
+  isOpen: boolean;
+  onClick: () => void;
+  isDark: boolean;
+  isScrolled: boolean;
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        "flex flex-col justify-center items-end w-12 h-12 rounded-full border transition-all pointer-events-auto relative z-50 cursor-pointer group",
+        isScrolled
+          ? "bg-[#FAF7F2]/80 backdrop-blur-md shadow-sm border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-[#0B1F3A]"
+          : isDark
+            ? "bg-transparent border-white/10 hover:border-white/30 text-white"
+            : "bg-transparent border-[#0B1F3A]/10 hover:border-[#0B1F3A]/30 text-[#0B1F3A]"
+      )}
+      aria-label="Toggle menu"
+    >
+      <div className="flex flex-col gap-1.5 justify-center items-end w-6 h-3 relative pr-3">
+        <motion.span
+          animate={isOpen ? { rotate: 45, y: 4, width: "24px" } : { rotate: 0, y: 0, width: "24px" }}
+          transition={{ duration: 0.2 }}
+          className="block h-[2px] bg-current rounded-full"
+        />
+        <motion.span
+          animate={isOpen ? { rotate: -45, y: -4, width: "24px" } : { rotate: 0, y: 0, width: "16px" }}
+          transition={{ duration: 0.2 }}
+          className="block h-[2px] bg-current rounded-full transition-all group-hover:w-6"
+        />
+      </div>
+    </button>
+  );
+};
+
+export const Navbar: React.FC<NavbarProps> = ({
+  disableDock = false,
+  forceWhiteText = false,
+}) => {
   const pathname = usePathname();
-  const [isDockActive, setIsDockActive] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const autoplayPlugin = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: false })
+  );
+
+  // Monitor scroll for fixed bar transitions
   useEffect(() => {
-    if (disableDock) return;
-
     const handleScroll = () => {
-      // Transition to bottom dock when scrolled past 180px
-      if (window.scrollY > 180) {
-        setIsDockActive(true);
+      if (window.scrollY > 80) {
+        setIsScrolled(true);
       } else {
-        setIsDockActive(false);
+        setIsScrolled(false);
       }
     };
 
-    // Initialize state
     handleScroll();
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [disableDock]);
+  }, []);
 
-  // Close mobile menu on route change
+  // Lock body scroll when overlay is active
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsMobileMenuOpen(false);
-    }, 0);
-    return () => clearTimeout(timer);
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+
+
+  // Close menu on route change
+  useEffect(() => {
+    setIsMenuOpen(false);
   }, [pathname]);
 
-  // Determine if the current page's hero has a dark background
   const isDarkHero =
     forceWhiteText ||
-    pathname === "/about" ||
     pathname === "/contact" ||
     pathname.startsWith("/utility") ||
     pathname === "/not-found" ||
     pathname === "/404";
 
   return (
-    <AnimatePresence>
-      {!isDockActive ? (
-        <motion.div
-          key="hero-nav"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="absolute top-0 left-0 w-full z-40 pointer-events-none"
-        >
-          {/* Left Logo & Brand (No pill, sits directly on background image) */}
-          <div className="absolute top-6 left-6 md:left-12 z-40 flex items-center pointer-events-auto">
-            <Link href="/" className="flex items-center gap-2.5 pl-1 group select-none cursor-pointer">
-              <div className="relative h-10 w-10 overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                <Image
-                  src="/logo/neidhal_logo.png"
-                  alt="Neidhal FC Logo"
-                  fill
-                  sizes="40px"
-                  className="object-contain"
-                  priority
-                />
-              </div>
-              <div className="flex flex-col text-left whitespace-nowrap">
-                <span className={cn(
-                  "font-display font-extrabold text-sm sm:text-base tracking-wider leading-none transition-colors",
-                  isDarkHero ? "text-white" : "text-primary"
-                )}>
-                  NEIDHAL
-                </span>
-                <span className={cn(
-                  "font-sans text-[7px] sm:text-[8px] uppercase font-bold tracking-widest leading-none mt-1 transition-colors",
-                  isDarkHero ? "text-sand" : "text-[#BCA688]"
-                )}>
-                  FOOTBALL CLUB
-                </span>
-              </div>
-            </Link>
+    <>
+      {/* Top-Left Logo (visible in hero, fades out on scroll) */}
+      <motion.div
+        animate={{ opacity: isScrolled ? 0 : 1, y: isScrolled ? -20 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="fixed top-6 left-6 md:top-8 md:left-12 z-40 flex pointer-events-none"
+      >
+        <Link href="/" className="group flex items-center gap-3.5 select-none cursor-pointer pointer-events-auto">
+          <div className="relative h-12 w-12 sm:h-14 sm:w-14 overflow-hidden transition-transform duration-300 group-hover:scale-105">
+            <Image
+              src="/logo/neidhal_logo.png"
+              alt="Neidhal FC Logo"
+              fill
+              sizes="(max-width: 640px) 48px, 56px"
+              className="object-contain"
+              priority
+            />
           </div>
+          <div className={cn(
+            "flex items-center font-raleway text-xl sm:text-2xl tracking-wider leading-none transition-colors duration-300 font-medium",
+            isDarkHero ? "text-white" : "text-primary"
+          )}>
+            <span>NEIDHAL</span>
+            <span className={cn(
+              "ml-2 font-light inline-flex overflow-hidden transition-all duration-500 ease-in-out w-[22px] group-hover:w-[180px] sm:w-[26px] sm:group-hover:w-[220px] relative whitespace-nowrap",
+              isDarkHero ? "text-sand" : "text-[#BCA688]"
+            )}>
+              <span className="transition-opacity duration-300 group-hover:opacity-0">FC</span>
+              <span className="absolute left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">FOOTBALL CLUB</span>
+            </span>
+          </div>
+        </Link>
+      </motion.div>
 
-          {/* Right Nav Menu & CTA (No pill, sits directly on background image) */}
-          <div className="absolute top-6 right-6 md:right-12 z-40 flex flex-col items-end gap-2 pointer-events-none">
-            {/* Main Nav Items Container */}
-            <div className="flex items-center gap-4 md:gap-8 pointer-events-auto">
-              {/* Desktop Nav Links */}
-              <div className="hidden md:flex items-center">
-                <nav className="flex items-center gap-1">
-                  {NAV_LINKS.map((link) => {
+      {/* Floating Hamburger button (always visible in top-right, changes style on scroll) */}
+      <div className="fixed top-6 right-6 md:top-8 md:right-12 z-50 pointer-events-auto">
+        <HamburgerButton
+          isOpen={isMenuOpen}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          isDark={isDarkHero && !isScrolled}
+          isScrolled={isScrolled}
+        />
+      </div>
+
+      {/* Full screen overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+            className="fixed inset-0 z-50 flex flex-col md:flex-row h-screen w-screen overflow-hidden text-[#0B1F3A]"
+            style={{ backgroundColor: "#FAF7F2" }}
+          >
+            {/* Left Side: Large vertical image carousel card */}
+            <div className="hidden md:block w-1/2 h-full p-3">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-black/5 shadow-2xl">
+                <Carousel
+                  options={{ loop: true }}
+                  plugins={[autoplayPlugin.current]}
+                  className="w-full h-full relative"
+                >
+                  <SliderContainer className="w-full h-full">
+                    {CAROUSEL_IMAGES.map((img, idx) => (
+                      <Slider key={idx} className="relative w-full h-full flex-[0_0_100%] min-w-0 overflow-hidden">
+                        <Image
+                          src={img.src}
+                          alt={img.label}
+                          fill
+                          priority={idx === 0}
+                          sizes="50vw"
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none z-10" />
+
+                        {/* Bottom Overlay containing Label and Title */}
+                        <div className="absolute bottom-8 inset-x-8 z-20 flex flex-col gap-2 text-white text-left">
+                          <span className="text-[10px] uppercase tracking-[0.25em] font-extrabold text-[#D9C3A5] block">
+                            {img.tag}
+                          </span>
+                          <h4 className="text-2xl font-bold font-sans tracking-wide">
+                            {img.label}
+                          </h4>
+                        </div>
+                      </Slider>
+                    ))}
+                  </SliderContainer>
+                </Carousel>
+              </div>
+            </div>
+
+            {/* Right Side: Navigation & Info */}
+            <div
+              className="w-full md:w-1/2 h-full flex flex-col justify-between p-8 md:p-16 relative overflow-y-auto"
+            >
+              {/* Huge half-hidden background text in bottom right */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[4.2rem] xs:text-[5rem] sm:text-[6.5rem] md:text-[7rem] lg:text-[8rem] font-raleway font-black uppercase tracking-tighter leading-none select-none bg-gradient-to-b from-[#0B1F3A]/8 to-transparent bg-clip-text text-transparent text-center w-full whitespace-nowrap">
+                  NEIDHAL FC
+                </span>
+              </div>
+
+              {/* Top Row: Logo & Close */}
+              <div className="flex items-center justify-between w-full relative z-10">
+                <Link
+                  href="/"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-3 group select-none cursor-pointer"
+                >
+                  <div className="relative h-10 w-10 sm:h-12 sm:w-12 overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                    <Image
+                      src="/logo/neidhal_logo.png"
+                      alt="Neidhal FC Logo"
+                      fill
+                      sizes="48px"
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                </Link>
+
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="font-sans font-bold text-xs uppercase tracking-[0.2em] text-[#0B1F3A] hover:text-[#0077b6] transition-colors cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+
+              {/* Middle Row: Links list */}
+              <div className="my-auto py-12 md:py-0 text-left relative z-10">
+                <nav className="flex flex-col gap-6 md:gap-8">
+                  {NAV_LINKS.map((link, idx) => {
                     const isActive = pathname === link.href;
                     return (
-                      <Link
+                      <motion.div
                         key={link.href}
-                        href={link.href}
-                        className={cn(
-                          "font-sans font-semibold text-[11px] uppercase tracking-wider transition-colors duration-200 relative px-3.5 py-2 rounded-full cursor-pointer select-none",
-                          isActive 
-                            ? (isDarkHero ? "text-white font-bold" : "text-primary font-bold")
-                            : (isDarkHero ? "text-slate-300 hover:text-white" : "text-primary/70 hover:text-primary")
-                        )}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 + idx * 0.08, duration: 0.4 }}
                       >
-                        <span className="relative z-10">{link.label}</span>
-                        {isActive && (
-                          <motion.span
-                            layoutId="activeTab"
-                            className={cn(
-                              "absolute inset-0 rounded-full z-0 border",
-                              isDarkHero 
-                                ? "bg-white/10 border-white/5" 
-                                : "bg-primary/5 border-primary/10"
+                        <Link
+                          href={link.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className="flex items-center gap-3 hover:pl-4 transition-all duration-300 cursor-pointer group"
+                        >
+                          <Letter3DSwap
+                            as="span"
+                            staggerDuration={0.03}
+                            rotateDirection="top"
+                            mainClassName={cn(
+                              "font-sans font-bold text-[2.8rem] xs:text-[3.4rem] sm:text-[4rem] md:text-5xl uppercase tracking-[0.1em]",
+                              isActive ? "text-[#0B1F3A]" : "text-[#0B1F3A]/70 group-hover:text-[#0B1F3A]"
                             )}
-                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          />
-                        )}
-                      </Link>
+                            frontFaceClassName="text-current"
+                            secondFaceClassName="text-current"
+                          >
+                            {link.label}
+                          </Letter3DSwap>
+
+                          <span className={cn(
+                            "transition-all duration-300 text-[#0B1F3A]",
+                            isActive
+                              ? "opacity-100 translate-y-0 translate-x-0"
+                              : "opacity-0 translate-y-2 -translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0"
+                          )}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="w-[0.7em] h-[0.7em]"
+                            >
+                              <line x1="7" y1="17" x2="17" y2="7"></line>
+                              <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                          </span>
+                        </Link>
+                      </motion.div>
                     );
                   })}
                 </nav>
               </div>
 
-              {/* Mobile Controls */}
-              <div className="md:hidden flex items-center gap-2 pointer-events-auto">
-                <button
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className={cn(
-                    "h-9 w-9 rounded-full flex items-center justify-center border transition-colors cursor-pointer",
-                    isDarkHero
-                      ? "text-white bg-white/10 hover:bg-white/15 border-white/10"
-                      : "text-primary bg-primary/5 hover:bg-primary/10 border-primary/10"
-                  )}
-                  aria-label="Toggle menu"
-                >
-                  {isMobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
-                </button>
-              </div>
+              {/* Bottom Spacer to balance the layout */}
+              <div className="hidden md:block h-12 w-full" />
             </div>
-
-            {/* Mobile Menu Dropdown */}
-            <AnimatePresence>
-              {isMobileMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="md:hidden w-[180px] p-2.5 bg-[#0B1528]/85 backdrop-blur-xl border border-white/10 rounded-3xl shadow-[0_16px_48px_rgba(0,0,0,0.3)] flex flex-col gap-1.5 pointer-events-auto origin-top-right mt-2"
-                >
-                  <nav className="flex flex-col gap-1">
-                    {NAV_LINKS.map((link) => {
-                      const isActive = pathname === link.href;
-                      return (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          className={cn(
-                            "font-sans font-semibold text-[11px] tracking-wider uppercase transition-colors duration-200 block px-4 py-2.5 rounded-2xl cursor-pointer select-none text-right",
-                            isActive ? "text-white bg-white/10 font-bold" : "text-slate-300 hover:text-white"
-                          )}
-                        >
-                          {link.label}
-                        </Link>
-                      );
-                    })}
-                  </nav>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </motion.div>
-      ) : (
-        <motion.div
-          key="dock-nav"
-          initial={{ y: 80, x: "-50%", opacity: 0 }}
-          animate={{ y: 0, x: "-50%", opacity: 1 }}
-          exit={{ y: 80, x: "-50%", opacity: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="fixed bottom-6 left-1/2 z-50 flex items-center gap-2.5 md:gap-4 p-2.5 px-5 bg-[#0B1528]/85 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_-8px_32px_rgba(0,0,0,0.3)] pointer-events-auto whitespace-nowrap"
-        >
-          {/* Links */}
-          <nav className="flex items-center gap-0.5 md:gap-1">
-            {NAV_LINKS.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "font-sans font-semibold text-[9px] md:text-[11px] uppercase tracking-wider transition-colors duration-200 relative px-2.5 md:px-3.5 py-1.5 rounded-full cursor-pointer select-none",
-                    isActive ? "text-white font-bold" : "text-slate-300 hover:text-white"
-                  )}
-                >
-                  <span className="relative z-10">{link.label}</span>
-                  {isActive && (
-                    <motion.span
-                      layoutId="activeTabDock"
-                      className="absolute inset-0 bg-white/10 rounded-full z-0 border border-white/5"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

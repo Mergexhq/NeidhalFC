@@ -24,9 +24,9 @@ interface KeeperSpriteProps {
 }
 
 // URL-encoded paths (spaces → %20)
-const IMG_REST = "/keeper%20rest.png";
-const IMG_LEFT = "/left%20catch.png";
-const IMG_RIGHT = "/rigth%20catch.png";  // matches actual filename "rigth"
+const IMG_REST = "/game/sprites/keeper-rest.png";
+const IMG_LEFT = "/game/sprites/left-catch.png";
+const IMG_RIGHT = "/game/sprites/right-catch.png";
 
 function getKeeperImage(keeperPos: KeeperAction, isShooting: boolean): string {
   if (isShooting) {

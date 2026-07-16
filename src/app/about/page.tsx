@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import AboutHero from "@/modules/about/AboutHero";
 import BrandMeaning from "@/modules/about/BrandMeaning";
 import OriginsSlider from "@/modules/about/OriginsSlider";
-import Philosophy from "@/modules/about/Philosophy";
 import OperationalUSP from "@/modules/about/OperationalUSP";
 
 export const metadata: Metadata = {
@@ -17,7 +16,6 @@ export default function AboutPage() {
       <AboutHero />
       <BrandMeaning />
       <OriginsSlider />
-      <Philosophy />
       <OperationalUSP />
     </>
   );

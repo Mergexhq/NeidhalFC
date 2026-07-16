@@ -95,7 +95,7 @@ export const FootballCTA: React.FC = () => {
             <div className="relative overflow-hidden rounded-2xl">
               {/* Illustration image */}
               <Image
-                src="/Tap to play illustration.png"
+                src="/game/ui/tap-to-play.png"
                 alt="Player about to take a beach penalty - tap to play the game"
                 width={1344}
                 height={896}
@@ -160,7 +160,7 @@ export const FootballCTA: React.FC = () => {
               className="h-[48px] w-[48px] rounded-full cursor-grab active:cursor-grabbing flex items-center justify-center bg-white shadow-[0_2px_8px_rgba(0,0,0,0.12)] z-40 shrink-0"
             >
               <Image
-                src="/1380575802.svg"
+                src="/images/decorations/football-handle.svg"
                 alt="Football handle"
                 width={40}
                 height={40}

@@ -39,7 +39,7 @@ const LOCATIONS_DATA: Record<string, LocationData> = {
     email: "contact@neidhalfc.com",
     mapLink: "https://maps.google.com/?q=Neidhal+FC+Turf+Injambakkam",
     calCom: "https://cal.com/neidhalfc/injambakkam-trial",
-    image: "/football-turf/injambakkam-4.webp",
+    image: "/images/locations/injambakkam-4.webp",
     hours: "Monday – Sunday: 5:00 AM – 9:00 PM",
   },
   Palavakkam: {
@@ -52,7 +52,7 @@ const LOCATIONS_DATA: Record<string, LocationData> = {
     email: "contact@neidhalfc.com",
     mapLink: "https://maps.google.com/?q=Palavakkam+Chennai",
     calCom: "https://cal.com/neidhalfc/palavakkam-trial",
-    image: "/football-turf/kottivakkam-3.webp",
+    image: "/images/locations/kottivakkam-3.webp",
     hours: "Monday – Sunday: 5:00 AM – 9:00 PM",
   },
   Thoraipakkam: {
@@ -65,7 +65,7 @@ const LOCATIONS_DATA: Record<string, LocationData> = {
     email: "contact@neidhalfc.com",
     mapLink: "https://maps.google.com/?q=Thoraipakkam+Chennai",
     calCom: "https://cal.com/neidhalfc/thoraipakkam-trial",
-    image: "/football-turf/nandanam-3.webp",
+    image: "/images/locations/nandanam-3.webp",
     hours: "Monday – Sunday: 5:00 AM – 9:00 PM",
   },
 };
@@ -586,7 +586,7 @@ export const ContactHero: React.FC = () => {
                   className="absolute -top-[15%] left-0 w-full h-[130%] origin-center z-0 pointer-events-none"
                 >
                   <Image
-                    src="/slot book.png"
+                    src="/images/decorations/slot-book.png"
                     alt="Book Slot Background"
                     fill
                     sizes="(max-width: 640px) 100vw, 30vw"

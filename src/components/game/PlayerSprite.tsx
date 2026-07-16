@@ -20,7 +20,7 @@ interface PlayerSpriteProps {
 
 export function PlayerSprite({ phase }: PlayerSpriteProps) {
   const isShooting = phase === "shooting" || phase === "result";
-  const imgSrc = isShooting ? "/player%201%20kick.png" : "/player1.png";
+  const imgSrc = isShooting ? "/game/sprites/player-kick.png" : "/game/sprites/player-ready.png";
 
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-none z-20">

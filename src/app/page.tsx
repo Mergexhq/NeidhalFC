@@ -1,5 +1,6 @@
 import React from "react";
 import Hero from "@/modules/home/Hero";
+import WhyWeStarted from "@/modules/home/WhyWeStarted";
 
 import CoachSection from "@/modules/home/CoachSection";
 import LifeAtNeidhal from "@/modules/home/LifeAtNeidhal";
@@ -13,6 +14,7 @@ export default function HomePage() {
   return (
     <div className="bg-gradient-to-b from-[#F5EFE6] to-[#FAF7F2]">
       <Hero />
+      <WhyWeStarted />
 
       <CoachSection />
       <LifeAtNeidhal />

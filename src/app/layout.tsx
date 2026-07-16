@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { Raleway } from "next/font/google";
 import "./globals.css";
+
+const raleway = Raleway({
+  subsets: ["latin"],
+  variable: "--font-raleway",
+  display: "swap",
+});
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -10,92 +17,92 @@ config.autoAddCss = false;
 const friendsFont = localFont({
   src: [
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Thin.ttf",
+      path: "../../public/fonts/friends/Friends-Thin.ttf",
       weight: "100",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-ThinItalic.ttf",
+      path: "../../public/fonts/friends/Friends-ThinItalic.ttf",
       weight: "100",
       style: "italic",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-UltraLight.ttf",
+      path: "../../public/fonts/friends/Friends-UltraLight.ttf",
       weight: "200",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-UltraLightItalic.ttf",
+      path: "../../public/fonts/friends/Friends-UltraLightItalic.ttf",
       weight: "200",
       style: "italic",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Regular.ttf",
+      path: "../../public/fonts/friends/Friends-Regular.ttf",
       weight: "300",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Italic.ttf",
+      path: "../../public/fonts/friends/Friends-Italic.ttf",
       weight: "300",
       style: "italic",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Regular.ttf",
+      path: "../../public/fonts/friends/Friends-Regular.ttf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Italic.ttf",
+      path: "../../public/fonts/friends/Friends-Italic.ttf",
       weight: "400",
       style: "italic",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Regular.ttf",
+      path: "../../public/fonts/friends/Friends-Regular.ttf",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Italic.ttf",
+      path: "../../public/fonts/friends/Friends-Italic.ttf",
       weight: "500",
       style: "italic",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-SemiBold.ttf",
+      path: "../../public/fonts/friends/Friends-SemiBold.ttf",
       weight: "600",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-SemiBoldItalic.ttf",
+      path: "../../public/fonts/friends/Friends-SemiBoldItalic.ttf",
       weight: "600",
       style: "italic",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-UltraBold.ttf",
+      path: "../../public/fonts/friends/Friends-UltraBold.ttf",
       weight: "700",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-UltraBoldItalic.ttf",
+      path: "../../public/fonts/friends/Friends-UltraBoldItalic.ttf",
       weight: "700",
       style: "italic",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Black.ttf",
+      path: "../../public/fonts/friends/Friends-Black.ttf",
       weight: "800",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-BlackItalic.ttf",
+      path: "../../public/fonts/friends/Friends-BlackItalic.ttf",
       weight: "800",
       style: "italic",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-Black.ttf",
+      path: "../../public/fonts/friends/Friends-Black.ttf",
       weight: "900",
       style: "normal",
     },
     {
-      path: "../../public/1689860129wpdm_Friends-Font-Family/Friends Font Family/TTF/Friends-BlackItalic.ttf",
+      path: "../../public/fonts/friends/Friends-BlackItalic.ttf",
       weight: "900",
       style: "italic",
     },
@@ -142,7 +149,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${(friendsFont as any).variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" className={`${(friendsFont as any).variable} ${raleway.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="font-sans antialiased bg-[#FAF7F2] text-black flex flex-col">
         <main className="grow">
           {children}

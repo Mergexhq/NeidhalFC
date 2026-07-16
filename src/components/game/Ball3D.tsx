@@ -34,7 +34,7 @@ function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
 
   // URL-safe path - no spaces
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { scene, materials } = useGLTF("/Ball/ball.gltf") as unknown as {
+  const { scene, materials } = useGLTF("/game/ball/ball.gltf") as unknown as {
     scene: THREE.Group;
     materials: Record<string, THREE.MeshStandardMaterial>;
   };
@@ -75,7 +75,7 @@ function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
 }
 
 // Pre-load immediately
-useGLTF.preload("/Ball/ball.gltf");
+useGLTF.preload("/game/ball/ball.gltf");
 
 // ── Canvas wrapper ───────────────────────────────────────────────────────────
 interface Ball3DProps {
