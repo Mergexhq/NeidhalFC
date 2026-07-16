@@ -21,8 +21,8 @@ export default function HomePage() {
       <PhotoStrip />
       <TestimonialBoard />
       <SeasonalEvents />
-      <HomeCTA />
       <FootballCTA />
+      <HomeCTA />
     </div>
   );
 }

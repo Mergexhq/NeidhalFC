@@ -15,7 +15,7 @@ const SEASONAL_PROGRAMS = [
     location: "Kottivakkam Beach Turf",
     price: "₹3,500 / Full Camp",
     description: "Our signature annual camp covering street football styles, beach sand physical conditioning, and 1v1 skill mastery. Open for U6 to U16.",
-    image: "/images/beach_soccer.jpg"
+    image: "/images/gallery/gallery-09.webp"
   },
   {
     id: "annual-reg",
@@ -26,7 +26,7 @@ const SEASONAL_PROGRAMS = [
     location: "Kottivakkam, Injambakkam & Nandanam",
     price: "₹2,500 / Monthly Fee",
     description: "Join our main academy training structure. Includes official Neidhal kit bag, customized coaching diagnostics, and participation in coastal leagues.",
-    image: "/images/coaching_ratio.jpg"
+    image: "/images/gallery/gallery-04.webp"
   },
 ];
 
@@ -43,23 +43,17 @@ export const SeasonalEvents: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-24 relative overflow-hidden bg-transparent">
+    <section className="py-14 relative overflow-hidden bg-transparent">
       {/* Subtle grid pattern to match original aesthetic */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,31,58,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,31,58,0.01)_1px,transparent_1px)] bg-size-[4rem_4rem] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-4xl mx-auto mb-16">
-          <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-accent mb-4 block font-sans">
-            Chapter 4: {"What's Happening"}
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold font-display tracking-wide text-primary text-center mb-6 select-none">
+        <div className="text-center max-w-4xl mx-auto mb-12">
+          <h2 className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center">
             Active Programs & Camps
           </h2>
-          <p className="text-[#6F6F6F] text-xs md:text-sm font-normal max-w-xl mx-auto leading-relaxed">
-            Keep track of our seasonal intakes and clinics. Book a trial session to secure a spot in any active program.
-          </p>
         </div>
 
         {/* Interactive Tabs */}

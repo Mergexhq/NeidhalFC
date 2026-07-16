@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import Image from "next/image";
 
@@ -31,55 +31,26 @@ const TESTIMONIALS = [
   },
   {
     quote: "Very good coaching and a great atmosphere for learning football. The training drills are professional and help players improve quickly. Happy to see young talents developing here.",
-    parent: "Hsh Hsh",
+    parent: "Aisha Rizwan",
     role: "Nandanam Center",
-    stars: 5,
-  },
-  {
-    quote: "Good teaching.",
-    parent: "Benghar Benghar",
-    role: "Nandanam Center",
-    stars: 5,
-  },
-  {
-    quote: "People are good.",
-    parent: "Daryl Dixon",
-    role: "Nandanam Center",
-    stars: 5,
-  },
-  {
-    quote: "My child loves coming to training every week. The coaches are patient and motivating, and they create a positive environment for kids to learn football. Great academy for young players.",
-    parent: "Hsh Hsh",
-    role: "Kottivakkam Center",
-    stars: 5,
-  },
-  {
-    quote: "Coaches are knowledge in fenominal.",
-    parent: "Benghar Benghar",
-    role: "Kottivakkam Center",
-    stars: 5,
-  },
-  {
-    quote: "Good environment",
-    parent: "Daryl Dixon",
-    role: "Kottivakkam Center",
     stars: 5,
   },
   {
     quote: "Amazing football academy! The coaches are very knowledgeable and give personal attention to every player. Training sessions are well structured and focus on fitness, technique, and game understanding. Perfect place for kids to develop their football talent.",
-    parent: "Daryl Dixon",
-    role: "Injambakkam Center",
-    stars: 5,
-  },
-  {
-    quote: "Excellent service.",
-    parent: "Benghar Benghar",
+    parent: "Rajesh Kumar",
     role: "Injambakkam Center",
     stars: 5,
   },
 ];
 
 export const TestimonialBoard: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+
   const [currentIndex, setCurrentIndex] = useState(TESTIMONIALS.length);
   const [cardsPerPage, setCardsPerPage] = useState(3);
   const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
@@ -153,36 +124,43 @@ export const TestimonialBoard: React.FC = () => {
   };
 
   return (
-    <section className="bg-transparent px-4 py-4 md:px-6 md:py-6 relative overflow-hidden">
+    <section className="bg-transparent px-4 pt-24 pb-2 md:px-6 md:pt-36 md:pb-3 relative overflow-hidden">
       {/* Cinematic Rounded Testimonial Box */}
-      <div className="relative w-full min-h-[70vh] rounded-3xl bg-primary text-white py-20 flex flex-col items-center justify-center overflow-hidden border border-white/5">
+      <div ref={containerRef} className="relative w-full min-h-[50vh] md:min-h-[520px] rounded-3xl bg-primary text-white py-10 md:py-14 flex flex-col items-center justify-center overflow-hidden border border-white/5">
 
-        {/* Background visual image matching reference */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/neidhal testimonial.jpg"
-            alt="Coastal football training background"
-            fill
-            className="object-cover pointer-events-none select-none"
-            priority
-          />
+        {/* Background visual image with smooth parallax */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <motion.div
+            style={{
+              y,
+              position: "absolute",
+              top: "-15%",
+              bottom: "-15%",
+              left: 0,
+              right: 0,
+              width: "100%",
+              height: "130%",
+            }}
+          >
+            <Image
+              src="/images/neidhal testimonial.jpg"
+              alt="Coastal football training background"
+              fill
+              className="object-cover pointer-events-none select-none"
+              priority
+            />
+          </motion.div>
           {/* Mild black overlay to optimize text contrast and match reference image */}
-          <div className="absolute inset-0 bg-black/65 backdrop-blur-[2.5px] pointer-events-none" />
+          <div className="absolute inset-0 bg-black/65 backdrop-blur-[2.5px] pointer-events-none z-[1]" />
         </div>
 
         <div className="relative z-10 w-full flex flex-col items-center">
 
-          {/* Header - Kept centered */}
-          <div className="text-center max-w-3xl mx-auto mb-16 px-6">
-            <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-sand mb-4 block">
-              Chapter 2: The Voices
-            </span>
-            <h2 className="text-4xl md:text-5xl font-semibold text-white font-display tracking-wide leading-tight">
-              Trusted by Chennai Parents
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10 px-6">
+            <h2 className="font-raleway font-semibold text-white uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center">
+              Voices of Neidhal FC
             </h2>
-            <p className="text-slate-300/80 font-normal text-xs md:text-sm mt-4 max-w-xl mx-auto leading-relaxed">
-              Read stories of how our dual-coach development system and coastal roots have transformed kids' technical and personal growth.
-            </p>
           </div>
 
           {/* Carousel Viewport Container - Edge-to-Edge with no padding */}
@@ -236,7 +214,7 @@ export const TestimonialBoard: React.FC = () => {
           <div className="flex items-center justify-between w-full max-w-xs mx-auto mt-12 px-6">
             <button
               onClick={handlePrev}
-              className="h-12 w-12 rounded-full border border-white/20 bg-white/5 text-white flex items-center justify-center hover:scale-105 active:scale-95 hover:bg-white/10 transition-all cursor-pointer shadow-md"
+              className="h-12 w-12 rounded-full border border-white/20 bg-white/5 text-white flex items-center justify-center hover:scale-105 active:scale-95 hover:bg-white/10 transition-all cursor-pointer shadow-md shrink-0"
               aria-label="Previous slide"
             >
               <ChevronLeft size={20} />
@@ -263,7 +241,7 @@ export const TestimonialBoard: React.FC = () => {
 
             <button
               onClick={handleNext}
-              className="h-12 w-12 rounded-full border border-white/20 bg-white/5 text-white flex items-center justify-center hover:scale-105 active:scale-95 hover:bg-white/10 transition-all cursor-pointer shadow-md"
+              className="h-12 w-12 rounded-full border border-white/20 bg-white/5 text-white flex items-center justify-center hover:scale-105 active:scale-95 hover:bg-white/10 transition-all cursor-pointer shadow-md shrink-0"
               aria-label="Next slide"
             >
               <ChevronRight size={20} />

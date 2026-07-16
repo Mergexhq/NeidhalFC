@@ -92,7 +92,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
         // Desktop: w * 0.24 (slightly larger cards filling viewport)
         // Mobile: w * 0.50
         const width = isMobile ? w * 0.50 : w * 0.24;
-        const height = width * 2.0;
+        const height = width * 1.70;
 
         // Radius formula - lower multiplier = tighter spacing between cards
         const angleIncrement = 360 / items.length;
@@ -223,7 +223,7 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
       <div
         ref={containerRef}
         className={cn(
-          "relative flex min-h-screen w-full flex-col items-center justify-center bg-transparent z-10 overflow-hidden",
+          "relative flex min-h-[500px] md:min-h-[650px] w-full flex-col items-center justify-center bg-transparent z-10 overflow-hidden",
           className
         )}
         {...rest}
@@ -231,10 +231,10 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
         {children}
         <div
           ref={wrapperRef}
-          className="relative flex w-full items-center justify-center translate-y-20 md:translate-y-24 z-30 pointer-events-auto"
+          className="relative flex w-full items-center justify-center translate-y-6 md:translate-y-8 z-30 pointer-events-auto"
           style={{
             perspective: `${perspective}px`,
-            height: `${dimensions.itemHeight + 120}px`
+            height: `${dimensions.itemHeight + 40}px`
           }}
         >
           <ul

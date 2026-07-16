@@ -29,7 +29,7 @@ export const FootballCTA: React.FC = () => {
         className="relative overflow-hidden py-16 md:py-24"
         style={{
           background:
-            "linear-gradient(180deg, #FAF7F2 0%, #FAF2E6 35%, #F3E6CE 65%, #ECDAB9 100%)",
+            "linear-gradient(180deg, #FAF7F2 0%, #FAF7F0 30%, #F8F3EA 65%, #F4EDE0 100%)",
         }}
         aria-label="Take the penalty - interactive experience"
       >
@@ -49,20 +49,9 @@ export const FootballCTA: React.FC = () => {
 
         <div className="max-w-5xl mx-auto px-6 text-center relative z-30">
 
-          {/* Chapter label */}
-          <motion.span
-            className="text-[11px] uppercase tracking-[0.28em] font-bold text-[#8B6330] mb-4 block font-sans"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            From the Shore
-          </motion.span>
-
           {/* Headline */}
           <motion.h2
-            className="font-condensed text-5xl md:text-7xl lg:text-[90px] leading-none tracking-wider text-[#0B1F3A] uppercase mb-3"
+            className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center mb-8"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -70,16 +59,6 @@ export const FootballCTA: React.FC = () => {
           >
             Take The Shot
           </motion.h2>
-
-          <motion.p
-            className="text-[#8B6330]/55 font-sans text-xs md:text-sm tracking-[0.22em] uppercase font-medium mb-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.16 }}
-          >
-            From the shores of Chennai to the football pitch
-          </motion.p>
 
           {/* ── Illustration - main clickable hero ──────────────────────────────── */}
           <motion.button
