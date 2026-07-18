@@ -162,9 +162,9 @@ export const Hero: React.FC = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=300%",
+          end: "+=600%",
           pin: heroRef.current,
-          scrub: 0.5, // Smooth interpolation (increased for slow-mo and buttery feel)
+          scrub: 0.8, // Smooth interpolation (increased for slow-mo and buttery feel)
           anticipatePin: 1,
           refreshPriority: 1,       // Processed FIRST - spacer committed before CoachSection refresh
           invalidateOnRefresh: true,

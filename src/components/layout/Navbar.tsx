@@ -155,15 +155,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               priority
             />
           </div>
-          <div className={cn(
-            "flex items-center font-raleway text-xl sm:text-2xl tracking-wider leading-none transition-colors duration-300 font-medium",
-            isDarkHero ? "text-white" : "text-primary"
-          )}>
+          <div className="flex items-center font-raleway text-xl sm:text-2xl tracking-wider leading-none transition-colors duration-300 font-medium text-[#0B1F3A]">
             <span>NEIDHAL</span>
-            <span className={cn(
-              "ml-2 font-light inline-flex overflow-hidden transition-all duration-500 ease-in-out w-[22px] group-hover:w-[180px] sm:w-[26px] sm:group-hover:w-[220px] relative whitespace-nowrap",
-              isDarkHero ? "text-sand" : "text-[#BCA688]"
-            )}>
+            <span className="ml-2 font-light inline-flex overflow-hidden transition-all duration-500 ease-in-out w-[22px] group-hover:w-[180px] sm:w-[26px] sm:group-hover:w-[220px] relative whitespace-nowrap text-[#0B1F3A]">
               <span className="transition-opacity duration-300 group-hover:opacity-0">FC</span>
               <span className="absolute left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">FOOTBALL CLUB</span>
             </span>

@@ -75,9 +75,9 @@ export const CoachSection: React.FC = () => {
       </div>
 
       {/* ═══════════════════════════════════════════════════════
-          5 STACKED HORIZONTAL CARD BARS  (desktop)
+          STACKED HORIZONTAL CARD BARS  (Responsive Mobile & Desktop)
           ═══════════════════════════════════════════════════════ */}
-      <div className="relative z-10 hidden md:block w-full px-6 sm:px-10 md:px-16 pb-28">
+      <div className="relative z-10 w-full px-4 sm:px-10 md:px-16 pb-20 md:pb-28">
         <div className="max-w-7xl mx-auto flex flex-col gap-4">
 
           {COACHES.map((coach, index) => {
@@ -90,8 +90,7 @@ export const CoachSection: React.FC = () => {
               <div
                 key={coach.id}
                 /* overflow-visible — image floats above, card is flush at bottom */
-                className="group relative flex items-end overflow-visible"
-                style={{ minHeight: `${CARD_H + OVERFLOW_TOP}px` }}
+                className="group relative flex items-end overflow-visible h-[110px] md:h-[194px]"
               >
                 {/* ── The card bar itself — flush at bottom, inset at top ── */}
                 <div
@@ -100,10 +99,10 @@ export const CoachSection: React.FC = () => {
                     flex items-center
                     rounded-2xl
                     transition-all duration-500
+                    top-[30px] md:top-[64px]
+                    bottom-0
                   "
                   style={{
-                    top: `${OVERFLOW_TOP}px`,
-                    bottom: 0,
                     background: "#F5EFE6",
                     border: "1px solid rgba(11,31,58,0.08)",
                     boxShadow: "0 8px 32px rgba(11,31,58,0.06)",
@@ -121,21 +120,16 @@ export const CoachSection: React.FC = () => {
                 {/* ── LEFT PHOTO (overflows TOP only, flush at bottom) ── */}
                 {leftImageSrc && (
                   <div
-                    className="relative shrink-0 z-20"
-                    style={{
-                      width: "clamp(180px, 20vw, 250px)",
-                      height: `${CARD_H + OVERFLOW_TOP}px`,
-                      marginLeft: "clamp(16px, 2.5vw, 40px)",
-                    }}
+                    className="relative shrink-0 z-20 w-[80px] sm:w-[120px] md:w-[220px] lg:w-[250px] h-[110px] sm:h-[140px] md:h-[194px] ml-2 sm:ml-4 md:ml-8 lg:ml-10"
                   >
                     <Image
                       src={leftImageSrc}
                       alt={`${coach.name} left visual`}
                       fill
-                      sizes="(max-width: 1280px) 20vw, 250px"
+                      sizes="(max-width: 768px) 120px, 250px"
                       className="
                         object-contain object-bottom
-                        drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]
+                        drop-shadow-[0_10px_20px_rgba(0,0,0,0.35)] md:drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]
                         transition-transform duration-500
                       "
                       priority={index < 2}
@@ -145,12 +139,11 @@ export const CoachSection: React.FC = () => {
 
                 {/* ── TEXT & CTA CONTENT WRAPPER ── */}
                 <div
-                  className="relative z-10 flex-1 flex items-center justify-center px-8"
-                  style={{ height: `${CARD_H}px` }}
+                  className="relative z-10 flex-1 flex items-center justify-center px-4 md:px-8 h-[80px] md:h-[130px]"
                 >
                   <h3
-                    className="font-sans font-bold uppercase tracking-[0.06em] text-center leading-[1.0]"
-                    style={{ fontSize: "clamp(28px, 3.2vw, 44px)", color: "#0B1F3A" }}
+                    className="font-sans font-bold uppercase tracking-[0.06em] text-center leading-[1.0] text-sm sm:text-base md:text-2xl lg:text-[34px] xl:text-[40px]"
+                    style={{ color: "#0B1F3A" }}
                   >
                     {coach.name}
                   </h3>
@@ -158,37 +151,31 @@ export const CoachSection: React.FC = () => {
                   <Link
                     href="/about"
                     className="
-                      absolute right-8
+                      absolute right-3 md:right-8
                       shrink-0 flex items-center justify-center
-                      h-9 w-9 rounded-full
+                      h-6 w-6 md:h-9 md:w-9 rounded-full
                       transition-all duration-300
                     "
                     style={{ background: "#0B1F3A", color: "#ffffff" }}
                     aria-label={`Learn more about ${coach.name}`}
                   >
-                    <ArrowUpRight size={14} />
+                    <ArrowUpRight className="h-3 w-3 md:h-[14px] md:w-[14px]" />
                   </Link>
                 </div>
-
 
                 {/* ── RIGHT PHOTO (overflows TOP only, flush at bottom) ── */}
                 {rightImageSrc && (
                   <div
-                    className="relative shrink-0 z-20"
-                    style={{
-                      width: "clamp(180px, 20vw, 250px)",
-                      height: `${CARD_H + OVERFLOW_TOP}px`,
-                      marginRight: "clamp(16px, 2.5vw, 40px)",
-                    }}
+                    className="relative shrink-0 z-20 w-[80px] sm:w-[120px] md:w-[220px] lg:w-[250px] h-[110px] sm:h-[140px] md:h-[194px] mr-2 sm:mr-4 md:mr-8 lg:mr-10"
                   >
                     <Image
                       src={rightImageSrc}
                       alt={`${coach.name} right visual`}
                       fill
-                      sizes="(max-width: 1280px) 20vw, 250px"
+                      sizes="(max-width: 768px) 120px, 250px"
                       className="
                         object-contain object-bottom
-                        drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]
+                        drop-shadow-[0_10px_20px_rgba(0,0,0,0.35)] md:drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]
                         transition-transform duration-500
                       "
                       priority={index < 2}
@@ -197,52 +184,8 @@ export const CoachSection: React.FC = () => {
                 )}
               </div>
             );
-
           })}
         </div>
-
-
-      </div>
-
-      {/* ═══════════════════════════════════════════════════════
-          MOBILE — stacked cards
-          ═══════════════════════════════════════════════════════ */}
-      <div className="md:hidden flex flex-col gap-0 pb-16 relative z-10">
-        {COACHES.map((coach, index) => (
-          <div
-            key={coach.id}
-            className="flex flex-col gap-5 px-6 py-10 border-t border-[#0B1F3A]/10 first:border-0"
-          >
-            <h3 className="font-sans font-bold uppercase tracking-[0.06em] text-[#0B1F3A] text-3xl tracking-tight leading-tight">
-              {coach.name}
-            </h3>
-            <div
-              className="relative w-full rounded-2xl overflow-hidden bg-[#F5EFE6] border border-[#0B1F3A]/10"
-              style={{ aspectRatio: "4/3" }}
-            >
-              <Image
-                src={coach.image}
-                alt={coach.name}
-                fill
-                sizes="100vw"
-                className="object-contain object-bottom drop-shadow-[0_16px_32px_rgba(0,0,0,0.5)]"
-                priority={index === 0}
-              />
-            </div>
-
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-2.5 group cursor-pointer w-fit"
-            >
-              <span className="font-sans font-bold text-[10px] uppercase tracking-widest border border-[#0B1F3A]/20 text-[#0B1F3A] px-6 py-2.5 rounded-full">
-                Learn More
-              </span>
-              <span className="h-9 w-9 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center shadow-md">
-                <ArrowUpRight size={14} />
-              </span>
-            </Link>
-          </div>
-        ))}
       </div>
 
     </div>
