@@ -12,7 +12,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const TOTAL_FRAMES = 193;
+const TOTAL_FRAMES = 241;
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
