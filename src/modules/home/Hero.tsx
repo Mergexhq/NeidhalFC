@@ -52,10 +52,11 @@ export const Hero: React.FC = () => {
       }
     };
 
-    // Preload all frames from the unified hero directory (which scales to cover canvas sizes for both mobile and desktop)
+    // Preload all frames from the device-specific directory (mobile or desktop)
+    const deviceType = isMob ? "mobile" : "desktop";
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = `/hero/frame_${String(i).padStart(4, "0")}.webp`;
+      img.src = `/hero/${deviceType}/frame_${String(i).padStart(4, "0")}.webp`;
       img.onload = handleImageLoad;
       img.onerror = handleImageError;
       loadedImages.push(img);
@@ -161,9 +162,9 @@ export const Hero: React.FC = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=100%",
+          end: "+=300%",
           pin: heroRef.current,
-          scrub: 0.15, // Smooth interpolation
+          scrub: 0.5, // Smooth interpolation (increased for slow-mo and buttery feel)
           anticipatePin: 1,
           refreshPriority: 1,       // Processed FIRST - spacer committed before CoachSection refresh
           invalidateOnRefresh: true,
@@ -262,9 +263,10 @@ export const Hero: React.FC = () => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            backgroundImage: "url('/hero/frame_0001.webp')",
+            objectPosition: isMobileDevice ? "center" : "center top",
+            backgroundImage: `url('/hero/${isMobileDevice ? "mobile" : "desktop"}/frame_0001.webp')`,
             backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundPosition: isMobileDevice ? "center" : "center top",
           }}
           className="z-0"
         />

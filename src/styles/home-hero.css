@@ -51,7 +51,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 100%); /* Reduced opacity */
+  background: transparent;
 }
 
 /* Hero Content Wrapper */
