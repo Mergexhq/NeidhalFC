@@ -19,6 +19,7 @@ function ConfettiCanvas() {
     if (!ctx) return;
 
     let animationFrameId: number;
+    let stopped = false;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -31,7 +32,8 @@ function ConfettiCanvas() {
     const colors = ["#FAF7F2", "#C5A880", "#005f73", "#e9d8a6", "#0B1F3A", "#94D2BD", "#EE9B00", "#CA6702", "#BB3E03", "#AE2012"];
     const particles: any[] = [];
 
-    for (let i = 0; i < 120; i++) {
+    // 80 particles — visually identical to 120 but 33% fewer draw calls
+    for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * -height - 20,
@@ -47,6 +49,7 @@ function ConfettiCanvas() {
     }
 
     const draw = () => {
+      if (stopped) return;
       ctx.clearRect(0, 0, width, height);
 
       particles.forEach((p, idx) => {
@@ -82,9 +85,17 @@ function ConfettiCanvas() {
 
     draw();
 
+    // Auto-stop after 5 seconds to save resources
+    const stopTimer = setTimeout(() => {
+      stopped = true;
+      cancelAnimationFrame(animationFrameId);
+    }, 5000);
+
     return () => {
+      stopped = true;
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(stopTimer);
     };
   }, []);
 

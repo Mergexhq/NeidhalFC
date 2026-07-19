@@ -74,7 +74,7 @@ export const FootballCTA: React.FC = () => {
             <div className="relative overflow-hidden rounded-2xl">
               {/* Illustration image */}
               <Image
-                src="/game/ui/tap-to-play.png"
+                src="/game/ui/tap-to-play.webp"
                 alt="Player about to take a beach penalty - tap to play the game"
                 width={1344}
                 height={896}

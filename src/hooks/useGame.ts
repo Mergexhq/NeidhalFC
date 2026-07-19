@@ -92,11 +92,19 @@ export function useGame() {
     playKick();
 
     // Animate ball: increment shootT from 0 → 1 over SHOT_DURATION_MS
+    // Throttle React state updates to every 3rd frame (~20fps) to reduce re-renders
     const startTime = performance.now();
+    let frameCount = 0;
     const tick = () => {
       const elapsed = performance.now() - startTime;
       const t = Math.min(elapsed / SHOT_DURATION_MS, 1);
-      setShootT(t);
+      frameCount++;
+
+      // Update React state every 3rd frame, or always on the final frame
+      if (t >= 1 || frameCount % 3 === 0) {
+        setShootT(t);
+      }
+
       if (t < 1) {
         shotRAFRef.current = requestAnimationFrame(tick);
         return;

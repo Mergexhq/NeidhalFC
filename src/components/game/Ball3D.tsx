@@ -3,22 +3,16 @@
 /**
  * Ball3D.tsx - React Three Fiber 3D football (GLTF model).
  *
- * Model: /Ball/ball.gltf (copy of "Ball BLEND.gltf" - space removed for URL safety)
- * Materials: "Bianco" (white panels), "Nero.001" (black patches)
- *
- * Fixes:
- *   1. URL-safe path - no space in filename (was failing to load silently).
- *   2. Canvas pointer-events explicitly disabled so AimOverlay receives
- *      all drag events across the whole scene, not just the ball area.
- *   3. Environment preset ("park") for PBR reflections → looks like real leather.
- *   4. Higher-quality material settings: slight glossy sheen on white panels.
- *   5. Fixed canvas size + CSS scale for smooth trajectory (no renderer resize).
- *   6. No idle rotation - ball stays still until kicked.
+ * Performance optimizations:
+ *   1. frameloop="demand" - only renders when invalidated (saves GPU during aiming)
+ *   2. Removed heavy "park" Environment preset (~1MB HDR download)
+ *   3. Capped DPR at [1, 1.5] for mobile performance
+ *   4. Ball mesh is memoized to avoid re-creating on every render
  */
 
-import React, { useRef, useEffect, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, Environment } from "@react-three/drei";
+import React, { useRef, useEffect, Suspense, memo } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import type { AimTarget } from "@/types/game";
 
@@ -29,8 +23,9 @@ interface BallMeshProps {
   isShooting: boolean;
 }
 
-function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
+const BallModel = memo(function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
   const groupRef = useRef<THREE.Group>(null!);
+  const { invalidate } = useThree();
 
   // URL-safe path - no spaces
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,7 +41,7 @@ function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
 
     if (bianco) {
       bianco.color.set("#F2F2F2");
-      bianco.roughness = 0.35;   // slightly glossy - like real leather
+      bianco.roughness = 0.35;
       bianco.metalness = 0.0;
       bianco.envMapIntensity = 0.8;
       bianco.needsUpdate = true;
@@ -60,19 +55,25 @@ function BallModel({ shootT, aimTarget, isShooting }: BallMeshProps) {
     }
   }, [materials]);
 
-  // Spin only during flight
+  // Spin only during flight — request frame only when animating
   useFrame(() => {
     if (!groupRef.current || !isShooting) return;
     groupRef.current.rotation.x = -(shootT * Math.PI * 6);
     groupRef.current.rotation.y = aimTarget.x * shootT * Math.PI * 2;
+    invalidate(); // Request next render frame
   });
+
+  // Also invalidate when shooting starts/stops to ensure state transitions render
+  useEffect(() => {
+    invalidate();
+  }, [isShooting, invalidate]);
 
   return (
     <group ref={groupRef}>
       <primitive object={scene} />
     </group>
   );
-}
+});
 
 // Pre-load immediately
 useGLTF.preload("/game/ball/ball.gltf");
@@ -107,25 +108,22 @@ export function Ball3D({
         height: `${baseSizeVw}vw`,
         transform: `translate(-50%, -50%) scale(${scale})`,
         transformOrigin: "center center",
-        // Critical: wrapper must not capture pointer events
         pointerEvents: "none",
       }}
     >
       <Canvas
+        frameloop="demand"
         gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
         camera={{ position: [0, 0, 3.0], fov: 45 }}
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         style={{
           width: "100%",
           height: "100%",
           background: "transparent",
-          // Canvas element itself must not steal pointer events from AimOverlay
           pointerEvents: "none",
         }}
       >
-        {/* PBR environment - gives the leather panels real reflections */}
         <Suspense fallback={null}>
-          <Environment preset="park" />
           <BallModel
             shootT={shootT}
             aimTarget={aimTarget}
@@ -134,12 +132,12 @@ export function Ball3D({
         </Suspense>
 
         {/* Bright outdoor sun from top-left */}
-        <ambientLight intensity={1.8} />
-        <directionalLight position={[4, 8, 5]} intensity={2.2} />
+        <ambientLight intensity={2.0} />
+        <directionalLight position={[4, 8, 5]} intensity={2.5} />
         {/* Warm sand bounce */}
-        <directionalLight position={[0, -2, 3]} intensity={0.8} color="#ffddaa" />
+        <directionalLight position={[0, -2, 3]} intensity={1.0} color="#ffddaa" />
         {/* Cool sky fill */}
-        <directionalLight position={[-3, 2, 2]} intensity={0.4} color="#b8d4f0" />
+        <directionalLight position={[-3, 2, 2]} intensity={0.5} color="#b8d4f0" />
       </Canvas>
     </div>
   );

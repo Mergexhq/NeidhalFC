@@ -96,7 +96,7 @@ export function Scene2D({
       <div
         className="absolute inset-0 hidden md:block"
         style={{
-          backgroundImage: "url('/game/backgrounds/environment.png')",
+          backgroundImage: "url('/game/backgrounds/environment.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
@@ -106,7 +106,7 @@ export function Scene2D({
       <div
         className="absolute inset-0 block md:hidden"
         style={{
-          backgroundImage: "url('/game/backgrounds/environment-mobile.png')",
+          backgroundImage: "url('/game/backgrounds/environment-mobile.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",

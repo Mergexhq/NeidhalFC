@@ -25,9 +25,17 @@ interface KeeperSpriteProps {
 }
 
 // URL-encoded paths (spaces → %20)
-const IMG_REST = "/game/sprites/keeper-rest.png";
-const IMG_LEFT = "/game/sprites/left-catch.png";
-const IMG_RIGHT = "/game/sprites/right-catch.png";
+const IMG_REST = "/game/sprites/keeper-rest.webp";
+const IMG_LEFT = "/game/sprites/left-catch.webp";
+const IMG_RIGHT = "/game/sprites/right-catch.webp";
+
+// Preload all sprites on module load to prevent flash
+if (typeof window !== "undefined") {
+  [IMG_REST, IMG_LEFT, IMG_RIGHT].forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+}
 
 function getKeeperImage(keeperPos: KeeperAction, isShooting: boolean, shootT: number): string {
   if (isShooting && shootT >= 0.35) {

@@ -1,44 +1,26 @@
 /**
- * sounds.ts - Howler.js sound manager
+ * sounds.ts - Lightweight audio stub (no external dependencies).
  *
- * Currently uses a 1-frame silent WAV stub so no 404 errors occur.
- * To add real audio: replace the `src` arrays below with paths to your .mp3 files.
+ * Currently plays nothing — acts as a zero-cost no-op layer.
+ * When real audio files are added, replace the `src` values and
+ * uncomment the AudioContext logic below.
  *
- * Example:
- *   kickSound = new Howl({ src: ['/sounds/kick.mp3'], volume: 0.6 })
+ * This removes the ~30 KB gzipped Howler.js dependency.
  */
 
-// Minimal valid silent WAV (44 bytes, base64)
-const SILENT =
-  "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let kickSound: any = null;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let netSound: any = null;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let crowdSound: any = null;
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 let initialized = false;
 
 export async function initSounds(): Promise<void> {
   if (initialized || typeof window === "undefined") return;
-
-  try {
-    const { Howl } = await import("howler");
-
-    // Replace `src` values with real audio file paths when available
-    kickSound = new Howl({ src: [SILENT], volume: 0.7, preload: true });
-    netSound = new Howl({ src: [SILENT], volume: 0.6, preload: true });
-    crowdSound = new Howl({ src: [SILENT], volume: 0.15, loop: true, preload: true });
-
-    initialized = true;
-  } catch {
-    // Audio is an enhancement - silently fail if unavailable
-  }
+  initialized = true;
+  // When audio files are ready:
+  // const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+  // Pre-fetch and decode audio buffers here
 }
 
-export function playKick(): void { try { kickSound?.play(); } catch { /* noop */ } }
-export function playNet(): void { try { netSound?.play(); } catch { /* noop */ } }
-export function playCrowd(): void { try { crowdSound?.play(); } catch { /* noop */ } }
-export function stopCrowd(): void { try { crowdSound?.stop(); } catch { /* noop */ } }
+export function playKick(): void { /* noop until audio files added */ }
+export function playNet(): void { /* noop until audio files added */ }
+export function playCrowd(): void { /* noop until audio files added */ }
+export function stopCrowd(): void { /* noop until audio files added */ }
