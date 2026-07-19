@@ -1,39 +1,28 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Users, UserCheck, ShieldCheck, MapPin, Gift, Trophy } from "lucide-react";
+import { Users, Layers, Activity } from "lucide-react";
 
-const ESSENTIALS = [
+const FEATURES = [
   {
     icon: Users,
-    title: "2 Coaches Every Session",
-    desc: "Every training session has dual leadership to track player mechanics and provide simultaneous technical feedback.",
+    title: "Dual-Coach Model",
+    body: "Every session runs with two coaches. One focuses on technical mechanics — footwork, ball control, shooting form. The other manages gameplay scenarios and tactical awareness. This means every player gets specific, personal feedback.",
+    image: "/images/gallery/gallery-08.webp",
   },
   {
-    icon: ShieldCheck,
-    title: "Small Training Groups",
-    desc: "Strict player-to-coach ratios to maximize ball contact time, tactical focus, and specialized attention.",
+    icon: Layers,
+    title: "Age-Appropriate Groups",
+    body: "U5–U8 learn through play and coordination. U9–U12 build technique and game intelligence. U13–U16+ focus on advanced tactics, fitness, and competitive preparation. Each group trains with methods designed for their developmental stage.",
+    image: "/images/gallery/gallery-04.webp",
   },
   {
-    icon: Trophy,
-    title: "Beach & Turf Development",
-    desc: "We combine ECR beach sand physical conditioning with precision turf football for optimal athletic adaptability.",
-  },
-  {
-    icon: MapPin,
-    title: "Three Chennai Locations",
-    desc: "Operating hubs in Kottivakkam, Injambakkam, and Nandanam covering the central city and coastal stretch.",
-  },
-  {
-    icon: Gift,
-    title: "Free Trial Sessions",
-    desc: "Book a complimentary session with no initial deposit or commitment to experience our method firsthand.",
-  },
-  {
-    icon: UserCheck,
-    title: "Player-First Coaching",
-    desc: "We focus on encouraging creativity, instinct, and building confidence rather than enforcing strict systems.",
+    icon: Activity,
+    title: "Sand + Turf Cycle",
+    body: "Players rotate between beach sessions on the ECR coastline and turf sessions at our three hubs. Beach builds strength and balance. Turf builds precision and speed. Together, they develop complete footballers.",
+    image: "/images/locations/kottivakkam-3.webp",
   },
 ];
 
@@ -42,70 +31,101 @@ export const HowWeCoach: React.FC = () => {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.12,
       },
     },
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 25 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
   return (
-    <section className="py-24 md:py-32 bg-[#FAF7F2] text-primary border-b border-black/5">
-      <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Eyebrow & Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-extrabold text-[#BCA688] mb-4">
-            How We Coach
+    <section className="py-24 md:py-32 bg-[#FAF7F2] text-primary border-b border-black/5 relative overflow-hidden">
+      {/* Subtle dot-grid texture */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(11,31,58,0.04) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Section Header */}
+        <div className="text-left mb-16 md:mb-20 max-w-2xl">
+          <span className="inline-block text-[10px] sm:text-xs uppercase tracking-[0.25em] font-extrabold text-[#BCA688] mb-4">
+            How Training Works
           </span>
           <h2 className="font-raleway font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-[46px] uppercase tracking-tight leading-none text-primary">
-            Simple. Structured. Consistent.
+            Structured Sessions.{" "}
+            <span className="text-[#BCA688]">Individual Focus.</span>
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm md:text-base font-light mt-4 max-w-xl mx-auto">
-            We focus strictly on what matters. Here are the core pillars that define the Neidhal training experience.
+          <p className="text-slate-600 text-sm sm:text-base font-light mt-5 leading-relaxed">
+            Every detail of our training model exists for a reason. Here&apos;s how a Neidhal session is built.
           </p>
         </div>
 
-        {/* 6-Card Grid */}
+        {/* Three Columns */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
         >
-          {ESSENTIALS.map((item, idx) => {
-            const IconComponent = item.icon;
+          {FEATURES.map((feature) => {
+            const IconComponent = feature.icon;
             return (
               <motion.div
-                key={idx}
+                key={feature.title}
                 variants={cardVariants}
-                className="bg-white border border-primary/5 hover:border-primary/15 p-6 sm:p-8 rounded-[2rem] shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01] flex flex-col items-start gap-4 text-left"
+                className="relative min-h-[460px] md:min-h-[480px] p-8 sm:p-10 rounded-none overflow-hidden flex flex-col items-start justify-between group shadow-md hover:shadow-xl transition-all duration-500 border border-black/5"
               >
-                {/* Icon bubble */}
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-primary/5 text-primary flex items-center justify-center">
-                  <IconComponent size={20} className="sm:size-[22px]" />
+                {/* Full-bleed background Image */}
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    fill
+                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
-                <div>
-                  <h3 className="font-raleway font-bold text-base sm:text-lg text-primary uppercase tracking-tight mb-2">
-                    {item.title}
+
+                {/* Gradient Overlay for high-contrast text readability */}
+                <div 
+                  className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-300"
+                  style={{
+                    background: "linear-gradient(to top, rgba(11, 31, 58, 0.95) 0%, rgba(11, 31, 58, 0.8) 45%, rgba(11, 31, 58, 0.2) 100%)"
+                  }}
+                />
+
+                {/* Icon (Sharp Corner, gold theme) */}
+                <div className="h-12 w-12 rounded-none bg-[#BCA688] text-[#0B1F3A] flex items-center justify-center group-hover:scale-105 transition-transform duration-300 relative z-20">
+                  <IconComponent size={22} strokeWidth={2} />
+                </div>
+
+                {/* Title & Body */}
+                <div className="relative z-20 w-full mt-auto">
+                  <h3 className="font-raleway font-bold text-lg sm:text-xl text-white uppercase tracking-tight mb-3">
+                    {feature.title}
                   </h3>
-                  <p className="text-slate-500 text-xs sm:text-sm leading-relaxed font-medium">
-                    {item.desc}
+                  <p className="text-slate-200 text-xs sm:text-[14px] leading-relaxed font-light">
+                    {feature.body}
                   </p>
                 </div>
               </motion.div>
             );
           })}
         </motion.div>
-
       </div>
     </section>
   );

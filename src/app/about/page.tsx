@@ -5,6 +5,7 @@ import BrandMeaning from "@/modules/about/BrandMeaning";
 import DolphinMascot from "@/modules/about/DolphinMascot";
 import WhatWeBelieve from "@/modules/about/WhatWeBelieve";
 import HowWeCoach from "@/modules/about/HowWeCoach";
+import CoachesGroup from "@/modules/about/CoachesGroup";
 import JoinNeidhal from "@/modules/about/JoinNeidhal";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function AboutPage() {
       <DolphinMascot />
       <WhatWeBelieve />
       <HowWeCoach />
+      <CoachesGroup />
       <JoinNeidhal />
     </>
   );
