@@ -2,6 +2,7 @@
 
 import React from "react";
 import CircularGallery from "@/components/common/CircularGallery";
+import { RevealText } from "@/components/ui/reveal-text";
 
 const FIELD_SNAPSHOTS = [
   {
@@ -108,9 +109,14 @@ export const PhotoStrip: React.FC = () => {
       >
         {/* Pinned Header */}
         <div className="absolute top-1 md:top-2 left-1/2 -translate-x-1/2 text-center w-full z-20 pointer-events-none px-6">
-          <h2 className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center">
-            Latest from the Field
-          </h2>
+          <RevealText
+            as="h2"
+            split="word"
+            text="Latest from the Field"
+            className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center"
+            whileInView
+            once
+          />
         </div>
       </CircularGallery>
 

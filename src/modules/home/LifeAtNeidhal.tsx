@@ -23,6 +23,7 @@ import {
 import type { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { BlurVignette, BlurVignetteArticle } from "@/components/ui/blur-vignette";
+import { RevealText } from "@/components/ui/reveal-text";
 
 // ─── IMAGE DATA ───────────────────────────────────────────────────────────────
 // portrait = true means the image is taller than wide (2:3 ratio)
@@ -303,9 +304,14 @@ export const LifeAtNeidhal: React.FC = () => {
       {/* Section Header */}
       <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 pt-0 pb-12 md:pb-16 text-center">
         <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
-          <h2 className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center">
-            Life at Neidhal
-          </h2>
+          <RevealText
+            as="h2"
+            split="word"
+            text="Life at Neidhal"
+            className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center"
+            whileInView
+            once
+          />
         </div>
       </div>
 

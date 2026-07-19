@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import Image from "next/image";
+import { RevealText } from "@/components/ui/reveal-text";
 
 const TESTIMONIALS = [
   {
@@ -158,9 +159,14 @@ export const TestimonialBoard: React.FC = () => {
 
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10 px-6">
-            <h2 className="font-raleway font-semibold text-white uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center">
-              Voices of Neidhal FC
-            </h2>
+            <RevealText
+              as="h2"
+              split="word"
+              text="Voices of Neidhal FC"
+              className="font-raleway font-semibold text-white uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center"
+              whileInView
+              once
+            />
           </div>
 
           {/* Carousel Viewport Container - Edge-to-Edge with no padding */}

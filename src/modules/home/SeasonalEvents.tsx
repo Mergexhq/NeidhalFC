@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring, animate } from "fra
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { RevealText } from "@/components/ui/reveal-text";
 
 const SEASONAL_PROGRAMS = [
   {
@@ -97,9 +98,14 @@ export const SeasonalEvents: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-12">
-          <h2 className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center">
-            Active Programs & Camps
-          </h2>
+          <RevealText
+            as="h2"
+            split="word"
+            text="Active Programs & Camps"
+            className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center"
+            whileInView
+            once
+          />
         </div>
 
         {/* Interactive Tabs */}

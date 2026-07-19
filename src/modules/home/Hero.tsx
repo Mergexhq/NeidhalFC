@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Navbar from "@/components/layout/Navbar";
+import { DiaText } from "@/components/ui/dia-text";
 import "@/styles/home-hero.css";
 
 // Register GSAP ScrollTrigger plugin
@@ -25,6 +26,10 @@ export const Hero: React.FC = () => {
   const subRef = useRef<HTMLDivElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const story1Ref = useRef<HTMLDivElement>(null);
+  const story2Ref = useRef<HTMLDivElement>(null);
+  const story3Ref = useRef<HTMLDivElement>(null);
+  const story4Ref = useRef<HTMLDivElement>(null);
 
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -187,61 +192,75 @@ export const Hero: React.FC = () => {
         0
       );
 
-      // 2. Stage 1 Elements (Eyebrow, Title, Sub, CTA) fade out sequentially (20% -> 40%)
+      // 2. Stage 1 Elements (Title, Sub, CTA) fade out in sync quickly (3% -> 11%)
       tl.to(
-        eyebrowRef.current,
+        [headingRef.current, subRef.current, actionsRef.current],
         {
-          y: -25,
+          y: -30,
           opacity: 0,
           duration: 0.08,
           ease: "power1.inOut",
         },
-        0.18
+        0.03
       );
 
-      tl.to(
-        headingRef.current,
-        {
-          y: -35,
-          opacity: 0,
-          duration: 0.1,
-          ease: "power1.inOut",
-        },
-        0.22
-      );
-
-      tl.to(
-        subRef.current,
-        {
-          y: -25,
-          opacity: 0,
-          duration: 0.08,
-          ease: "power1.inOut",
-        },
-        0.26
-      );
-
-      tl.to(
-        actionsRef.current,
-        {
-          y: -20,
-          opacity: 0,
-          duration: 0.08,
-          ease: "power1.inOut",
-        },
-        0.28
-      );
-
-      // Fade out and disable the entire content block
+      // Fade out and disable the entire content block (11% -> 13%)
       tl.to(
         contentRef.current,
         {
           opacity: 0,
           pointerEvents: "none",
-          duration: 0.15,
+          duration: 0.02,
           ease: "power1.inOut",
         },
-        0.35
+        0.11
+      );
+
+      // Story Beat 1 (Left Side) — visible 0.15→0.28, gap until 0.44
+      tl.fromTo(
+        story1Ref.current,
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 0.07, ease: "power1.out" },
+        0.15
+      );
+      tl.to(
+        story1Ref.current,
+        { opacity: 0, x: 30, duration: 0.07, ease: "power1.in" },
+        0.28
+      );
+
+      // Story Beat 2 (Right Side) — visible 0.44→0.55, gap until 0.70
+      tl.fromTo(
+        story2Ref.current,
+        { opacity: 0, x: 30 },
+        { opacity: 1, x: 0, duration: 0.07, ease: "power1.out" },
+        0.44
+      );
+      tl.to(
+        story2Ref.current,
+        { opacity: 0, x: -30, duration: 0.07, ease: "power1.in" },
+        0.55
+      );
+
+      // Story Beat 3 (Center Bottom) — visible 0.76→0.85, gap until 0.92
+      tl.fromTo(
+        story3Ref.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.07, ease: "power1.out" },
+        0.76
+      );
+      tl.to(
+        story3Ref.current,
+        { opacity: 0, y: -30, duration: 0.07, ease: "power1.in" },
+        0.85
+      );
+
+      // Story Beat 4 (Conclusion) — visible 0.92→1.00
+      tl.fromTo(
+        story4Ref.current,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.07, ease: "power1.out" },
+        0.92
       );
     },
     { scope: containerRef, dependencies: [isLoaded, images] }
@@ -279,15 +298,37 @@ export const Hero: React.FC = () => {
             {/* Pinned animation ref preserved inside empty div */}
             <div ref={eyebrowRef} className="hidden" />
             <h1 ref={headingRef} className="hh-heading">
-              <span className="hh-heading-line hh-animate">Bring the Soul</span>
-              <span className="hh-heading-accent hh-animate">Back to Football.</span>
+              <span className="hh-heading-line hh-animate">
+                <DiaText
+                  text="Bring the Soul"
+                  colors={["#0B1F3A", "#C5A880", "#005f73", "#e9d8a6", "#0B1F3A"]}
+                  textColor="#0B1F3A"
+                  duration={1.2}
+                  delay={0.1}
+                />
+              </span>
+              <span className="hh-heading-accent hh-animate">
+                <DiaText
+                  text="Back to Football."
+                  colors={["#0B1F3A", "#C5A880", "#005f73", "#e9d8a6", "#0B1F3A"]}
+                  textColor="#0B1F3A"
+                  duration={1.2}
+                  delay={0.4}
+                />
+              </span>
             </h1>
           </div>
 
           <div>
             <div ref={subRef}>
               <p className="hh-sub hh-animate">
-                We develop fearless, creative players who play with freedom and flair. Combining Chennai's street-style beach spirit with structured coaching.
+                <DiaText
+                  text="We develop fearless, creative players who play with freedom and flair. Combining Chennai's street-style beach spirit with structured coaching."
+                  colors={["#0B1F3A", "#C5A880", "#005f73", "#e9d8a6", "#0B1F3A"]}
+                  textColor="#0B1F3A"
+                  duration={1.8}
+                  delay={0.8}
+                />
               </p>
             </div>
 
@@ -306,6 +347,27 @@ export const Hero: React.FC = () => {
               </Link>
             </div>
           </div>
+        </div>
+
+        {/* Storytelling Captions */}
+        <div ref={story1Ref} className="story-caption story-left">
+          <h3>Preserving the Art of the Game</h3>
+          <p>We reject robotic repetition. On the shoreline, players learn to improvise, express themselves, and make their own decisions.</p>
+        </div>
+
+        <div ref={story2Ref} className="story-caption story-right">
+          <h3>Confidence in 1v1 Situations</h3>
+          <p>Training on the sand builds explosive power and street-style touch. We teach players to dare, to fail, and to stand out.</p>
+        </div>
+
+        <div ref={story3Ref} className="story-caption story-center-bottom">
+          <h3>Playing with Flair and Freedom</h3>
+          <p>Every shot is an expression of individuality, not just a system-driven instruction.</p>
+        </div>
+
+        <div ref={story4Ref} className="story-caption story-conclusion">
+          <h3>Making People Fall in Love with Football</h3>
+          <p>We train the players Chennai has been waiting for. Welcome to Neidhal FC.</p>
         </div>
       </div>
 

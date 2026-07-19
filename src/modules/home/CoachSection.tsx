@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { RevealText } from "@/components/ui/reveal-text";
 
 /* ── Coach data ──────────────────────────────────────────── */
 const COACHES = [
@@ -63,14 +64,18 @@ export const CoachSection: React.FC = () => {
         }}
       />
 
-      {/* ═══════════════════════════════════════════════════════
-          SECTION HEADER
-          ═══════════════════════════════════════════════════════ */}
+      {/* SECTION HEADER */}
+      {/* ======================================================= */}
       <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 pt-24 pb-12 md:pt-28 md:pb-16 text-center">
         <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
-          <h2 className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center">
-            The Coaches of Neidhal FC
-          </h2>
+          <RevealText
+            as="h2"
+            split="word"
+            text="The Coaches of Neidhal FC"
+            className="font-raleway font-semibold text-[#0B1F3A] uppercase tracking-tight leading-none text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-center"
+            whileInView
+            once
+          />
         </div>
       </div>
 

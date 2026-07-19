@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { RevealText } from "@/components/ui/reveal-text";
 
 export const WhyWeStarted: React.FC = () => {
   return (
@@ -14,15 +15,14 @@ export const WhyWeStarted: React.FC = () => {
       <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-10 md:gap-14">
         
         {/* Editorial Heading */}
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        <RevealText
+          as="h2"
+          split="word"
+          text="Why We Started Neidhal FC"
           className="font-raleway font-semibold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[46px] text-[#0B1F3A] uppercase tracking-tight leading-none whitespace-nowrap max-w-none"
-        >
-          Why We Started Neidhal FC
-        </motion.h2>
+          whileInView
+          once
+        />
 
         {/* Story copy structured like Image 2 */}
         <div className="flex flex-col gap-4 sm:gap-5 md:gap-5 text-center text-base sm:text-lg md:text-[21px] text-[#0B1F3A]/85 font-light leading-[1.55] max-w-3xl font-sans">

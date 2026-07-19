@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { RevealText } from "@/components/ui/reveal-text";
 
 export const HomeCTA: React.FC = () => {
   return (
@@ -55,9 +56,14 @@ export const HomeCTA: React.FC = () => {
 
           {/* Text and Button (Bottom-Left) */}
           <div className="relative z-10 mt-auto max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold font-sans tracking-wide leading-[1.15] text-white mb-4 md:mb-6">
-              The Next Chapter Could Be Yours
-            </h2>
+            <RevealText
+              as="h2"
+              split="word"
+              text="The Next Chapter Could Be Yours"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold font-sans tracking-wide leading-[1.15] text-white mb-4 md:mb-6"
+              whileInView
+              once
+            />
             <p className="text-white/85 text-xs sm:text-sm md:text-base leading-relaxed font-light mb-6 md:mb-8 max-w-xl">
               The shore gave us our beginning. Every child who steps onto our field writes the next chapter. Come experience Neidhal FC through a trial session.
             </p>
