@@ -2,9 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { RevealText } from "@/components/ui/reveal-text";
+import { DiaText } from "@/components/ui/dia-text";
 
 /* ── Coach data ──────────────────────────────────────────── */
 const COACHES = [
@@ -142,7 +141,7 @@ export const CoachSection: React.FC = () => {
                   </div>
                 )}
 
-                {/* ── TEXT & CTA CONTENT WRAPPER ── */}
+                {/* ── TEXT CONTENT WRAPPER ── */}
                 <div
                   className="relative z-10 flex-1 flex items-center justify-center px-4 md:px-8 h-[80px] md:h-[130px]"
                 >
@@ -150,22 +149,16 @@ export const CoachSection: React.FC = () => {
                     className="font-sans font-bold uppercase tracking-[0.06em] text-center leading-[1.0] text-sm sm:text-base md:text-2xl lg:text-[34px] xl:text-[40px]"
                     style={{ color: "#0B1F3A" }}
                   >
-                    {coach.name}
+                    <DiaText
+                      text={coach.name}
+                      colors={["#0B1F3A", "#C5A880", "#005f73", "#e9d8a6", "#0B1F3A"]}
+                      textColor="#0B1F3A"
+                      duration={1.2}
+                      delay={index * 0.08}
+                      triggerOnView={true}
+                      once={true}
+                    />
                   </h3>
-
-                  <Link
-                    href="/about"
-                    className="
-                      absolute right-3 md:right-8
-                      shrink-0 flex items-center justify-center
-                      h-6 w-6 md:h-9 md:w-9 rounded-full
-                      transition-all duration-300
-                    "
-                    style={{ background: "#0B1F3A", color: "#ffffff" }}
-                    aria-label={`Learn more about ${coach.name}`}
-                  >
-                    <ArrowUpRight className="h-3 w-3 md:h-[14px] md:w-[14px]" />
-                  </Link>
                 </div>
 
                 {/* ── RIGHT PHOTO (overflows TOP only, flush at bottom) ── */}

@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Navbar from "@/components/layout/Navbar";
 import { DiaText } from "@/components/ui/dia-text";
+import { KineticTextReveal, type KineticTextRevealRef } from "@/components/ui/kinetic-text-reveal";
 import "@/styles/home-hero.css";
 
 // Register GSAP ScrollTrigger plugin
@@ -30,6 +31,14 @@ export const Hero: React.FC = () => {
   const story2Ref = useRef<HTMLDivElement>(null);
   const story3Ref = useRef<HTMLDivElement>(null);
   const story4Ref = useRef<HTMLDivElement>(null);
+  const story1TitleRef = useRef<KineticTextRevealRef>(null);
+  const story1DescRef = useRef<KineticTextRevealRef>(null);
+  const story2TitleRef = useRef<KineticTextRevealRef>(null);
+  const story2DescRef = useRef<KineticTextRevealRef>(null);
+  const story3TitleRef = useRef<KineticTextRevealRef>(null);
+  const story3DescRef = useRef<KineticTextRevealRef>(null);
+  const story4TitleRef = useRef<KineticTextRevealRef>(null);
+  const story4DescRef = useRef<KineticTextRevealRef>(null);
 
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -220,7 +229,16 @@ export const Hero: React.FC = () => {
       tl.fromTo(
         story1Ref.current,
         { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.07, ease: "power1.out" },
+        { 
+          opacity: 1, 
+          x: 0, 
+          duration: 0.07, 
+          ease: "power1.out",
+          onStart: () => {
+            story1TitleRef.current?.play();
+            story1DescRef.current?.play();
+          }
+        },
         0.15
       );
       tl.to(
@@ -233,7 +251,16 @@ export const Hero: React.FC = () => {
       tl.fromTo(
         story2Ref.current,
         { opacity: 0, x: 30 },
-        { opacity: 1, x: 0, duration: 0.07, ease: "power1.out" },
+        { 
+          opacity: 1, 
+          x: 0, 
+          duration: 0.07, 
+          ease: "power1.out",
+          onStart: () => {
+            story2TitleRef.current?.play();
+            story2DescRef.current?.play();
+          }
+        },
         0.44
       );
       tl.to(
@@ -246,7 +273,16 @@ export const Hero: React.FC = () => {
       tl.fromTo(
         story3Ref.current,
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.07, ease: "power1.out" },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.07, 
+          ease: "power1.out",
+          onStart: () => {
+            story3TitleRef.current?.play();
+            story3DescRef.current?.play();
+          }
+        },
         0.76
       );
       tl.to(
@@ -259,7 +295,16 @@ export const Hero: React.FC = () => {
       tl.fromTo(
         story4Ref.current,
         { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.07, ease: "power1.out" },
+        { 
+          opacity: 1, 
+          scale: 1, 
+          duration: 0.07, 
+          ease: "power1.out",
+          onStart: () => {
+            story4TitleRef.current?.play();
+            story4DescRef.current?.play();
+          }
+        },
         0.92
       );
     },
@@ -351,23 +396,95 @@ export const Hero: React.FC = () => {
 
         {/* Storytelling Captions */}
         <div ref={story1Ref} className="story-caption story-left">
-          <h3>Preserving the Art of the Game</h3>
-          <p>We reject robotic repetition. On the shoreline, players learn to improvise, express themselves, and make their own decisions.</p>
+          <h3>
+            <KineticTextReveal
+              ref={story1TitleRef}
+              text="Preserving the Art of the Game"
+              autoPlay={false}
+              splitBy="words"
+              stagger={0.06}
+            />
+          </h3>
+          <p>
+            <KineticTextReveal
+              ref={story1DescRef}
+              text="We reject robotic repetition. On the shoreline, players learn to improvise, express themselves, and make their own decisions."
+              autoPlay={false}
+              splitBy="words"
+              stagger={0.03}
+              delay={0.2}
+            />
+          </p>
         </div>
 
         <div ref={story2Ref} className="story-caption story-right">
-          <h3>Confidence in 1v1 Situations</h3>
-          <p>Training on the sand builds explosive power and street-style touch. We teach players to dare, to fail, and to stand out.</p>
+          <h3>
+            <KineticTextReveal
+              ref={story2TitleRef}
+              text="Confidence in 1v1 Situations"
+              autoPlay={false}
+              splitBy="words"
+              stagger={0.06}
+            />
+          </h3>
+          <p>
+            <KineticTextReveal
+              ref={story2DescRef}
+              text="Training on the sand builds explosive power and street-style touch. We teach players to dare, to fail, and to stand out."
+              autoPlay={false}
+              splitBy="words"
+              stagger={0.03}
+              delay={0.2}
+            />
+          </p>
         </div>
 
         <div ref={story3Ref} className="story-caption story-center-bottom">
-          <h3>Playing with Flair and Freedom</h3>
-          <p>Every shot is an expression of individuality, not just a system-driven instruction.</p>
+          <h3>
+            <KineticTextReveal
+              ref={story3TitleRef}
+              text="Playing with Flair and Freedom"
+              autoPlay={false}
+              splitBy="words"
+              stagger={0.06}
+              className="justify-center"
+            />
+          </h3>
+          <p>
+            <KineticTextReveal
+              ref={story3DescRef}
+              text="Every shot is an expression of individuality, not just a system-driven instruction."
+              autoPlay={false}
+              splitBy="words"
+              stagger={0.03}
+              delay={0.2}
+              className="justify-center"
+            />
+          </p>
         </div>
 
         <div ref={story4Ref} className="story-caption story-conclusion">
-          <h3>Making People Fall in Love with Football</h3>
-          <p>We train the players Chennai has been waiting for. Welcome to Neidhal FC.</p>
+          <h3>
+            <KineticTextReveal
+              ref={story4TitleRef}
+              text="Making People Fall in Love with Football"
+              autoPlay={false}
+              splitBy="words"
+              stagger={0.06}
+              className="justify-center"
+            />
+          </h3>
+          <p>
+            <KineticTextReveal
+              ref={story4DescRef}
+              text="We train the players Chennai has been waiting for. Welcome to Neidhal FC."
+              autoPlay={false}
+              splitBy="words"
+              stagger={0.03}
+              delay={0.2}
+              className="justify-center"
+            />
+          </p>
         </div>
       </div>
 

@@ -144,7 +144,7 @@ export const TestimonialBoard: React.FC = () => {
             }}
           >
             <Image
-              src="/images/neidhal testimonial.jpg"
+              src="/images/home/neidhal testimonial.jpg"
               alt="Coastal football training background"
               fill
               className="object-cover pointer-events-none select-none"
