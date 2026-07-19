@@ -2,10 +2,20 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 
 export const CoachesGroup: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll tracking on the section container for vertical scroll parallax
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Scroll offsets: text moves faster for dynamic 3D depth separation
+  const scrollTextY = useTransform(scrollYProgress, [0, 1], [-80, 80]);
+  const scrollCoachesY = useTransform(scrollYProgress, [0, 1], [-25, 25]);
 
   // Motion values for interactive 3D mouse parallax tracking
   const mouseX = useMotionValue(0);
@@ -15,7 +25,7 @@ export const CoachesGroup: React.FC = () => {
   const springX = useSpring(mouseX, springConfig);
   const springY = useSpring(mouseY, springConfig);
 
-  // Transform coordinates for background text (moves slightly)
+  // Transform coordinates for background text (moves slightly with mouse)
   const textX = useTransform(springX, [-0.5, 0.5], ["-12px", "12px"]);
   const textY = useTransform(springY, [-0.5, 0.5], ["-8px", "8px"]);
 
@@ -46,7 +56,7 @@ export const CoachesGroup: React.FC = () => {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[450px] sm:h-[550px] md:h-[650px] lg:h-[720px] bg-[#FAF7F2] overflow-hidden flex items-end border-b border-black/5"
+      className="relative w-full h-[450px] sm:h-[550px] md:h-[650px] lg:h-[720px] bg-[#FAF7F2] overflow-hidden flex items-end"
     >
       {/* Subtle grid pattern background to ground the section */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0B1F3A/2_1px,transparent_1px),linear-gradient(to_bottom,#0B1F3A/2_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none opacity-20 z-0" />
@@ -61,39 +71,42 @@ export const CoachesGroup: React.FC = () => {
         </h2>
       </div>
 
-      {/* Giant Backdrop BRAND text (NEIDHAL FC) */}
-      <motion.div 
-        style={{ 
-          x: textX, 
-          y: textY,
-          left: "50%",
-          top: "55%",
-          translateX: "-50%",
-          translateY: "-50%"
-        }}
-        className="absolute text-[16vw] font-raleway font-extrabold text-[#0B1F3A] opacity-[0.08] tracking-tighter leading-none select-none z-0 text-center whitespace-nowrap pointer-events-none"
+      {/* Giant Backdrop BRAND text (NEIDHAL FC) with combined Scroll + Mouse Parallax */}
+      <motion.div
+        style={{ y: scrollTextY }}
+        className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden"
       >
-        NEIDHAL FC
+        <motion.div 
+          style={{ x: textX, y: textY }}
+          className="text-[16vw] font-raleway font-extrabold text-[#0B1F3A] opacity-[0.16] tracking-tighter leading-none select-none text-center whitespace-nowrap"
+        >
+          NEIDHAL FC
+        </motion.div>
       </motion.div>
 
-      {/* Coaches Group Foreground Cutout */}
+      {/* Coaches Group Foreground Cutout with combined Scroll + Mouse Parallax */}
       <motion.div 
-        style={{ x: coachesX, y: coachesY }}
+        style={{ y: scrollCoachesY }}
         className="absolute inset-x-0 bottom-0 h-[80%] max-w-5xl mx-auto z-10 flex justify-center items-end"
       >
-        <div className="relative w-full h-full max-h-[420px] sm:max-h-[520px] md:max-h-[600px]">
-          <Image
-            src="/images/about/about_coaches_group.webp"
-            alt="Neidhal FC Coaches Group"
-            fill
-            priority
-            className="object-contain object-bottom pointer-events-none"
-          />
-        </div>
+        <motion.div 
+          style={{ x: coachesX, y: coachesY }}
+          className="relative w-full h-[95%] max-h-[420px] sm:max-h-[520px] md:max-h-[600px] flex justify-center items-end"
+        >
+          <div className="relative w-full h-full">
+            <Image
+              src="/images/about/about_coaches_group.webp"
+              alt="Neidhal FC Coaches Group"
+              fill
+              priority
+              className="object-contain object-bottom pointer-events-none"
+            />
+          </div>
+        </motion.div>
       </motion.div>
 
-      {/* Bottom white/cream smudge gradient overlay */}
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/80 to-transparent z-20 pointer-events-none" />
+      {/* Bottom white/cream smudge gradient overlay - reduced height and density, shifted slightly down */}
+      <div className="absolute inset-x-0 -bottom-2 h-28 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/40 to-transparent z-20 pointer-events-none" />
     </section>
   );
 };

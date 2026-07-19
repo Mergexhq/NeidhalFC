@@ -39,10 +39,9 @@ export const Footer: React.FC = () => {
         className="relative w-full overflow-hidden text-white px-6 pt-12 pb-8 sm:px-10 sm:pt-16 sm:pb-10 md:px-12 md:pt-20 md:pb-12 lg:px-16 lg:pt-24 lg:pb-14 bg-transparent"
       >
         <div 
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 bg-[#0B1F3A] [background-size:100%_auto] md:[background-size:cover]"
           style={{
             backgroundImage: "url('/images/home/footer.jpg')",
-            backgroundSize: "cover",
             backgroundPosition: "center",
             maskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
             WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%)",
@@ -133,12 +132,12 @@ export const Footer: React.FC = () => {
               {/* Quick Links Column */}
               <motion.div 
                 variants={fadeInUpVariants} 
-                className="flex flex-col gap-6"
+                className="flex flex-col items-center md:items-start gap-0 md:gap-6 w-full"
               >
-                <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#BCA688] pl-3">
+                <h4 className="hidden md:block font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#BCA688] pl-3">
                   Explore
                 </h4>
-                <ul className="space-y-7 text-sm text-[#0B1F3A]/80">
+                <ul className="flex flex-row flex-wrap justify-center gap-x-6 gap-y-3 md:flex-col md:space-y-7 md:gap-0 text-sm text-[#0B1F3A]/80">
                   {[
                     { label: "Home", href: "/" },
                     { label: "About", href: "/about" },
@@ -150,7 +149,7 @@ export const Footer: React.FC = () => {
                         href={link.href}
                         className="hover:text-[#0B1F3A] transition-colors duration-200 flex items-center gap-1.5 group cursor-pointer font-medium"
                       >
-                        <ArrowRight size={10} className="opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#BCA688]" />
+                        <ArrowRight size={10} className="hidden md:block opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#BCA688]" />
                         {link.label}
                       </Link>
                     </li>
@@ -161,7 +160,7 @@ export const Footer: React.FC = () => {
               {/* Locations Column */}
               <motion.div 
                 variants={fadeInUpVariants} 
-                className="flex flex-col gap-6"
+                className="hidden md:flex flex-col gap-6"
               >
                 <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#BCA688] pl-3">
                   Our Locations
@@ -194,7 +193,7 @@ export const Footer: React.FC = () => {
               {/* Contact Column */}
               <motion.div 
                 variants={fadeInUpVariants} 
-                className="flex flex-col gap-6"
+                className="hidden md:flex flex-col gap-6"
               >
                 <h4 className="font-display font-bold text-sm tracking-widest uppercase text-[#0B1F3A] border-l-2 border-[#BCA688] pl-3">
                   Get in Touch
