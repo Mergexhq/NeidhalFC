@@ -114,7 +114,7 @@ export const WhatWeBelieve: React.FC = () => {
             <motion.div
               key={card.bigWord}
               variants={cardVariants}
-              className={`relative flex flex-col justify-between pt-3 pb-8 px-6 md:pt-4 md:pb-10 md:px-8 min-h-[580px] md:min-h-[660px] transition-colors duration-500 group border-b md:border-b-0 overflow-hidden ${
+              className={`relative flex flex-col justify-between pt-3 pb-8 px-6 md:pt-4 md:pb-10 md:px-8 min-h-[660px] md:min-h-[660px] transition-colors duration-500 group border-b md:border-b-0 overflow-hidden ${
                 idx < CARDS.length - 1 ? "md:border-r border-primary/10" : ""
               }`}
             >
