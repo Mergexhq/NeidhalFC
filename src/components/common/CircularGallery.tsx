@@ -194,11 +194,63 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
           isCursorOverCarouselRef.current = false;
         };
 
+        // Touch interaction for mobile swipe support
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchStartRotation = initialRotation;
+        let isDragging = false;
+
+        const handleTouchStart = (e: TouchEvent) => {
+          if (e.touches.length !== 1) return;
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchStartRotation = rotationRef.current;
+          isDragging = false;
+          gsap.killTweensOf(carouselRef.current);
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+          if (e.touches.length !== 1) return;
+          const currentX = e.touches[0].clientX;
+          const currentY = e.touches[0].clientY;
+          const deltaX = currentX - touchStartX;
+          const deltaY = currentY - touchStartY;
+
+          if (!isDragging) {
+            // Initiate horizontal dragging if the horizontal movement is greater than vertical
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+              isDragging = true;
+            }
+          }
+
+          if (isDragging) {
+            if (e.cancelable) {
+              e.preventDefault();
+            }
+            const sensitivity = 0.22;
+            rotationRef.current = touchStartRotation + deltaX * sensitivity;
+
+            gsap.to(carouselRef.current, {
+              rotationY: rotationRef.current,
+              duration: 0.2,
+              ease: "power2.out",
+              onUpdate: updateVideos,
+            });
+          }
+        };
+
+        const handleTouchEnd = () => {
+          isDragging = false;
+        };
+
         const container = containerRef.current!;
         // Wheel on the whole section (passive:false so we can preventDefault when needed)
         container.addEventListener("wheel", handleWheel, { passive: false });
         container.addEventListener("mousemove", handleMouseMove);
         container.addEventListener("mouseleave", handleMouseLeave);
+        container.addEventListener("touchstart", handleTouchStart, { passive: true });
+        container.addEventListener("touchmove", handleTouchMove, { passive: false });
+        container.addEventListener("touchend", handleTouchEnd, { passive: true });
 
         // Run initial check once mounted
         setTimeout(updateVideos, 100);
@@ -207,6 +259,9 @@ const CircularGallery = forwardRef<HTMLDivElement, CircularGalleryProps>(
           container.removeEventListener("wheel", handleWheel);
           container.removeEventListener("mousemove", handleMouseMove);
           container.removeEventListener("mouseleave", handleMouseLeave);
+          container.removeEventListener("touchstart", handleTouchStart);
+          container.removeEventListener("touchmove", handleTouchMove);
+          container.removeEventListener("touchend", handleTouchEnd);
           if (scrollTimeoutRef.current) {
             clearTimeout(scrollTimeoutRef.current);
           }

@@ -124,7 +124,7 @@ export const CoachSection: React.FC = () => {
                 {/* ── LEFT PHOTO (overflows TOP only, flush at bottom) ── */}
                 {leftImageSrc && (
                   <div
-                    className="relative shrink-0 z-20 w-[80px] sm:w-[120px] md:w-[220px] lg:w-[250px] h-[110px] sm:h-[140px] md:h-[194px] ml-2 sm:ml-4 md:ml-8 lg:ml-10"
+                    className="relative shrink-0 z-20 w-[100px] sm:w-[130px] md:w-[220px] lg:w-[250px] h-[110px] sm:h-[140px] md:h-[194px] ml-2 sm:ml-4 md:ml-8 lg:ml-10"
                   >
                     <Image
                       src={leftImageSrc}
@@ -164,7 +164,7 @@ export const CoachSection: React.FC = () => {
                 {/* ── RIGHT PHOTO (overflows TOP only, flush at bottom) ── */}
                 {rightImageSrc && (
                   <div
-                    className="relative shrink-0 z-20 w-[80px] sm:w-[120px] md:w-[220px] lg:w-[250px] h-[110px] sm:h-[140px] md:h-[194px] mr-2 sm:mr-4 md:mr-8 lg:mr-10"
+                    className="relative shrink-0 z-20 w-[100px] sm:w-[130px] md:w-[220px] lg:w-[250px] h-[110px] sm:h-[140px] md:h-[194px] mr-2 sm:mr-4 md:mr-8 lg:mr-10"
                   >
                     <Image
                       src={rightImageSrc}

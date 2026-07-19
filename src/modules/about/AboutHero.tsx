@@ -79,12 +79,12 @@ export const AboutHero: React.FC = () => {
             >
               {/* Small top tag: NEIDHAL FOOTBALL CLUB aligned above 'OUR' */}
               <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="absolute -top-4 sm:-top-5 md:-top-5 lg:-top-7 left-[2%] sm:left-[3%] md:left-[4%] z-20 text-left"
+                className="absolute -top-4 sm:-top-5 md:-top-5 lg:-top-7 left-1/2 -translate-x-1/2 sm:left-[3%] sm:translate-x-0 md:left-[4%] z-20 text-center sm:text-left w-full sm:w-auto"
               >
-                <span className="font-raleway font-bold text-[3.8vw] xs:text-[3.2vw] sm:text-[2.4vw] md:text-[1.8vw] lg:text-[1.5vw] uppercase tracking-[0.2em] text-[#0B1F3A] whitespace-nowrap">
+                <span className="font-raleway font-bold text-[10px] xs:text-[11px] sm:text-[2.4vw] md:text-[1.8vw] lg:text-[1.5vw] uppercase tracking-[0.2em] text-[#0B1F3A] whitespace-nowrap">
                   NEIDHAL FOOTBALL CLUB
                 </span>
               </motion.div>

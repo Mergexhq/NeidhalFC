@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
         className="relative w-full overflow-hidden text-white px-6 pt-12 pb-8 sm:px-10 sm:pt-16 sm:pb-10 md:px-12 md:pt-20 md:pb-12 lg:px-16 lg:pt-24 lg:pb-14 bg-transparent"
       >
         <div 
-          className="absolute inset-0 z-0 bg-[#0B1F3A] [background-size:100%_auto] md:[background-size:cover]"
+          className="absolute inset-0 z-0 bg-[#0B1F3A] bg-cover bg-no-repeat"
           style={{
             backgroundImage: "url('/images/home/footer.jpg')",
             backgroundPosition: "center",

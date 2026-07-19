@@ -173,7 +173,7 @@ export const TestimonialBoard: React.FC = () => {
           <div className="relative overflow-hidden w-full px-0">
             {/* Card slider track */}
             <div
-              className={`flex gap-6 ${isTransitionEnabled ? "transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
+              className={`flex ${isTransitionEnabled ? "transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
               style={{
                 transform: `translateX(-${currentIndex * (100 / extendedItems.length)}%)`,
                 width: `${(extendedItems.length / cardsPerPage) * 100}%`
@@ -182,8 +182,8 @@ export const TestimonialBoard: React.FC = () => {
               {extendedItems.map((t, idx) => (
                 <div
                   key={idx}
-                  style={{ width: `calc(${100 / extendedItems.length}% - ${(24 * (cardsPerPage - 1)) / cardsPerPage}px)` }}
-                  className="shrink-0"
+                  style={{ width: `${100 / extendedItems.length}%` }}
+                  className="shrink-0 px-3 md:px-4"
                 >
                   {/* Premium Glassmorphic Card matching mockup */}
                   <div className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl py-8 px-4 md:py-10 md:px-5 flex flex-col justify-between hover:bg-white/10 hover:border-white/20 transition-all duration-300 shadow-xl min-h-[350px] text-left">

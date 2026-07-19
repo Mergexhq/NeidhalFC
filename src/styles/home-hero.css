@@ -402,6 +402,10 @@
 }
 
 @media (max-width: 768px) {
+  .story-caption .inline-flex {
+    justify-content: center;
+  }
+
   .story-left,
   .story-right {
     left: 50%;

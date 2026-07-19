@@ -4,7 +4,6 @@ import AboutHero from "@/modules/about/AboutHero";
 import BrandMeaning from "@/modules/about/BrandMeaning";
 import DolphinMascot from "@/modules/about/DolphinMascot";
 import WhatWeBelieve from "@/modules/about/WhatWeBelieve";
-import HowWeCoach from "@/modules/about/HowWeCoach";
 import CoachesGroup from "@/modules/about/CoachesGroup";
 import JoinNeidhal from "@/modules/about/JoinNeidhal";
 
@@ -20,7 +19,6 @@ export default function AboutPage() {
       <BrandMeaning />
       <DolphinMascot />
       <WhatWeBelieve />
-      <HowWeCoach />
       <CoachesGroup />
       <JoinNeidhal />
     </>
