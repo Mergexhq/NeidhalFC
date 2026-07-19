@@ -39,18 +39,18 @@ export function Scene2D({
 }: Scene2DProps) {
   const isShooting = phase === "shooting" || phase === "result";
 
-  // Detect window width to match the goalkeeper's goal center alignment (Desktop: 53%, Mobile: 41%)
-  const [isMobile, setIsMobile] = useState(false);
+  // Detect window aspect ratio to match goalkeeper's goal center (Desktop/Landscape: 53%, Mobile/Portrait/Tablet: 50%)
+  const [isPortrait, setIsPortrait] = useState(false);
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsPortrait(window.innerWidth < window.innerHeight);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const goalCenter = isMobile ? 41 : 53;
+  const goalCenter = isPortrait ? 50 : 53;
 
   // ── Ball trajectory coordinates ──────────────────────────────────────────
   const getBallPos = () => {
@@ -60,8 +60,18 @@ export function Scene2D({
 
     const startX = 50;
     const startY = 76;
-    const targetX = goalCenter + aimTarget.x * 13;
-    const targetY = 65 - aimTarget.y * 21;
+
+    // Mobile/Portrait: goal centered horizontally at 50%, with width 38% (so half width 19%)
+    //         ground Y at top: 58.5%, height 18.5% (so crossbar at top: 40%)
+    // Desktop/Landscape: goal centered at 53%, half width 13%
+    //          ground Y at top: 65%, height 21% (so crossbar at top: 44%)
+    const targetX = isPortrait
+      ? goalCenter + aimTarget.x * 19
+      : goalCenter + aimTarget.x * 13;
+
+    const targetY = isPortrait
+      ? 58.5 - aimTarget.y * 18.5
+      : 65 - aimTarget.y * 21;
 
     const curX = startX + shootT * (targetX - startX);
     const curY = startY + shootT * (targetY - startY);
@@ -92,22 +102,22 @@ export function Scene2D({
       }
       transition={{ duration: 0.5, ease: "easeInOut" as const }}
     >
-      {/* Desktop background - hidden on mobile */}
+      {/* Desktop background - hidden in portrait */}
       <div
-        className="absolute inset-0 hidden md:block"
+        className={`absolute inset-0 ${isPortrait ? "hidden" : "block"}`}
         style={{
           backgroundImage: "url('/game/backgrounds/environment.webp')",
-          backgroundSize: "cover",
+          backgroundSize: "100% 100%",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
         }}
       />
-      {/* Mobile background - hidden on desktop */}
+      {/* Mobile background - hidden in landscape */}
       <div
-        className="absolute inset-0 block md:hidden"
+        className={`absolute inset-0 ${isPortrait ? "block" : "hidden"}`}
         style={{
           backgroundImage: "url('/game/backgrounds/environment-mobile.webp')",
-          backgroundSize: "cover",
+          backgroundSize: "100% 100%",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
         }}
@@ -126,10 +136,11 @@ export function Scene2D({
         shootT={shootT}
         aimTarget={aimTarget}
         isShooting={isShooting}
+        baseSizeVw={isPortrait ? 12 : 5}
       />
 
-      {/* ── Kicker PNG sprite ── */}
-      <PlayerSprite phase={phase} />
+      {/* ── Kicker PNG sprite (Desktop only) ── */}
+      {!isPortrait && <PlayerSprite phase={phase} />}
     </motion.div>
   );
 }

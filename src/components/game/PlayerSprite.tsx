@@ -43,7 +43,7 @@ export function PlayerSprite({ phase }: PlayerSpriteProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.08 }}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-fill"
         />
       </AnimatePresence>
     </div>

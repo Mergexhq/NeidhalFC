@@ -45,21 +45,21 @@ function getKeeperImage(keeperPos: KeeperAction, isShooting: boolean, shootT: nu
   return IMG_REST;
 }
 
-// Dive translation - expressed as vw so it scales with viewport
+// Dive translation - expressed as % of container width so it scales with keeper size
 // During aiming: no movement (keeper sway is just visual wobble via sprite)
 // During shooting: freeze at center, then dive after reaction delay
-function getDiveX(keeperPos: KeeperAction, isShooting: boolean, shootT: number): string {
+function getDiveX(keeperPos: KeeperAction, isShooting: boolean, shootT: number, isPortrait: boolean): string {
   if (!isShooting) {
     // Gentle visual sway during aiming phase (very small, just a hint)
-    if (keeperPos === "left") return "-1.5vw";
-    if (keeperPos === "right") return "1.5vw";
-    return "0vw";
+    if (keeperPos === "left") return "-6%";
+    if (keeperPos === "right") return "6%";
+    return "0%";
   }
 
   // Shooting phase: freeze at center during reaction time
   const reactionDelay = 0.35;
   if (shootT < reactionDelay) {
-    return "0vw";
+    return "0%";
   }
 
   // After reaction: dive toward committed direction
@@ -67,14 +67,18 @@ function getDiveX(keeperPos: KeeperAction, isShooting: boolean, shootT: number):
   // Cubic ease-out for natural deceleration
   const easedProgress = 1 - Math.pow(1 - diveProgress, 3);
 
-  if (keeperPos === "left") return `${-14 * easedProgress}vw`;
-  if (keeperPos === "right") return `${14 * easedProgress}vw`;
-  return "0vw";
+  // Desktop: container is 36% wide, dive 13% parent width -> 13/36 = ~36% of container width
+  // Mobile: container is 74% wide, dive 19% parent width -> 19/74 = ~26% of container width
+  const maxDivePercent = isPortrait ? 26 : 36;
+
+  if (keeperPos === "left") return `-${maxDivePercent * easedProgress}%`;
+  if (keeperPos === "right") return `${maxDivePercent * easedProgress}%`;
+  return "0%";
 }
 
 // Keeper stays at ground level - no upward movement on dive
 function getDiveY(): string {
-  return "0vw";
+  return "0%";
 }
 
 function getDiveRotate(): number {
@@ -92,40 +96,43 @@ export function KeeperSprite({ keeperPos, phase, shootT = 0 }: KeeperSpriteProps
     ? { type: "tween" as const, ease: "linear" as const, duration: 0.05 }
     : { type: "spring" as const, stiffness: 40, damping: 12 };
 
-  // Detect window width to set correct goal center (Desktop: 53%, Mobile: 41%)
-  const [isMobile, setIsMobile] = useState(false);
+  // Detect window aspect ratio to set correct goal center (Desktop/Landscape: 53%, Mobile/Portrait/Tablet: 50%)
+  const [isPortrait, setIsPortrait] = useState(false);
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsPortrait(window.innerWidth < window.innerHeight);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const goalCenter = isMobile ? "41%" : "53%";
+  const goalCenter = isPortrait ? "50%" : "53%";
+  const keeperWidth = isPortrait ? "74%" : "36%";
+  const keeperMarginLeft = isPortrait ? "-37%" : "-18%";
+  const keeperBottom = isPortrait ? "28.5%" : "29%";
 
   return (
     <div
       className="absolute pointer-events-none z-10"
       style={{
-        bottom: "14%",
+        bottom: keeperBottom,
         left: goalCenter,
-        marginLeft: "-12%",
-        width: "24%",
+        marginLeft: keeperMarginLeft,
+        width: keeperWidth,
       }}
     >
       {/* Animated wrapper - handles dive/sway */}
       <motion.div
         className="w-full origin-bottom"
         animate={{
-          x: getDiveX(keeperPos, isShooting, shootT),
+          x: getDiveX(keeperPos, isShooting, shootT, isPortrait),
           y: getDiveY(),
           rotate: getDiveRotate(),
           scale: getDiveScale(),
         }}
         transition={spring}
-        style={{ aspectRatio: "0.72 / 1" }}
+        style={{ aspectRatio: "669 / 373" }}
       >
         {/* Image crossfade */}
         <AnimatePresence mode="wait">
@@ -157,3 +164,4 @@ export function KeeperSprite({ keeperPos, phase, shootT = 0 }: KeeperSpriteProps
     </div>
   );
 }
+
