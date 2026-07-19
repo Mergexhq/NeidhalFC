@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import AboutHero from "@/modules/about/AboutHero";
 import BrandMeaning from "@/modules/about/BrandMeaning";
+import DolphinMascot from "@/modules/about/DolphinMascot";
 import WhatWeBelieve from "@/modules/about/WhatWeBelieve";
 import HowWeCoach from "@/modules/about/HowWeCoach";
 import JoinNeidhal from "@/modules/about/JoinNeidhal";
@@ -16,6 +17,7 @@ export default function AboutPage() {
     <>
       <AboutHero />
       <BrandMeaning />
+      <DolphinMascot />
       <WhatWeBelieve />
       <HowWeCoach />
       <JoinNeidhal />

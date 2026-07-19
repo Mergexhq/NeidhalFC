@@ -22,7 +22,7 @@ export const LocationsHero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay: 0.1 }}
-            className="font-display font-medium text-[clamp(2.5rem,6.8vw,5.2rem)] text-[#0B1F3A] uppercase tracking-tight leading-none"
+            className="font-display font-medium text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-[#0B1F3A] uppercase tracking-tight leading-none whitespace-nowrap"
           >
             Find Your Training Hub.
           </motion.h1>

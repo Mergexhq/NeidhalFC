@@ -46,11 +46,13 @@ const HamburgerButton = ({
   onClick,
   isDark,
   isScrolled,
+  isActualDark,
 }: {
   isOpen: boolean;
   onClick: () => void;
   isDark: boolean;
   isScrolled: boolean;
+  isActualDark: boolean;
 }) => {
   return (
     <button
@@ -58,27 +60,47 @@ const HamburgerButton = ({
       className={cn(
         "flex flex-col justify-center items-center w-12 h-12 rounded-full border transition-all pointer-events-auto relative z-50 cursor-pointer group shadow-lg",
         isOpen
-          ? "bg-[#FAF7F2] border-[#0B1F3A]/15 text-[#0B1F3A]"
+          ? "bg-[#FAF7F2] border-[#0B1F3A]/15 text-black"
           : isScrolled
-            ? "bg-[#FAF7F2]/90 backdrop-blur-md border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-[#0B1F3A] hover:scale-105"
+            ? "bg-[#FAF7F2]/90 backdrop-blur-md border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-black"
             : isDark
-              ? "bg-white/10 backdrop-blur-md border-white/20 hover:border-white/40 text-white hover:scale-105"
-              : "bg-[#FAF7F2]/90 backdrop-blur-md border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-[#0B1F3A] hover:scale-105"
+              ? isActualDark
+                ? "bg-white/10 backdrop-blur-md border-white/20 hover:border-white/40 text-white"
+                : "bg-[#FAF7F2]/90 backdrop-blur-md border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-black"
+              : "bg-[#FAF7F2]/90 backdrop-blur-md border-[#0B1F3A]/15 hover:border-[#0B1F3A]/30 text-black"
       )}
       aria-label="Toggle menu"
     >
-      <div className="flex flex-col gap-1.5 justify-center items-center w-6 h-3 relative">
-        <motion.span
-          animate={isOpen ? { rotate: 45, y: 4, width: "24px" } : { rotate: 0, y: 0, width: "24px" }}
+      <svg
+        width="24"
+        height="12"
+        viewBox="0 0 24 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="text-current"
+      >
+        <motion.rect
+          x="0"
+          y="0"
+          width="24"
+          height="2"
+          rx="1"
+          fill="currentColor"
+          style={{ transformOrigin: "center" }}
+          animate={isOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
-          className="block h-[2px] bg-current rounded-full"
         />
-        <motion.span
-          animate={isOpen ? { rotate: -45, y: -4, width: "24px" } : { rotate: 0, y: 0, width: "24px" }}
+        <motion.rect
+          x="8"
+          y="10"
+          height="2"
+          rx="1"
+          fill="currentColor"
+          style={{ transformOrigin: "center" }}
+          animate={isOpen ? { rotate: -45, y: -5, x: -8, width: 24 } : { rotate: 0, y: 0, x: 0, width: 16 }}
           transition={{ duration: 0.2 }}
-          className="block h-[2px] bg-current rounded-full"
         />
-      </div>
+      </svg>
     </button>
   );
 };
@@ -136,9 +158,15 @@ export const Navbar: React.FC<NavbarProps> = ({
     pathname === "/not-found" ||
     pathname === "/404";
 
+  const isActualDarkPage =
+    pathname === "/contact" ||
+    pathname.startsWith("/utility") ||
+    pathname === "/not-found" ||
+    pathname === "/404";
+
   return (
     <>
-      {/* Top-Left Logo (visible in hero, fades out on scroll) */}
+      {/* Top-Left Logo and Typography (visible in hero, fades out on scroll) */}
       <motion.div
         animate={{ opacity: isScrolled ? 0 : 1, y: isScrolled ? -20 : 0 }}
         transition={{ duration: 0.3 }}
@@ -155,12 +183,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               priority
             />
           </div>
-          <div className="flex items-center font-raleway text-xl sm:text-2xl tracking-wider leading-none transition-colors duration-300 font-medium text-[#0B1F3A]">
-            <span>NEIDHAL</span>
-            <span className="ml-2 font-light inline-flex overflow-hidden transition-all duration-500 ease-in-out w-[22px] group-hover:w-[180px] sm:w-[26px] sm:group-hover:w-[220px] relative whitespace-nowrap text-[#0B1F3A]">
-              <span className="transition-opacity duration-300 group-hover:opacity-0">FC</span>
-              <span className="absolute left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">FOOTBALL CLUB</span>
-            </span>
+          <div className={cn(
+            "flex items-center font-raleway text-xl sm:text-2xl tracking-wider leading-none transition-colors duration-300 font-medium",
+            isActualDarkPage && !isScrolled ? "text-white" : "text-[#0B1F3A]"
+          )}>
+            <span>NEIDHAL FC</span>
           </div>
         </Link>
       </motion.div>
@@ -172,6 +199,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           isDark={isDarkHero && !isScrolled}
           isScrolled={isScrolled}
+          isActualDark={isActualDarkPage}
         />
       </div>
 

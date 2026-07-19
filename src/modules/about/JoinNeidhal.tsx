@@ -15,7 +15,7 @@ export const JoinNeidhal: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative w-full rounded-[2.5rem] overflow-hidden min-h-[480px] md:min-h-[580px] p-8 sm:p-12 md:p-16 flex flex-col justify-between text-left shadow-2xl group"
+          className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden min-h-[480px] md:min-h-[580px] p-8 sm:p-12 md:p-16 flex flex-col justify-between text-left shadow-2xl group"
         >
           {/* Background Image */}
           <Image

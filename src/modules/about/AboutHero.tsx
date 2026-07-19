@@ -52,13 +52,23 @@ export const AboutHero: React.FC = () => {
           style={{ y }}
           className="absolute inset-0 w-full h-[120%] -top-[10%] z-0"
         >
+          {/* Desktop Version */}
           <Image
-            src="/images/about/about_hero_bg.webp"
+            src="/images/about/about_hero_bg_desktop.webp"
             alt="About Neidhal FC background"
             fill
             priority
             unoptimized
-            className="object-cover object-bottom pointer-events-none select-none"
+            className="hidden md:block object-cover object-bottom pointer-events-none select-none"
+          />
+          {/* Mobile Version */}
+          <Image
+            src="/images/about/about_hero_bg_mobile.webp"
+            alt="About Neidhal FC background"
+            fill
+            priority
+            unoptimized
+            className="block md:hidden object-cover object-bottom pointer-events-none select-none"
           />
         </motion.div>
 

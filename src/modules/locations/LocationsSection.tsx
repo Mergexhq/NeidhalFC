@@ -1,8 +1,7 @@
-"use client";
-
 import React from "react";
-import LocationsHero from "./LocationsHero";
 import LocationCard from "./LocationCard";
+import LocationsScrollAnimation from "./LocationsScrollAnimation";
+
 
 /* ─────────────────────────────────────────────
    DATA
@@ -98,8 +97,8 @@ const LOCATIONS = [
 export const LocationsSection: React.FC = () => {
   return (
     <div className="relative bg-[#FAF7F2]">
-      {/* Hero Section in normal flow */}
-      <LocationsHero />
+      {/* Scroll-scrub animation illustration acting as the Hero */}
+      <LocationsScrollAnimation />
 
       {/* Cards container following the hero banner */}
       <div className="relative z-10 bg-[#FAF7F2]">
