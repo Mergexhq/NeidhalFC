@@ -14,13 +14,14 @@
  *         the keeper sits inside the goal properly.
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { KeeperAction, GamePhase } from "@/types/game";
 
 interface KeeperSpriteProps {
   keeperPos: KeeperAction;
   phase: GamePhase;
+  shootT?: number;
 }
 
 // URL-encoded paths (spaces → %20)
@@ -28,8 +29,8 @@ const IMG_REST = "/game/sprites/keeper-rest.png";
 const IMG_LEFT = "/game/sprites/left-catch.png";
 const IMG_RIGHT = "/game/sprites/right-catch.png";
 
-function getKeeperImage(keeperPos: KeeperAction, isShooting: boolean): string {
-  if (isShooting) {
+function getKeeperImage(keeperPos: KeeperAction, isShooting: boolean, shootT: number): string {
+  if (isShooting && shootT >= 0.35) {
     if (keeperPos === "left") return IMG_LEFT;
     if (keeperPos === "right") return IMG_RIGHT;
   }
@@ -37,10 +38,20 @@ function getKeeperImage(keeperPos: KeeperAction, isShooting: boolean): string {
 }
 
 // Dive translation in pixels - expressed as vw so it scales with viewport
-function getDiveX(keeperPos: KeeperAction, isShooting: boolean): string {
+function getDiveX(keeperPos: KeeperAction, isShooting: boolean, shootT: number): string {
   if (isShooting) {
-    if (keeperPos === "left") return "-15vw";
-    if (keeperPos === "right") return "15vw";
+    const reactionDelay = 0.35;
+    if (shootT < reactionDelay) {
+      return "0vw";
+    }
+    // Calculate progress of dive from 0 to 1
+    const diveProgress = Math.min((shootT - reactionDelay) / (0.80 - reactionDelay), 1);
+    
+    // Cubic ease-out
+    const easedProgress = 1 - Math.pow(1 - diveProgress, 3);
+
+    if (keeperPos === "left") return `${-14 * easedProgress}vw`;
+    if (keeperPos === "right") return `${14 * easedProgress}vw`;
   }
   // Gentle sway during aiming
   if (keeperPos === "left") return "-2vw";
@@ -61,19 +72,32 @@ function getDiveScale(): number {
   return 1;
 }
 
-export function KeeperSprite({ keeperPos, phase }: KeeperSpriteProps) {
+export function KeeperSprite({ keeperPos, phase, shootT = 0 }: KeeperSpriteProps) {
   const isShooting = phase === "shooting" || phase === "result";
-  const imgSrc = getKeeperImage(keeperPos, isShooting);
+  const imgSrc = getKeeperImage(keeperPos, isShooting, shootT);
   const spring = isShooting
-    ? { type: "spring" as const, stiffness: 200, damping: 20 }
+    ? { type: "tween" as const, ease: "linear" as const, duration: 0.05 }
     : { type: "spring" as const, stiffness: 40, damping: 12 };
+
+  // Detect window width to set correct goal center (Desktop: 53%, Mobile: 41%)
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const goalCenter = isMobile ? "41%" : "53%";
 
   return (
     <div
       className="absolute pointer-events-none z-10"
       style={{
         bottom: "14%",
-        left: "46%",
+        left: goalCenter,
         marginLeft: "-12%",
         width: "24%",
       }}
@@ -82,7 +106,7 @@ export function KeeperSprite({ keeperPos, phase }: KeeperSpriteProps) {
       <motion.div
         className="w-full origin-bottom"
         animate={{
-          x: getDiveX(keeperPos, isShooting),
+          x: getDiveX(keeperPos, isShooting, shootT),
           y: getDiveY(),
           rotate: getDiveRotate(),
           scale: getDiveScale(),

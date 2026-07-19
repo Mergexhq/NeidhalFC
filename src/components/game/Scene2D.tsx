@@ -12,7 +12,7 @@
  * Shadows: removed per request.
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import type { GamePhase, AimTarget, KeeperAction } from "@/types/game";
 import { Ball3D } from "./Ball3D";
@@ -39,6 +39,19 @@ export function Scene2D({
 }: Scene2DProps) {
   const isShooting = phase === "shooting" || phase === "result";
 
+  // Detect window width to match the goalkeeper's goal center alignment (Desktop: 53%, Mobile: 41%)
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const goalCenter = isMobile ? 41 : 53;
+
   // ── Ball trajectory coordinates ──────────────────────────────────────────
   const getBallPos = () => {
     if (!isShooting) {
@@ -47,7 +60,7 @@ export function Scene2D({
 
     const startX = 50;
     const startY = 76;
-    const targetX = 50 + aimTarget.x * 13;
+    const targetX = goalCenter + aimTarget.x * 13;
     const targetY = 65 - aimTarget.y * 21;
 
     const curX = startX + shootT * (targetX - startX);
@@ -103,7 +116,7 @@ export function Scene2D({
       <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/5 via-transparent to-sky-400/5 mix-blend-overlay pointer-events-none" />
 
       {/* ── Goalkeeper PNG sprite ── */}
-      <KeeperSprite keeperPos={keeperPos} phase={phase} />
+      <KeeperSprite keeperPos={keeperPos} phase={phase} shootT={shootT} />
 
       {/* ── 3D GLTF Ball (R3F Canvas) ── */}
       <Ball3D
