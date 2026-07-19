@@ -89,10 +89,10 @@ export const CoachSection: React.FC = () => {
             return (
               <div
                 key={coach.id}
-                /* overflow-visible — image floats above, card is flush at bottom */
+                /* overflow-visible - image floats above, card is flush at bottom */
                 className="group relative flex items-end overflow-visible h-[110px] md:h-[194px]"
               >
-                {/* ── The card bar itself — flush at bottom, inset at top ── */}
+                {/* ── The card bar itself - flush at bottom, inset at top ── */}
                 <div
                   className="
                     absolute inset-x-0

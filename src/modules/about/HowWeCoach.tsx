@@ -9,7 +9,7 @@ const FEATURES = [
   {
     icon: Users,
     title: "Dual-Coach Model",
-    body: "Every session runs with two coaches. One focuses on technical mechanics — footwork, ball control, shooting form. The other manages gameplay scenarios and tactical awareness. This means every player gets specific, personal feedback.",
+    body: "Every session runs with two coaches. One focuses on technical mechanics - footwork, ball control, shooting form. The other manages gameplay scenarios and tactical awareness. This means every player gets specific, personal feedback.",
     image: "/images/gallery/gallery-08.webp",
   },
   {
@@ -101,7 +101,7 @@ export const HowWeCoach: React.FC = () => {
                 </div>
 
                 {/* Gradient Overlay for high-contrast text readability */}
-                <div 
+                <div
                   className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-300"
                   style={{
                     background: "linear-gradient(to top, rgba(11, 31, 58, 0.95) 0%, rgba(11, 31, 58, 0.8) 45%, rgba(11, 31, 58, 0.2) 100%)"

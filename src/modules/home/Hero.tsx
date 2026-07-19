@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -275,14 +277,34 @@ export const Hero: React.FC = () => {
         <div ref={contentRef} className="hh-content">
           <div className="hh-top-content">
             {/* Pinned animation ref preserved inside empty div */}
-            <div ref={eyebrowRef} />
-            <div ref={headingRef} />
+            <div ref={eyebrowRef} className="hidden" />
+            <h1 ref={headingRef} className="hh-heading">
+              <span className="hh-heading-line hh-animate">Bring the Soul</span>
+              <span className="hh-heading-accent hh-animate">Back to Football.</span>
+            </h1>
           </div>
 
           <div>
-            <div ref={subRef} />
+            <div ref={subRef}>
+              <p className="hh-sub hh-animate">
+                We develop fearless, creative players who play with freedom and flair. Combining Chennai's street-style beach spirit with structured coaching.
+              </p>
+            </div>
 
-            <div ref={actionsRef} />
+            <div ref={actionsRef} className="hh-actions hh-animate flex items-center gap-3 mt-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-[#0B1F3A] hover:bg-[#FAF7F2] font-sans font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:scale-[1.02] active:scale-95 cursor-pointer"
+              >
+                Join Our Club Today
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white text-[#0B1F3A] hover:bg-[#FAF7F2] transition-all duration-300 shadow-md hover:scale-[1.02] active:scale-95 cursor-pointer"
+              >
+                <ArrowUpRight size={18} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

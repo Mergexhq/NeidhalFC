@@ -61,12 +61,12 @@ export const DolphinMascot: React.FC = () => {
     <div ref={triggerRef} className="w-full relative bg-black">
       {/* Pinned Viewport Container */}
       <section className="w-full h-screen md:h-[75vh] bg-black overflow-hidden grid grid-cols-1 md:grid-cols-2">
-        
+
         {/* Left Column: Text & Logo reveal */}
         <div className="relative flex flex-col justify-center items-center px-6 sm:px-12 md:px-16 lg:px-20 py-16 text-[#FAF7F2] bg-black h-[55vh] md:h-full overflow-hidden order-2 md:order-1">
-          
+
           {/* Copy Wrapper */}
-          <div 
+          <div
             ref={textWrapperRef}
             className="absolute inset-y-6 inset-x-6 sm:inset-x-12 md:inset-x-16 lg:inset-x-20 flex flex-col items-start justify-center max-w-xl mx-auto h-full"
           >
@@ -82,12 +82,12 @@ export const DolphinMascot: React.FC = () => {
 
             {/* Body Text */}
             <p className="text-[#FAF7F2]/80 font-sans text-sm sm:text-base leading-relaxed font-light">
-              Before Neidhal FC had training grounds, we trained on the beach. During those early mornings, pods of dolphins would often swim just beyond the waves, sometimes only 30 feet from where we played. The dolphin became more than something we saw—it became part of our journey. Today, it proudly represents the club and the coastal roots that continue to define who we are.
+              Before Neidhal FC had training grounds, we trained on the beach. During those early mornings, pods of dolphins would often swim just beyond the waves, sometimes only 30 feet from where we played. The dolphin became more than something we saw-it became part of our journey. Today, it proudly represents the club and the coastal roots that continue to define who we are.
             </p>
           </div>
 
           {/* Logo Wrapper */}
-          <div 
+          <div
             ref={logoWrapperRef}
             className="absolute inset-y-6 inset-x-6 sm:inset-x-12 md:inset-x-16 lg:inset-x-20 flex flex-col items-center justify-center max-w-xl mx-auto h-full pointer-events-none"
             style={{ opacity: 0 }}
