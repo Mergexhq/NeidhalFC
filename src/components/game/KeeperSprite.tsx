@@ -37,25 +37,30 @@ function getKeeperImage(keeperPos: KeeperAction, isShooting: boolean, shootT: nu
   return IMG_REST;
 }
 
-// Dive translation in pixels - expressed as vw so it scales with viewport
+// Dive translation - expressed as vw so it scales with viewport
+// During aiming: no movement (keeper sway is just visual wobble via sprite)
+// During shooting: freeze at center, then dive after reaction delay
 function getDiveX(keeperPos: KeeperAction, isShooting: boolean, shootT: number): string {
-  if (isShooting) {
-    const reactionDelay = 0.35;
-    if (shootT < reactionDelay) {
-      return "0vw";
-    }
-    // Calculate progress of dive from 0 to 1
-    const diveProgress = Math.min((shootT - reactionDelay) / (0.80 - reactionDelay), 1);
-    
-    // Cubic ease-out
-    const easedProgress = 1 - Math.pow(1 - diveProgress, 3);
-
-    if (keeperPos === "left") return `${-14 * easedProgress}vw`;
-    if (keeperPos === "right") return `${14 * easedProgress}vw`;
+  if (!isShooting) {
+    // Gentle visual sway during aiming phase (very small, just a hint)
+    if (keeperPos === "left") return "-1.5vw";
+    if (keeperPos === "right") return "1.5vw";
+    return "0vw";
   }
-  // Gentle sway during aiming
-  if (keeperPos === "left") return "-2vw";
-  if (keeperPos === "right") return "2vw";
+
+  // Shooting phase: freeze at center during reaction time
+  const reactionDelay = 0.35;
+  if (shootT < reactionDelay) {
+    return "0vw";
+  }
+
+  // After reaction: dive toward committed direction
+  const diveProgress = Math.min((shootT - reactionDelay) / (0.80 - reactionDelay), 1);
+  // Cubic ease-out for natural deceleration
+  const easedProgress = 1 - Math.pow(1 - diveProgress, 3);
+
+  if (keeperPos === "left") return `${-14 * easedProgress}vw`;
+  if (keeperPos === "right") return `${14 * easedProgress}vw`;
   return "0vw";
 }
 

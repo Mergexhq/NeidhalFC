@@ -176,9 +176,21 @@ export function useGame() {
     const aimX = Math.max(-1, Math.min(1, rawX));
     const aimY = Math.max(0, Math.min(1, rawY));
 
-    // Keeper randomly commits to a dive zone
+    // Keeper dives toward the ball direction with some chance of guessing wrong
+    // This creates realistic behavior: keeper reads the shot direction
     const r = Math.random();
-    const keeperDive: KeeperAction = r < 0.36 ? "left" : r < 0.72 ? "right" : "center";
+    let keeperDive: KeeperAction;
+
+    if (Math.abs(aimX) < 0.25) {
+      // Center shot: keeper has a ~40% chance of staying center, else dives randomly
+      keeperDive = r < 0.40 ? "center" : r < 0.70 ? "left" : "right";
+    } else if (aimX < 0) {
+      // Ball going left: keeper dives left 55%, wrong direction 25%, stays center 20%
+      keeperDive = r < 0.55 ? "left" : r < 0.80 ? "right" : "center";
+    } else {
+      // Ball going right: keeper dives right 55%, wrong direction 25%, stays center 20%
+      keeperDive = r < 0.55 ? "right" : r < 0.80 ? "left" : "center";
+    }
 
     fireShot({ x: aimX, y: aimY }, keeperDive);
   }, [phase, fireShot]);
