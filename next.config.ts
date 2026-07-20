@@ -21,7 +21,8 @@ const nextConfig: NextConfig = {
     const isDev = process.env.NODE_ENV === 'development';
     const headersList = [
       {
-        // Apply security headers to all routes
+        // Apply security headers to all routes and prevent caching of HTML pages to ensure
+        // client-side code loads the latest JS/CSS chunks after deployment.
         source: '/(.*)',
         headers: [
           {
@@ -44,6 +45,10 @@ const nextConfig: NextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
           },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
         ],
       },
     ];
@@ -63,6 +68,60 @@ const nextConfig: NextConfig = {
         {
           // Cache public assets for 1 week
           source: '/favicon/(.*)',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'public, max-age=604800, stale-while-revalidate=86400',
+            },
+          ],
+        },
+        {
+          source: '/images/:path*',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'public, max-age=604800, stale-while-revalidate=86400',
+            },
+          ],
+        },
+        {
+          source: '/videos/:path*',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'public, max-age=604800, stale-while-revalidate=86400',
+            },
+          ],
+        },
+        {
+          source: '/fonts/:path*',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'public, max-age=604800, stale-while-revalidate=86400',
+            },
+          ],
+        },
+        {
+          source: '/game/:path*',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'public, max-age=604800, stale-while-revalidate=86400',
+            },
+          ],
+        },
+        {
+          source: '/logo/:path*',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'public, max-age=604800, stale-while-revalidate=86400',
+            },
+          ],
+        },
+        {
+          source: '/hero/:path*',
           headers: [
             {
               key: 'Cache-Control',

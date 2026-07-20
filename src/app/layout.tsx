@@ -107,6 +107,7 @@ const friendsFont = localFont({
       style: "italic",
     },
   ],
+  variable: "--font-friends",
 });
 
 export const viewport: Viewport = {
