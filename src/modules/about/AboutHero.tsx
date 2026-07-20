@@ -77,14 +77,14 @@ export const AboutHero: React.FC = () => {
               style={{ x: textXSpring, y: textYSpring }}
               className="relative"
             >
-              {/* Small top tag: NEIDHAL FOOTBALL CLUB aligned above 'OUR' */}
+              {/* Desktop version: Small top tag: NEIDHAL FOOTBALL CLUB aligned above 'OUR' */}
               <motion.div 
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="absolute -top-4 sm:-top-5 md:-top-5 lg:-top-7 left-1/2 -translate-x-1/2 sm:left-[3%] sm:translate-x-0 md:left-[4%] z-20 text-center sm:text-left w-full sm:w-auto"
+                className="hidden md:block absolute md:-top-5 lg:-top-7 md:left-[4%] z-20 text-left w-auto"
               >
-                <span className="font-raleway font-bold text-[10px] xs:text-[11px] sm:text-[2.4vw] md:text-[1.8vw] lg:text-[1.5vw] uppercase tracking-[0.2em] text-[#0B1F3A] whitespace-nowrap">
+                <span className="font-raleway font-bold md:text-[1.8vw] lg:text-[1.5vw] uppercase tracking-[0.2em] text-[#0B1F3A] whitespace-nowrap">
                   NEIDHAL FOOTBALL CLUB
                 </span>
               </motion.div>
@@ -94,10 +94,11 @@ export const AboutHero: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className="hidden md:block font-raleway font-bold uppercase text-transparent bg-clip-text bg-cover tracking-[0.03em] text-[14vw] leading-none text-center select-none"
+                className="hidden md:block font-raleway font-bold uppercase text-transparent bg-clip-text bg-cover tracking-[0.03em] leading-none text-center select-none whitespace-nowrap"
                 style={{
                   backgroundImage: "url('/images/about/about_hero_bg_desktop.webp')",
                   backgroundPosition: "center 45%",
+                  fontSize: "clamp(5rem, 14vw, 11rem)",
                 }}
               >
                 OUR STORY
@@ -115,6 +116,18 @@ export const AboutHero: React.FC = () => {
               >
                 OUR STORY
               </motion.h1>
+
+              {/* Mobile version: Small bottom tag: NEIDHAL FOOTBALL CLUB centered below 'OUR STORY' */}
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="block md:hidden mt-4 z-20 text-center w-full"
+              >
+                <span className="font-raleway font-bold text-[10px] xs:text-[11px] sm:text-[14px] uppercase tracking-[0.2em] text-[#0B1F3A] whitespace-nowrap">
+                  NEIDHAL FOOTBALL CLUB
+                </span>
+              </motion.div>
             </motion.div>
           </motion.div>
 
@@ -137,6 +150,7 @@ export const AboutHero: React.FC = () => {
                   src="/images/about/about_hero_nobg_left.webp"
                   alt="Left cutout player"
                   fill
+                  sizes="(max-width: 768px) 0px, (max-width: 1280px) 33vw, 410px"
                   priority
                   className="object-contain object-bottom drop-shadow-[0_15px_30px_rgba(11,31,58,0.15)]"
                 />
@@ -151,6 +165,7 @@ export const AboutHero: React.FC = () => {
                   src="/images/about/about_hero_nobg_right.webp"
                   alt="Right cutout player"
                   fill
+                  sizes="(max-width: 768px) 0px, (max-width: 1280px) 33vw, 410px"
                   priority
                   className="object-contain object-bottom drop-shadow-[0_15px_30px_rgba(11,31,58,0.15)]"
                 />
@@ -165,6 +180,7 @@ export const AboutHero: React.FC = () => {
                   src="/images/about/about_hero_nobg_desktop.webp"
                   alt="Center cutout player"
                   fill
+                  sizes="(max-width: 768px) 0px, (max-width: 1280px) 42vw, 538px"
                   priority
                   className="object-contain object-bottom drop-shadow-[0_20px_40px_rgba(11,31,58,0.2)]"
                 />
@@ -177,6 +193,7 @@ export const AboutHero: React.FC = () => {
                 src="/images/about/about_hero_nobg_mobile.webp"
                 alt="Cutout foreground"
                 fill
+                sizes="(max-width: 768px) 100vw, 0px"
                 priority
                 className="object-contain object-center drop-shadow-[0_15px_30px_rgba(11,31,58,0.15)]"
               />
