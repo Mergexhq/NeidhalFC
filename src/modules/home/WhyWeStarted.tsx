@@ -13,7 +13,7 @@ export const WhyWeStarted: React.FC = () => {
 
       {/* Main Copy Wrapper */}
       <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-10 md:gap-14">
-        
+
         {/* Editorial Heading */}
         <RevealText
           as="h2"
@@ -26,7 +26,7 @@ export const WhyWeStarted: React.FC = () => {
 
         {/* Story copy structured like Image 2 */}
         <div className="flex flex-col gap-4 sm:gap-5 md:gap-5 text-center text-base sm:text-lg md:text-[21px] text-[#0B1F3A]/85 font-light leading-[1.55] max-w-3xl font-sans">
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -34,16 +34,7 @@ export const WhyWeStarted: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-raleway font-semibold text-xl sm:text-2xl md:text-[26px] text-[#0B1F3A] leading-tight"
           >
-            Football has changed.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-          >
-            Children are often taught where to stand before they&apos;re encouraged to think.
+            To bring the soul back into football by creating fearless, skillful players who play with flair, freedom, and creativity -not just tactics.
           </motion.p>
 
           <motion.p
@@ -51,36 +42,9 @@ export const WhyWeStarted: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="font-raleway font-medium text-lg sm:text-xl md:text-[22px] text-[#0B1F3A]"
           >
-            We started Neidhal FC because we believe the game deserves more than that.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-          >
-            We want young players to dribble with confidence, make fearless decisions, express their own style, and enjoy every moment on the pitch.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            Because football isn&apos;t just about fitting into a system.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="font-raleway font-semibold text-lg sm:text-xl md:text-[22px] text-[#0B1F3A]"
-          >
-            It&apos;s about finding your own game.
+            At Neidhal FC, we believe football should inspire expression, joy, and individuality, not robotic repetition.
           </motion.p>
         </div>
 

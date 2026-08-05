@@ -1,7 +1,7 @@
 /**
  * sounds.ts - Lightweight audio stub (no external dependencies).
  *
- * Currently plays nothing — acts as a zero-cost no-op layer.
+ * Currently plays nothing -acts as a zero-cost no-op layer.
  * When real audio files are added, replace the `src` values and
  * uncomment the AudioContext logic below.
  *

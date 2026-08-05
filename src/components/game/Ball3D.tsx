@@ -55,7 +55,7 @@ const BallModel = memo(function BallModel({ shootT, aimTarget, isShooting }: Bal
     }
   }, [materials]);
 
-  // Spin only during flight — request frame only when animating
+  // Spin only during flight -request frame only when animating
   useFrame(() => {
     if (!groupRef.current || !isShooting) return;
     groupRef.current.rotation.x = -(shootT * Math.PI * 6);

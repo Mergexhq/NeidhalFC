@@ -225,14 +225,14 @@ export const Hero: React.FC = () => {
         0.11
       );
 
-      // Story Beat 1 (Left Side) — visible 0.15→0.28, gap until 0.44
+      // Story Beat 1 (Left Side) -visible 0.15→0.28, gap until 0.44
       tl.fromTo(
         story1Ref.current,
         { opacity: 0, x: -30 },
-        { 
-          opacity: 1, 
-          x: 0, 
-          duration: 0.07, 
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.07,
           ease: "power1.out",
           onStart: () => {
             story1TitleRef.current?.play();
@@ -247,14 +247,14 @@ export const Hero: React.FC = () => {
         0.28
       );
 
-      // Story Beat 2 (Right Side) — visible 0.44→0.55, gap until 0.70
+      // Story Beat 2 (Right Side) -visible 0.44→0.55, gap until 0.70
       tl.fromTo(
         story2Ref.current,
         { opacity: 0, x: 30 },
-        { 
-          opacity: 1, 
-          x: 0, 
-          duration: 0.07, 
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.07,
           ease: "power1.out",
           onStart: () => {
             story2TitleRef.current?.play();
@@ -269,14 +269,14 @@ export const Hero: React.FC = () => {
         0.55
       );
 
-      // Story Beat 3 (Center Bottom) — visible 0.76→0.85, gap until 0.92
+      // Story Beat 3 (Center Bottom) -visible 0.76→0.85, gap until 0.92
       tl.fromTo(
         story3Ref.current,
         { opacity: 0, y: 30 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.07, 
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.07,
           ease: "power1.out",
           onStart: () => {
             story3TitleRef.current?.play();
@@ -291,14 +291,14 @@ export const Hero: React.FC = () => {
         0.85
       );
 
-      // Story Beat 4 (Conclusion) — visible 0.92→1.00
+      // Story Beat 4 (Conclusion) -visible 0.92→1.00
       tl.fromTo(
         story4Ref.current,
         { opacity: 0, scale: 0.95 },
-        { 
-          opacity: 1, 
-          scale: 1, 
-          duration: 0.07, 
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.07,
           ease: "power1.out",
           onStart: () => {
             story4TitleRef.current?.play();
@@ -408,7 +408,7 @@ export const Hero: React.FC = () => {
           <p>
             <KineticTextReveal
               ref={story1DescRef}
-              text="We reject robotic repetition. On the shoreline, players learn to improvise, express themselves, and make their own decisions."
+              text="At Neidhal FC, we believe football should inspire expression, joy, and individuality, not robotic repetition."
               autoPlay={false}
               splitBy="words"
               stagger={0.03}
@@ -421,7 +421,7 @@ export const Hero: React.FC = () => {
           <h3>
             <KineticTextReveal
               ref={story2TitleRef}
-              text="Confidence in 1v1 Situations"
+              text="Flair & Street-Style Expression"
               autoPlay={false}
               splitBy="words"
               stagger={0.06}
@@ -430,7 +430,7 @@ export const Hero: React.FC = () => {
           <p>
             <KineticTextReveal
               ref={story2DescRef}
-              text="Training on the sand builds explosive power and street-style touch. We teach players to dare, to fail, and to stand out."
+              text="Our training focuses on flair & street style expression. We teach players to dare to try, to fail & to stand out."
               autoPlay={false}
               splitBy="words"
               stagger={0.03}
