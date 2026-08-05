@@ -7,6 +7,12 @@
       "skillPath": "skills/audit-typography/SKILL.md",
       "computedHash": "b81a05167ef34eb88d6b19ba2fcd415c4339fea880fbfb88cdd9eaf78b56f2fa"
     },
+    "sanity-best-practices": {
+      "source": "sanity-io/agent-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/sanity-best-practices/SKILL.md",
+      "computedHash": "9c8a70623967092c11be2598d9e90dca28cbc985b14a94a4f0b5ed9372cecad2"
+    },
     "suggest-improvements": {
       "source": "kapishdima/fonttrio",
       "sourceType": "github",

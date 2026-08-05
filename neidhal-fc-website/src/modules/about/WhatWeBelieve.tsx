@@ -126,7 +126,7 @@ export const WhatWeBelieve: React.FC = () => {
                   fill
                   sizes="(max-width: 768px) 100vw, 20vw"
                   className="object-cover object-center"
-                  priority={idx < 2}
+                  priority
                 />
               </div>
 
