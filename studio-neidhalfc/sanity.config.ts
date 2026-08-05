@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'default',
   title: 'Neidhalfc',
 
-  projectId: '8nt74cnh',
+  projectId: '6u09poo0',
   dataset: 'production',
 
   plugins: [structureTool(), visionTool()],
