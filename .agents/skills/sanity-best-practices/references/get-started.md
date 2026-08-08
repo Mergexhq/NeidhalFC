@@ -8,9 +8,9 @@ description: Use these rules when users ask to 'Get started with Sanity' or need
 ## Overview
 
 Getting started with Sanity follows three phases:
-1. **Studio & Schema** — Set up Sanity Studio and define your content model
-2. **Content** — Import existing content or generate placeholder content via MCP
-3. **Frontend** — Integrate with your application (framework-specific)
+1. **Studio & Schema** - Set up Sanity Studio and define your content model
+2. **Content** - Import existing content or generate placeholder content via MCP
+3. **Frontend** - Integrate with your application (framework-specific)
 
 ## Communication Style
 
@@ -66,7 +66,7 @@ Check whether Sanity MCP tools are already available before creating files.
 
 ### Step 1: Check for Existing Studio
 
-**Look for `sanity.config.ts` or `sanity.cli.ts` across the workspace** — in the recommended side-by-side layout the Studio lives in its own folder (`studio/`, or `studio-*` when created by the Sanity onboarding flow) next to the app folder:
+**Look for `sanity.config.ts` or `sanity.cli.ts` across the workspace** - in the recommended side-by-side layout the Studio lives in its own folder (`studio/`, or `studio-*` when created by the Sanity onboarding flow) next to the app folder:
 
 **If NO Studio found:**
 - Ask: "Want to create a new Sanity Studio?"
@@ -75,7 +75,7 @@ Check whether Sanity MCP tools are already available before creating files.
 - Create or select the project and dataset first. Prefer Sanity MCP project
   tools when available, and never guess an organization or create a project in
   the wrong account.
-- Run the initializer unattended with the known values from the repo root —
+- Run the initializer unattended with the known values from the repo root -
   **not inside a Next.js app folder**, where the CLI would switch to its
   embedded flow (not recommended):
   ```bash
@@ -260,13 +260,13 @@ For publishable values (`projectId`, `dataset`, `apiVersion`, public studio URL)
 - Astro: `import.meta.env.PUBLIC_*`
 - Nuxt: `useRuntimeConfig().public`
 
-For secrets (read tokens, webhook secrets), read `process.env.*` (or the server equivalent) **only from server-only modules** — `.server.ts`, route handlers, API endpoints. Don't centralize them in a shared `env.ts` that anything else imports.
+For secrets (read tokens, webhook secrets), read `process.env.*` (or the server equivalent) **only from server-only modules** - `.server.ts`, route handlers, API endpoints. Don't centralize them in a shared `env.ts` that anything else imports.
 
-This trap is invisible at SSR — the page renders fine on first load. It surfaces on client-side route transitions, when a lazy-loaded route chunk pulls a shared client/image module into the browser.
+This trap is invisible at SSR - the page renders fine on first load. It surfaces on client-side route transitions, when a lazy-loaded route chunk pulls a shared client/image module into the browser.
 
 ### Step 1: Find the App and Detect Framework
 
-The working directory is often a parent folder with the Studio and the app side by side. Identify the app folder first: a sibling of the Studio folder with its own `package.json` (commonly `web/`). If several candidates exist, ask the user which app to integrate — never assume.
+The working directory is often a parent folder with the Studio and the app side by side. Identify the app folder first: a sibling of the Studio folder with its own `package.json` (commonly `web/`). If several candidates exist, ask the user which app to integrate - never assume.
 
 **Check the app's `package.json` dependencies:**
 
@@ -301,15 +301,15 @@ npm install next-sanity @sanity/image-url
 ```
 
 `next-sanity` is the official Sanity toolkit for Next.js. It bundles `@sanity/client`, `groq` (with `defineQuery`), and `@portabletext/react`, plus dedicated subpath exports for Next.js-specific features:
-- `next-sanity` — `createClient`, `defineQuery`, `PortableText`, `SanityDocument`, `stegaClean`
-- `next-sanity/live` — `defineLive` for live content with Next.js cache integration
-- `next-sanity/draft-mode` — Draft Mode endpoint helpers
-- `next-sanity/visual-editing` — `<VisualEditing />` component for click-to-edit overlays
-- `next-sanity/image` — Sanity-aware `<Image />` wrapping `next/image`
-- `next-sanity/studio` — embed the Sanity Studio at a route (legacy setups only — keep the Studio standalone, see `nextjs.md`)
-- `next-sanity/webhook` — webhook signature verification
+- `next-sanity` - `createClient`, `defineQuery`, `PortableText`, `SanityDocument`, `stegaClean`
+- `next-sanity/live` - `defineLive` for live content with Next.js cache integration
+- `next-sanity/draft-mode` - Draft Mode endpoint helpers
+- `next-sanity/visual-editing` - `<VisualEditing />` component for click-to-edit overlays
+- `next-sanity/image` - Sanity-aware `<Image />` wrapping `next/image`
+- `next-sanity/studio` - embed the Sanity Studio at a route (legacy setups only - keep the Studio standalone, see `nextjs.md`)
+- `next-sanity/webhook` - webhook signature verification
 
-Don't also install `@sanity/client`, `@portabletext/react`, or `groq` directly — import them from `next-sanity`. `@sanity/image-url` is not bundled (yet), so add it separately.
+Don't also install `@sanity/client`, `@portabletext/react`, or `groq` directly - import them from `next-sanity`. `@sanity/image-url` is not bundled (yet), so add it separately.
 
 **Create the client (`src/sanity/client.ts`):**
 ```typescript
@@ -394,8 +394,8 @@ NEXT_PUBLIC_SANITY_DATASET=production
 
 After the first smoke test, configure TypeGen and replace the broad
 `SanityDocument` casts with generated query results. Run TypeGen after schema
-or query changes. For the recommended production path—live content with
-`defineLive`, Visual Editing, and the standalone Studio architecture—follow
+or query changes. For the recommended production path-live content with
+`defineLive`, Visual Editing, and the standalone Studio architecture-follow
 `nextjs.md`.
 
 ### Step 3: Other Frameworks
@@ -415,9 +415,9 @@ Before declaring integration done, exercise both render paths:
 
 1. `npm run dev` (in the app folder)
 2. Load the home page (lists posts).
-3. **Click through to a detail page** via the in-app Next.js `<Link>` — do not paste the URL.
+3. **Click through to a detail page** via the in-app Next.js `<Link>` - do not paste the URL.
 4. Open the browser console. It should be clean. No `ReferenceError: process is not defined`, no hard reload to `/`.
-5. For good measure, reload the detail page directly (URL bar) — that exercises SSR.
+5. For good measure, reload the detail page directly (URL bar) - that exercises SSR.
 
 Server-side rendering passing isn't enough. Client-side route transitions pull lazy chunks that exercise different code paths, and that's where env/bundling traps surface.
 
@@ -429,11 +429,11 @@ Once setup is complete, let the user know:
 
 "You're all set! Here are some things I can help with:
 
-- **Visual Editing** — Click-to-edit in the Presentation tool (`visual-editing.md`)
-- **TypeGen** — Type-safe queries with generated types (`typegen.md`)
-- **Studio Structure** — Customize the Studio sidebar (`studio-structure.md`)
-- **SEO** — Metadata, sitemaps, and Open Graph (`seo.md`)
-- **i18n** — Multi-language content (`localization.md`)
+- **Visual Editing** - Click-to-edit in the Presentation tool (`visual-editing.md`)
+- **TypeGen** - Type-safe queries with generated types (`typegen.md`)
+- **Studio Structure** - Customize the Studio sidebar (`studio-structure.md`)
+- **SEO** - Metadata, sitemaps, and Open Graph (`seo.md`)
+- **i18n** - Multi-language content (`localization.md`)
 
 Just ask about any of these!"
 
@@ -451,7 +451,7 @@ Just ask about any of these!"
 | Nuxt | `NUXT_PUBLIC_` | `NUXT_PUBLIC_SANITY_PROJECT_ID` |
 | Astro | `PUBLIC_` | `PUBLIC_SANITY_PROJECT_ID` |
 
-**Secrets** (read tokens, webhook secrets) stay **unprefixed** and are read via `process.env` (or the framework's server-only equivalent) from server-only modules — `*.server.ts`, route handlers, API routes. Never re-export a secret from a module that a route component can import.
+**Secrets** (read tokens, webhook secrets) stay **unprefixed** and are read via `process.env` (or the framework's server-only equivalent) from server-only modules - `*.server.ts`, route handlers, API routes. Never re-export a secret from a module that a route component can import.
 
 ---
 
@@ -470,8 +470,8 @@ npm run typegen                  # Generate TypeScript types
 
 ## Important Notes
 
-- **Be succinct** — Guide step-by-step without over-explaining
-- **Check context first** — Read existing files before suggesting changes
-- **Don't give up** — If something fails, give the user a way to complete manually
-- **Deploy schema early** — MCP content tools need deployed schemas to see new types and fields
-- **One phase at a time** — Complete each phase before moving to the next
+- **Be succinct** - Guide step-by-step without over-explaining
+- **Check context first** - Read existing files before suggesting changes
+- **Don't give up** - If something fails, give the user a way to complete manually
+- **Deploy schema early** - MCP content tools need deployed schemas to see new types and fields
+- **One phase at a time** - Complete each phase before moving to the next

@@ -34,26 +34,26 @@ export const WhyWeStarted: React.FC = () => {
         >
           {/* Line 1 (Widest) */}
           <span className="block md:inline-block">
-            To bring the soul back into football by creating fearless, skillful players
+            To bring the <strong className="font-semibold text-[#0B1F3A]">soul</strong> back into football by creating <strong className="font-semibold text-[#0B1F3A]">fearless, skillful players</strong>
           </span>
 
           {/* Line 2 */}
           <span className="block md:inline-block">
-            who play with flair, freedom, and creativity — not just tactics.
+            who play with <strong className="font-semibold text-[#0B1F3A]">flair</strong>, <strong className="font-semibold text-[#0B1F3A]">freedom</strong>, and <strong className="font-semibold text-[#0B1F3A]">creativity</strong> - not just tactics.
           </span>
 
           {/* Line 3 */}
           <span className="block md:inline-block text-[#0B1F3A]/80 pt-2 md:pt-3">
-            At Neidhal FC, we believe football should inspire
+            At Neidhal FC, we believe football should <strong className="font-semibold text-[#0B1F3A]">inspire</strong>
           </span>
 
           {/* Line 4 */}
           <span className="block md:inline-block text-[#0B1F3A]/80">
-            expression, joy, and individuality,
+            <strong className="font-semibold text-[#0B1F3A]">expression</strong>, <strong className="font-semibold text-[#0B1F3A]">joy</strong>, and <strong className="font-semibold text-[#0B1F3A]">individuality</strong>,
           </span>
 
           {/* Line 5 (Narrowest) */}
-          <span className="block md:inline-block text-[#0B1F3A]/80 font-medium">
+          <span className="block md:inline-block text-[#0B1F3A]/80 font-normal">
             not robotic repetition.
           </span>
         </motion.div>

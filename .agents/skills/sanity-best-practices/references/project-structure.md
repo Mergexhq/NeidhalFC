@@ -28,7 +28,7 @@ your-project/
 
 ## Monorepo (Recommended with a frontend)
 
-Best for most projects pairing Sanity with a Next.js (or other framework) app. The Studio stays standalone — Vite-based dev/builds, auto-updates, TypeGen watch mode — while living in the same repo as the frontend.
+Best for most projects pairing Sanity with a Next.js (or other framework) app. The Studio stays standalone - Vite-based dev/builds, auto-updates, TypeGen watch mode - while living in the same repo as the frontend.
 
 ```
 your-project/
@@ -52,14 +52,14 @@ your-project/
     └── package.json
 ```
 
-No workspace tooling is required — each app manages its own dependencies. For larger repos, the same shape works under `apps/` with npm or pnpm workspaces.
+No workspace tooling is required - each app manages its own dependencies. For larger repos, the same shape works under `apps/` with npm or pnpm workspaces.
 
 **Setup:**
 1. Add the web app URL to CORS origins: `npx sanity cors add http://localhost:3000 --credentials` (or via [Sanity Manage](https://www.sanity.io/manage))
 2. Configure `typegen` in `studio/sanity.cli.ts` to read queries from `../web` and output types to `../web/sanity.types.ts` (see `typegen.md`)
 3. Optionally add a root `package.json` with scripts that run both dev servers
 
-## Embedded Studio (Legacy — Not Recommended)
+## Embedded Studio (Legacy - Not Recommended)
 
 Older Next.js projects may mount the Studio inside the app at `src/app/studio/[[...tool]]/page.tsx`, with `sanity.config.ts` in the app root. This still works but is no longer recommended: it slows builds, ties Studio updates to app deploys, and rules out auto-updates and TypeGen watch mode. See `nextjs.md` for the rationale and migration steps.
 

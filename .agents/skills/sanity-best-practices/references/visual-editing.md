@@ -75,7 +75,7 @@ export default defineConfig({
     presentationTool({
       resolve, // Document locations (see below)
       previewUrl: {
-        // The front-end origin — required when the Studio runs standalone
+        // The front-end origin - required when the Studio runs standalone
         origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:3000',
         previewMode: {
           enable: '/api/draft-mode/enable',
@@ -88,7 +88,7 @@ export default defineConfig({
 
 ### Document Locations
 
-Show where documents appear in the front-end — enables quick navigation between Structure and Presentation tools.
+Show where documents appear in the front-end - enables quick navigation between Structure and Presentation tools.
 
 ```typescript
 // src/sanity/presentation/resolve.ts
@@ -170,7 +170,7 @@ export function DisableDraftMode() {
 -   **General:** Explicitly clean fields used in `<title>` or `<meta>`.
 
 ```typescript
-// Next.js Example — disable stega at fetch level
+// Next.js Example - disable stega at fetch level
 export async function generateMetadata({ params }) {
   const { data } = await sanityFetch({
     query: SEO_QUERY,

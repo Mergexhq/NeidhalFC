@@ -37,7 +37,7 @@ const blocks = htmlToBlocks(htmlString, blockContentType, {
   rules: [
     {
       deserialize(el, next, block) {
-        // Custom link handling — links are inline annotations, not blocks.
+        // Custom link handling - links are inline annotations, not blocks.
         // Return an `__annotation` with a `markDef`, and recurse into the
         // child nodes via `next()` so the link text is preserved.
         if (el.tagName?.toLowerCase() === 'a') {
@@ -55,7 +55,7 @@ const blocks = htmlToBlocks(htmlString, blockContentType, {
             children: next(el.childNodes)
           }
         }
-        // Custom image handling — block-level types are wrapped with `block()`
+        // Custom image handling - block-level types are wrapped with `block()`
         if (el.tagName?.toLowerCase() === 'img') {
           const src = el.getAttribute('src')
           // Skip sourceless images rather than emitting `image@null`, which
@@ -63,7 +63,7 @@ const blocks = htmlToBlocks(htmlString, blockContentType, {
           if (!src) return undefined
           return block({
             _type: 'image',
-            // NDJSON + `sanity datasets import` only — see the note below.
+            // NDJSON + `sanity datasets import` only - see the note below.
             _sanityAsset: `image@${src}`
           })
         }
@@ -78,7 +78,7 @@ const blocks = htmlToBlocks(htmlString, blockContentType, {
 > importer fetches each `image@<url>` and swaps in a real asset reference. The
 > mutation API does not interpret the directive, so the same blocks written
 > through `@sanity/client`, `sanity exec`, or `defineMigration` are stored
-> verbatim — leaving an image field with a stray `_sanityAsset` string and no
+> verbatim - leaving an image field with a stray `_sanityAsset` string and no
 > `asset` reference. On those paths, upload the image first and emit an asset
 > reference instead, as in [Image Upload](#image-upload) below.
 
@@ -107,7 +107,7 @@ function cleanHtml(html) {
 
 ### Image Upload
 
-Don't just link external images—upload them:
+Don't just link external images-upload them:
 
 ```javascript
 async function uploadImage(client, imageUrl) {

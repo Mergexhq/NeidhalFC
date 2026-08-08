@@ -22,7 +22,7 @@ cd my-app
 npx nuxi@latest module add sanity
 ```
 
-`nuxi module add sanity` resolves to the official `@nuxtjs/sanity` module and registers it in `nuxt.config.ts` automatically. The module bundles `@sanity/client`, `@sanity/visual-editing`, `@portabletext/vue`, and `groq` as direct dependencies — no separate installs needed.
+`nuxi module add sanity` resolves to the official `@nuxtjs/sanity` module and registers it in `nuxt.config.ts` automatically. The module bundles `@sanity/client`, `@sanity/visual-editing`, `@portabletext/vue`, and `groq` as direct dependencies - no separate installs needed.
 
 `groq` and `defineQuery` are also **auto-imported** by the module, so you can use them in `.vue` files without an `import` statement.
 
@@ -35,18 +35,18 @@ npm install @sanity/image-url
 ### What the module auto-imports
 
 **Composables** (use directly in `<script setup>`, no imports needed):
-- `useSanity()` — get the client and its config
-- `useSanityQuery()` / `useLazySanityQuery()` — reactive query helpers
-- `useSanityConfig()` — read the resolved module config
-- `useSanityPerspective()`, `useSanityPreviewPerspective()`, `useSanityPreviewEnvironment()` — perspective helpers for drafts/preview
-- `useSanityVisualEditingState()`, `useIsSanityLivePreview()`, `useIsSanityPresentationTool()` — visual-editing state helpers
+- `useSanity()` - get the client and its config
+- `useSanityQuery()` / `useLazySanityQuery()` - reactive query helpers
+- `useSanityConfig()` - read the resolved module config
+- `useSanityPerspective()`, `useSanityPreviewPerspective()`, `useSanityPreviewEnvironment()` - perspective helpers for drafts/preview
+- `useSanityVisualEditingState()`, `useIsSanityLivePreview()`, `useIsSanityPresentationTool()` - visual-editing state helpers
 
 **GROQ helpers** (template tags): `groq`, `defineQuery`
 
 **Components** (use directly in `<template>`):
-- `<SanityContent>` — Portable Text renderer (uses `@portabletext/vue` internally; prop is `:value`)
-- `<SanityImage>` — image renderer; takes an `assetId` (the image asset's `_ref`); upgrades to `<NuxtImg>` automatically when `@nuxt/image` is installed
-- `<SanityFile>` — file renderer
+- `<SanityContent>` - Portable Text renderer (uses `@portabletext/vue` internally; prop is `:value`)
+- `<SanityImage>` - image renderer; takes an `assetId` (the image asset's `_ref`); upgrades to `<NuxtImg>` automatically when `@nuxt/image` is installed
+- `<SanityFile>` - file renderer
 
 ### Configuration (`nuxt.config.ts`)
 
@@ -73,7 +73,7 @@ export default defineNuxtConfig({
 ## 2. Data Fetching
 
 ### `useSanityQuery`
-Use the composable for reactive fetching. It handles preview state automatically when `visualEditing` is configured. `groq` and `defineQuery` are auto-imported — use either.
+Use the composable for reactive fetching. It handles preview state automatically when `visualEditing` is configured. `groq` and `defineQuery` are auto-imported - use either.
 
 ```vue
 <!-- app/pages/posts.vue -->
@@ -93,7 +93,7 @@ const { data: posts } = await useSanityQuery<Array<{ _id: string; title?: string
 
 ### Dynamic Routes (`[slug].vue`)
 
-Pull the slug off `useRoute()` and pass it as a query parameter. The `<SanityContent>` component renders Portable Text — note the prop is `value`, not `blocks` (renamed in v2).
+Pull the slug off `useRoute()` and pass it as a query parameter. The `<SanityContent>` component renders Portable Text - note the prop is `value`, not `blocks` (renamed in v2).
 
 ```vue
 <!-- app/pages/[slug].vue -->
@@ -133,7 +133,7 @@ const layout = computed(() => stegaClean(props.layout))
 
 ## 4. Components
 
-### Portable Text — `<SanityContent>`
+### Portable Text - `<SanityContent>`
 
 The module auto-registers `<SanityContent>`. Don't install `@portabletext/vue` separately; it's a direct dep of the module.
 
@@ -147,15 +147,15 @@ For custom blocks/marks, pass `:components`:
 <SanityContent :value="post.body" :components="{ block: { h2: MyH2 } }" />
 ```
 
-### Images — two options
+### Images - two options
 
-**Option A — `<SanityImage>` (recommended).** Auto-registered. Takes the asset's `_ref` (the `assetId`) and builds the URL via the module's resolved projectId/dataset. If `@nuxt/image` is installed, it transparently upgrades to `<NuxtImg>` for responsive sizing.
+**Option A - `<SanityImage>` (recommended).** Auto-registered. Takes the asset's `_ref` (the `assetId`) and builds the URL via the module's resolved projectId/dataset. If `@nuxt/image` is installed, it transparently upgrades to `<NuxtImg>` for responsive sizing.
 
 ```vue
 <SanityImage :asset-id="post.mainImage.asset._ref" width="800" />
 ```
 
-**Option B — `@sanity/image-url` builder.** Install `@sanity/image-url` separately and build URLs manually. Useful when you need fine-grained control (hotspot/crop, format negotiation, srcset).
+**Option B - `@sanity/image-url` builder.** Install `@sanity/image-url` separately and build URLs manually. Useful when you need fine-grained control (hotspot/crop, format negotiation, srcset).
 
 ```typescript
 import imageUrlBuilder from '@sanity/image-url'

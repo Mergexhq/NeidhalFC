@@ -194,7 +194,7 @@ Always run `plan` before `deploy`. It is read-only and surfaces validation error
 
 `deploy` and `destroy` return: **`0`** succeeded, **`2`** failed, **`75`** accepted but completion could not be confirmed.
 
-**✅ Correct — treat exit 75 as unknown, then verify:**
+**✅ Correct - treat exit 75 as unknown, then verify:**
 ```bash
 npx sanity@latest blueprints deploy || status=$?
 if [ "${status:-0}" -eq 75 ]; then
@@ -202,7 +202,7 @@ if [ "${status:-0}" -eq 75 ]; then
 fi
 ```
 
-**❌ Incorrect — treating any nonzero exit as failure and retrying.** Exit 75 means the deployment was accepted; blindly redeploying can queue duplicate operations (deploy also refuses to start while another operation is in progress).
+**❌ Incorrect - treating any nonzero exit as failure and retrying.** Exit 75 means the deployment was accepted; blindly redeploying can queue duplicate operations (deploy also refuses to start while another operation is in progress).
 
 ### Scope resolution and environment variables
 
@@ -257,12 +257,12 @@ export SANITY_BLUEPRINT_STACK_ID=<stackId>
 npx sanity@latest blueprints deploy --json --message "CI deploy"
 ```
 
-**✅ Correct — secrets via server-side function env vars:**
+**✅ Correct - secrets via server-side function env vars:**
 ```bash
 npx sanity@latest functions env add my-function API_KEY sk-...
 ```
 
-**❌ Incorrect — secrets in the blueprint file's `env` block, which is committed to git:**
+**❌ Incorrect - secrets in the blueprint file's `env` block, which is committed to git:**
 ```typescript
 defineDocumentFunction({
   name: 'my-function',

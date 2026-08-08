@@ -7,7 +7,7 @@ description: Integration guide for React Router v7 (and Remix v2) with Sanity, i
 
 ## Version Note
 
-The primary examples below use **React Router v7** (the current shape — Remix v2 was renamed to React Router v7 starting with the v7 release). Import paths and the route-types file (`./+types/<route>`) come from the `react-router` package and the framework's typegen.
+The primary examples below use **React Router v7** (the current shape - Remix v2 was renamed to React Router v7 starting with the v7 release). Import paths and the route-types file (`./+types/<route>`) come from the `react-router` package and the framework's typegen.
 
 If you are on the older **Remix v2** stack, the integration shape is identical; only the import paths differ:
 
@@ -33,7 +33,7 @@ To support both server-side fetching and client-side live previews, use the **Sp
 
 ### A. Environment Variables
 
-React Router runs on Vite. **Any module reachable from a route component gets bundled into the client** — `process.env` doesn't exist there and will throw `ReferenceError: process is not defined` on client-side route transitions (SSR will still work, which makes this trap easy to miss).
+React Router runs on Vite. **Any module reachable from a route component gets bundled into the client** - `process.env` doesn't exist there and will throw `ReferenceError: process is not defined` on client-side route transitions (SSR will still work, which makes this trap easy to miss).
 
 Split publishable values from secrets:
 
@@ -50,7 +50,7 @@ VITE_SANITY_STUDIO_URL=http://localhost:3333
 SANITY_API_READ_TOKEN=your-read-token
 ```
 
-`app/sanity/env.ts` — browser-safe, publishable values only:
+`app/sanity/env.ts` - browser-safe, publishable values only:
 
 ```typescript
 export const projectId = import.meta.env.VITE_SANITY_PROJECT_ID!
@@ -74,7 +74,7 @@ export const {
 ```
 
 ### C. Server Loader (`app/sanity/loader.server.ts`)
-Initializes the server client. Read the token directly from `process.env` here — do **not** import it from `env.ts`, or it will leak into the client bundle the moment any client-reachable module touches `env.ts`.
+Initializes the server client. Read the token directly from `process.env` here - do **not** import it from `env.ts`, or it will leak into the client bundle the moment any client-reachable module touches `env.ts`.
 
 ```typescript
 import { createClient } from '@sanity/client'
@@ -91,7 +91,7 @@ const client = createClient({
     // Stega encodes invisible markers into string fields for click-to-edit
     // overlays in the Presentation tool. Those markers can leak into copy/paste,
     // screen readers, and some downstream renderers, so only enable when actually
-    // previewing — gate on an env var that's only set in preview environments.
+    // previewing - gate on an env var that's only set in preview environments.
     enabled: Boolean(studioUrl),
     studioUrl,
   },
@@ -155,7 +155,7 @@ export const POST_QUERY = defineQuery(
 
 ## 2. Data Fetching (Loaders)
 
-Use `loadQuery` from your **server** file in route loaders. Import the generated `Route` type from `./+types/<route>` — React Router writes one type module per route file.
+Use `loadQuery` from your **server** file in route loaders. Import the generated `Route` type from `./+types/<route>` - React Router writes one type module per route file.
 
 ```typescript
 // app/routes/home.tsx

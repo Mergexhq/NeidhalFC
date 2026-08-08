@@ -225,7 +225,7 @@ export async function POST(req: NextRequest) {
 
 ### Tag-Based Revalidation
 
-"Update once, revalidate everywhere" — best for referenced content.
+"Update once, revalidate everywhere" - best for referenced content.
 
 **1. Tag Your Queries:**
 ```typescript
@@ -284,8 +284,8 @@ export async function POST(req: NextRequest) {
 
 Webhooks fire *before* Sanity CDN updates. If you see stale data:
 
-1. **Add delay** — Pass `true` as third arg to `parseBody`
-2. **Or bypass CDN** — Set `useCdn: false` in client config (use sparingly)
+1. **Add delay** - Pass `true` as third arg to `parseBody`
+2. **Or bypass CDN** - Set `useCdn: false` in client config (use sparingly)
 
 ## 4. Visual Editing (Stega) & Clean Data
 
@@ -340,7 +340,7 @@ export async function generateStaticParams() {
 
 ## 5. Setup: Studio (Standalone)
 
-Create the Studio as its own app from the repo root — **not inside the Next.js app folder**, where the CLI would switch to its embedded flow:
+Create the Studio as its own app from the repo root - **not inside the Next.js app folder**, where the CLI would switch to its embedded flow:
 
 ```bash
 npm create sanity@latest -- --project <projectId> --dataset production --template clean --typescript --output-path studio
@@ -354,7 +354,7 @@ Embedded Studios (`<NextStudio />` mounted at a route like `/app/studio/[[...too
 
 1. Create a standalone Studio folder as above, reusing your existing `projectId` and dataset.
 2. Move `sanity.config.ts`, `sanity.cli.ts`, and your schema types into it.
-3. Delete the `/app/studio/[[...tool]]/` route from the Next.js app. Keep `next-sanity` — the app still needs it for fetching, Live Content, and Visual Editing.
+3. Delete the `/app/studio/[[...tool]]/` route from the Next.js app. Keep `next-sanity` - the app still needs it for fetching, Live Content, and Visual Editing.
 4. Add the app's URLs to CORS origins and set the Presentation Tool's `previewUrl.origin` to the app's URL.
 
 ## 6. Setup: Draft Mode
@@ -511,7 +511,7 @@ export const ARTICLES_COUNT_QUERY = defineQuery(`
   count(*[_type == "article" && defined(slug.current)])
 `);
 
-// Paginated listing — validated integers interpolated into the slice
+// Paginated listing - validated integers interpolated into the slice
 function articlesQuery(start: number, end: number) {
   return defineQuery(`
     *[_type == "article" && defined(slug.current)]

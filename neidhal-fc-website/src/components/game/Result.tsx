@@ -32,7 +32,7 @@ function ConfettiCanvas() {
     const colors = ["#FAF7F2", "#C5A880", "#005f73", "#e9d8a6", "#0B1F3A", "#94D2BD", "#EE9B00", "#CA6702", "#BB3E03", "#AE2012"];
     const particles: any[] = [];
 
-    // 80 particles — visually identical to 120 but 33% fewer draw calls
+    // 80 particles - visually identical to 120 but 33% fewer draw calls
     for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * width,

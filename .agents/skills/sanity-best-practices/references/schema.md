@@ -115,10 +115,10 @@ Every item in a Sanity array automatically gets a `_key` property. This is **cri
 Always assign an icon from `@sanity/icons` to documents and objects. This improves the Studio UX significantly. Browse all icons at [icons.sanity.build](https://icons.sanity.build/all).
 
 ```typescript
-// ✅ Correct — import each icon from its own subpath
+// ✅ Correct - import each icon from its own subpath
 import { DocumentTextIcon } from '@sanity/icons/DocumentText'
 
-// ❌ Wrong — root named exports were removed in v5.
+// ❌ Wrong - root named exports were removed in v5.
 // Type-checks clean, then fails at bundle time.
 import { DocumentTextIcon } from '@sanity/icons'
 ```
@@ -296,9 +296,9 @@ defineField({
 
 ### Migration Workflow
 
-**Phase 1: Deprecate** — Apply the deprecation pattern above. Deploy.
+**Phase 1: Deprecate** - Apply the deprecation pattern above. Deploy.
 
-**Phase 2: Migrate** — Update frontend to use new fields (with `coalesce()` fallbacks). Create a migration:
+**Phase 2: Migrate** - Update frontend to use new fields (with `coalesce()` fallbacks). Create a migration:
 
 ```typescript
 // migrations/rename-oldTitle-to-newTitle/index.ts
@@ -328,7 +328,7 @@ sanity migrations run rename-oldTitle-to-newTitle
 sanity migrations run rename-oldTitle-to-newTitle --no-dry-run
 ```
 
-**Phase 3: Remove** — Once `oldTitle` is undefined for all documents, delete the field definition.
+**Phase 3: Remove** - Once `oldTitle` is undefined for all documents, delete the field definition.
 
 ## 8. Validation Patterns
 

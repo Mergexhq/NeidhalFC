@@ -29,7 +29,7 @@ npm install astro-portabletext @sanity/image-url groq
 
 ### Configuration (`astro.config.mjs`)
 
-Use the official `@sanity/astro` integration. `astro.config.mjs` runs at config time before Astro's env loading, so `import.meta.env.PUBLIC_*` is not available there — use Vite's `loadEnv` to read the same `PUBLIC_` variables your pages will use.
+Use the official `@sanity/astro` integration. `astro.config.mjs` runs at config time before Astro's env loading, so `import.meta.env.PUBLIC_*` is not available there - use Vite's `loadEnv` to read the same `PUBLIC_` variables your pages will use.
 
 ```javascript
 import { defineConfig } from "astro/config";
@@ -48,7 +48,7 @@ export default defineConfig({
       projectId: PUBLIC_SANITY_PROJECT_ID,
       dataset: PUBLIC_SANITY_DATASET,
       useCdn: false, // False for static builds
-      studioBasePath: "/admin", // Optional — only if embedding the Studio
+      studioBasePath: "/admin", // Optional - only if embedding the Studio
     }),
   ],
 });
@@ -101,7 +101,7 @@ export async function getPosts() {
 
 ### Dynamic Routes (`[slug].astro`)
 
-Astro hoists `getStaticPaths()` into a separate module context. Module-scope `const` declarations in the frontmatter are NOT accessible inside it — referencing them throws `ReferenceError: <NAME> is not defined` at request time. Define queries used by `getStaticPaths` inside the function, or import them from a utility module.
+Astro hoists `getStaticPaths()` into a separate module context. Module-scope `const` declarations in the frontmatter are NOT accessible inside it - referencing them throws `ReferenceError: <NAME> is not defined` at request time. Define queries used by `getStaticPaths` inside the function, or import them from a utility module.
 
 ```astro
 ---

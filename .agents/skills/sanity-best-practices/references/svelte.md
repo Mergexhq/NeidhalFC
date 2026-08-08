@@ -5,7 +5,7 @@ description: Integration guide for SvelteKit with Sanity using @sanity/sveltekit
 
 # SvelteKit & Sanity Integration Rules
 
-This guide uses the official **`@sanity/sveltekit`** package (Svelte 5 + SvelteKit 2). The older `@sanity/svelte-loader` does not work with Svelte 5 — its `useQuery` store returns empty on the client. Use `@sanity/sveltekit` instead.
+This guide uses the official **`@sanity/sveltekit`** package (Svelte 5 + SvelteKit 2). The older `@sanity/svelte-loader` does not work with Svelte 5 - its `useQuery` store returns empty on the client. Use `@sanity/sveltekit` instead.
 
 ## 1. Setup & Configuration
 
@@ -24,7 +24,7 @@ cd my-app
 npm install @sanity/sveltekit @sanity/image-url @portabletext/svelte
 ```
 
-`@sanity/sveltekit` is the one-stop integration: it bundles `@sanity/client`, `@sanity/visual-editing`, `@sanity/core-loader`, `groq`, and friends, and re-exports `createClient`, `defineQuery`, `groq`, and `stegaClean`. **Do not** also install `@sanity/client`, `@sanity/visual-editing`, or `groq` directly — import them from `@sanity/sveltekit`. `@sanity/image-url` and `@portabletext/svelte` are not bundled, so add them separately.
+`@sanity/sveltekit` is the one-stop integration: it bundles `@sanity/client`, `@sanity/visual-editing`, `@sanity/core-loader`, `groq`, and friends, and re-exports `createClient`, `defineQuery`, `groq`, and `stegaClean`. **Do not** also install `@sanity/client`, `@sanity/visual-editing`, or `groq` directly - import them from `@sanity/sveltekit`. `@sanity/image-url` and `@portabletext/svelte` are not bundled, so add them separately.
 
 ### Environment variables (`.env.local`)
 
@@ -40,7 +40,7 @@ SvelteKit's `$env/static/public` requires the `PUBLIC_` prefix for any var read 
 
 ## 2. Files
 
-### `src/lib/sanity/api.ts` — env var resolution
+### `src/lib/sanity/api.ts` - env var resolution
 
 ```ts
 import {
@@ -63,7 +63,7 @@ export const apiVersion = PUBLIC_SANITY_API_VERSION || '2026-05-15'
 export const studioUrl = PUBLIC_SANITY_STUDIO_URL || 'http://localhost:3333'
 ```
 
-### `src/lib/sanity/client.ts` — public client
+### `src/lib/sanity/client.ts` - public client
 
 ```ts
 import {createClient} from '@sanity/sveltekit'
@@ -80,7 +80,7 @@ export const client = createClient({
 
 Import `createClient` from `@sanity/sveltekit`, not `@sanity/client`. `useCdn: true` is for production reads; the server (preview) client below overrides to `false`.
 
-### `src/lib/sanity/client.server.ts` — server (preview) client
+### `src/lib/sanity/client.server.ts` - server (preview) client
 
 ```ts
 import {SANITY_API_READ_TOKEN} from '$env/static/private'
@@ -93,7 +93,7 @@ export const serverClient = client.withConfig({
 })
 ```
 
-### `src/lib/sanity/queries.ts` — queries + types
+### `src/lib/sanity/queries.ts` - queries + types
 
 ```ts
 import {groq} from '@sanity/sveltekit'
@@ -119,7 +119,7 @@ export interface Post {
 
 Use `defineQuery` instead of `groq` if you want TypeGen-friendly query definitions; both are re-exported from `@sanity/sveltekit`.
 
-### `src/lib/sanity/image.ts` — image URL builder
+### `src/lib/sanity/image.ts` - image URL builder
 
 ```ts
 import {createImageUrlBuilder} from '@sanity/image-url'
@@ -136,7 +136,7 @@ Use the named `createImageUrlBuilder` export; the default export logs a deprecat
 
 ## 3. Hooks & Locals
 
-### `src/hooks.server.ts` — wire preview + query loader
+### `src/hooks.server.ts` - wire preview + query loader
 
 ```ts
 import {handlePreviewMode, handleQueryLoader, setServerClient} from '@sanity/sveltekit'
@@ -157,7 +157,7 @@ export const handle = sequence(
 
 `handlePreviewMode` installs `/preview/enable` and `/preview/disable` endpoints, reads the preview cookie, and populates `locals.sanity` with `{client, fetch, loadQuery, previewEnabled, previewPerspective, browserToken}`. `handleQueryLoader` attaches `loadQuery` to `locals.sanity` for use in `+page.server.ts` / `+layout.server.ts`.
 
-### `src/app.d.ts` — typed locals
+### `src/app.d.ts` - typed locals
 
 ```ts
 import type {SanityLocals} from '@sanity/sveltekit'
@@ -173,7 +173,7 @@ export {}
 
 ## 4. Layout: Preview + Visual Editing Providers
 
-### `src/routes/+layout.server.ts` — propagate previewEnabled
+### `src/routes/+layout.server.ts` - propagate previewEnabled
 
 ```ts
 import type {LayoutServerLoad} from './$types'
@@ -184,7 +184,7 @@ export const load: LayoutServerLoad = (event) => {
 }
 ```
 
-### `src/routes/+layout.svelte` — wrap children in providers (Svelte 5)
+### `src/routes/+layout.svelte` - wrap children in providers (Svelte 5)
 
 ```svelte
 <script lang="ts">
@@ -206,8 +206,8 @@ export const load: LayoutServerLoad = (event) => {
 ```
 
 Svelte 5 idioms here are mandatory:
-- `const {children, data} = $props()` — not `export let data`.
-- `{@render children()}` — not `<slot />`.
+- `const {children, data} = $props()` - not `export let data`.
+- `{@render children()}` - not `<slot />`.
 - The `svelte-ignore state_referenced_locally` comment silences a warning about destructuring reactive props at module scope.
 
 `<VisualEditing>` dynamically imports its component only when `enabled === true`, so a preview-off app never loads the React-Compiler-runtime chunk.
@@ -229,7 +229,7 @@ export const load: PageServerLoad = async ({locals}) => {
 }
 ```
 
-The return shape `{query, params?, options: {initial}}` is what `useQuery(data)` on the client expects — don't change the field names.
+The return shape `{query, params?, options: {initial}}` is what `useQuery(data)` on the client expects - don't change the field names.
 
 `src/routes/+page.svelte`:
 
