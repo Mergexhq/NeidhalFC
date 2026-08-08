@@ -1,0 +1,12 @@
+{
+  "name": "neidhalfc-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently -n \"website,studio\" -c \"cyan,yellow\" \"npm run dev --prefix neidhal-fc-website\" \"npm run dev --prefix studio-neidhalfc\"",
+    "build": "npm run build --prefix neidhal-fc-website && npm run build --prefix studio-neidhalfc"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

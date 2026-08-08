@@ -19,34 +19,44 @@ export const WhyWeStarted: React.FC = () => {
           as="h2"
           split="word"
           text="Why We Started Neidhal FC"
-          className="font-raleway font-semibold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[46px] text-[#0B1F3A] uppercase tracking-tight leading-none whitespace-nowrap max-w-none"
+          className="font-raleway font-bold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[46px] text-[#0B1F3A] uppercase tracking-tight leading-none whitespace-nowrap max-w-none"
           whileInView
           once
         />
 
-        {/* Story copy structured like Image 2 */}
-        <div className="flex flex-col gap-4 sm:gap-5 md:gap-5 text-center text-base sm:text-lg md:text-[21px] text-[#0B1F3A]/85 font-light leading-[1.55] max-w-3xl font-sans">
+        {/* Story copy structured as 5 lines forming an inverted triangle */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="flex flex-col items-center text-center font-raleway font-normal text-lg sm:text-xl md:text-[23px] text-[#0B1F3A]/90 leading-[1.65] max-w-5xl mx-auto space-y-1.5"
+        >
+          {/* Line 1 (Widest) */}
+          <span className="block md:inline-block">
+            To bring the soul back into football by creating fearless, skillful players
+          </span>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-raleway font-semibold text-xl sm:text-2xl md:text-[26px] text-[#0B1F3A] leading-tight"
-          >
-            To bring the soul back into football by creating fearless, skillful players who play with flair, freedom, and creativity -not just tactics.
-          </motion.p>
+          {/* Line 2 */}
+          <span className="block md:inline-block">
+            who play with flair, freedom, and creativity — not just tactics.
+          </span>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-raleway font-medium text-lg sm:text-xl md:text-[22px] text-[#0B1F3A]"
-          >
-            At Neidhal FC, we believe football should inspire expression, joy, and individuality, not robotic repetition.
-          </motion.p>
-        </div>
+          {/* Line 3 */}
+          <span className="block md:inline-block text-[#0B1F3A]/80 pt-2 md:pt-3">
+            At Neidhal FC, we believe football should inspire
+          </span>
+
+          {/* Line 4 */}
+          <span className="block md:inline-block text-[#0B1F3A]/80">
+            expression, joy, and individuality,
+          </span>
+
+          {/* Line 5 (Narrowest) */}
+          <span className="block md:inline-block text-[#0B1F3A]/80 font-medium">
+            not robotic repetition.
+          </span>
+        </motion.div>
 
         {/* Rounded Pill CTA Button (Image 2 style) */}
         <motion.div

@@ -38,6 +38,7 @@ const CAROUSEL_IMAGES = [
 interface NavbarProps {
   disableDock?: boolean;
   forceWhiteText?: boolean;
+  isLightHeader?: boolean;
 }
 
 // Custom animated asymmetric 2-line Hamburger Button
@@ -108,6 +109,7 @@ const HamburgerButton = ({
 export const Navbar: React.FC<NavbarProps> = ({
   disableDock = false,
   forceWhiteText = false,
+  isLightHeader = false,
 }) => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -152,17 +154,19 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, [pathname]);
 
   const isDarkHero =
-    forceWhiteText ||
+    !isLightHeader &&
+    (forceWhiteText ||
     pathname === "/contact" ||
     pathname.startsWith("/utility") ||
     pathname === "/not-found" ||
-    pathname === "/404";
+    pathname === "/404");
 
   const isActualDarkPage =
-    pathname === "/contact" ||
+    !isLightHeader &&
+    (pathname === "/contact" ||
     pathname.startsWith("/utility") ||
     pathname === "/not-found" ||
-    pathname === "/404";
+    pathname === "/404");
 
   return (
     <>

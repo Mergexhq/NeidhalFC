@@ -7,6 +7,6 @@ export const metadata: Metadata = {
   description: "Official Terms and Conditions of Neidhal Football Club. Rules governing academy memberships.",
 };
 
-export default function TermsAndConditionsPage() {
+export default function DirectTermsAndConditionsPage() {
   return <TermsAndConditionsContent />;
 }

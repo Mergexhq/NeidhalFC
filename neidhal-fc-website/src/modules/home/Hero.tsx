@@ -40,6 +40,8 @@ export const Hero: React.FC = () => {
   const story4TitleRef = useRef<KineticTextRevealRef>(null);
   const story4DescRef = useRef<KineticTextRevealRef>(null);
 
+
+
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
@@ -178,9 +180,9 @@ export const Hero: React.FC = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=600%",
+          end: "+=1200%",
           pin: heroRef.current,
-          scrub: 0.8, // Smooth interpolation (increased for slow-mo and buttery feel)
+          scrub: 1.2, // Ultra smooth slow-mo scrub interpolation
           anticipatePin: 1,
           refreshPriority: 1,       // Processed FIRST - spacer committed before CoachSection refresh
           invalidateOnRefresh: true,
@@ -225,10 +227,12 @@ export const Hero: React.FC = () => {
         0.11
       );
 
-      // Story Beat 1 (Left Side) -visible 0.15→0.28, gap until 0.44
+      // --------------------------------------------------
+      // Story Beat 1 (Left Side Callout) - 0.15 → 0.44
+      // --------------------------------------------------
       tl.fromTo(
         story1Ref.current,
-        { opacity: 0, x: -30 },
+        { opacity: 0, x: -20 },
         {
           opacity: 1,
           x: 0,
@@ -241,16 +245,19 @@ export const Hero: React.FC = () => {
         },
         0.15
       );
+      // Story Beat 1 Exit (Stays visible until 0.44)
       tl.to(
         story1Ref.current,
-        { opacity: 0, x: 30, duration: 0.07, ease: "power1.in" },
-        0.28
+        { opacity: 0, duration: 0.06, ease: "power1.in" },
+        0.44
       );
 
-      // Story Beat 2 (Right Side) -visible 0.44→0.55, gap until 0.70
+      // --------------------------------------------------
+      // Story Beat 2 (Right Side Callout) - 0.48 → 0.62
+      // --------------------------------------------------
       tl.fromTo(
         story2Ref.current,
-        { opacity: 0, x: 30 },
+        { opacity: 0, x: 20 },
         {
           opacity: 1,
           x: 0,
@@ -261,18 +268,21 @@ export const Hero: React.FC = () => {
             story2DescRef.current?.play();
           }
         },
-        0.44
+        0.48
       );
+      // Story Beat 2 Exit
       tl.to(
         story2Ref.current,
-        { opacity: 0, x: -30, duration: 0.07, ease: "power1.in" },
-        0.55
+        { opacity: 0, duration: 0.06, ease: "power1.in" },
+        0.62
       );
 
-      // Story Beat 3 (Center Bottom) -visible 0.76→0.85, gap until 0.92
+      // --------------------------------------------------
+      // Story Beat 3 (Center Bottom Callout) - 0.76 → 0.85
+      // --------------------------------------------------
       tl.fromTo(
         story3Ref.current,
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
@@ -285,19 +295,22 @@ export const Hero: React.FC = () => {
         },
         0.76
       );
+      // Story Beat 3 Exit
       tl.to(
         story3Ref.current,
-        { opacity: 0, y: -30, duration: 0.07, ease: "power1.in" },
+        { opacity: 0, duration: 0.06, ease: "power1.in" },
         0.85
       );
 
-      // Story Beat 4 (Conclusion) -visible 0.92→1.00
+      // --------------------------------------------------
+      // Story Beat 4 (Conclusion Frame) - 0.91 → 1.00
+      // --------------------------------------------------
       tl.fromTo(
         story4Ref.current,
-        { opacity: 0, scale: 0.95 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
-          scale: 1,
+          y: 0,
           duration: 0.07,
           ease: "power1.out",
           onStart: () => {
@@ -305,7 +318,7 @@ export const Hero: React.FC = () => {
             story4DescRef.current?.play();
           }
         },
-        0.92
+        0.91
       );
     },
     { scope: containerRef, dependencies: [isLoaded, images] }
@@ -394,7 +407,7 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Storytelling Captions */}
+        {/* Storytelling Captions HUD Cards */}
         <div ref={story1Ref} className="story-caption story-left">
           <h3>
             <KineticTextReveal
@@ -493,3 +506,4 @@ export const Hero: React.FC = () => {
 };
 
 export default Hero;
+

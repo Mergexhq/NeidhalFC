@@ -7,6 +7,6 @@ export const metadata: Metadata = {
   description: "Official Privacy Policy of Neidhal Football Club. How we protect your data.",
 };
 
-export default function PrivacyPolicyPage() {
+export default function DirectPrivacyPolicyPage() {
   return <PrivacyPolicyContent />;
 }
