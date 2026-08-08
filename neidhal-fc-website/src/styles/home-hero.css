@@ -441,18 +441,22 @@
   }
 
   .story-left,
-  .story-right {
+  .story-right,
+  .story-center-bottom {
     left: 50%;
-    top: auto;
-    bottom: 10%;
+    top: 14%;
+    bottom: auto;
     transform: translateX(-50%) !important;
     text-align: center;
     width: 92%;
   }
 
-  .story-center-bottom {
-    bottom: 10%;
-    width: 92%;
+  /* White text color for all story captions on mobile */
+  .story-caption h3,
+  .story-caption p,
+  .story-caption span {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.9) !important;
   }
 
   .story-conclusion {
