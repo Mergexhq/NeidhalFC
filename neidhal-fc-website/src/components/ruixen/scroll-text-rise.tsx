@@ -15,7 +15,7 @@ interface ScrollTextRiseProps {
 
 const parseWord = (word: string) => {
   let isBold = false;
-  let isUnderline = false;
+  let isBeige = false;
   let isBlue = false;
   let cleanWord = word;
 
@@ -24,17 +24,17 @@ const parseWord = (word: string) => {
     cleanWord = cleanWord.replaceAll("**", "");
   }
   if (cleanWord.includes("__")) {
-    isUnderline = true;
+    isBeige = true;
     cleanWord = cleanWord.replaceAll("__", "");
   }
 
-  // Neidhal specific highlighting (strip punctuation for match)
+  // Neidhal specific beige highlighting (strip punctuation for match)
   const plain = cleanWord.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
   if (plain === "Neidhal") {
-    isUnderline = true;
+    isBeige = true;
   }
 
-  return { cleanWord, isBold, isUnderline, isBlue };
+  return { cleanWord, isBold, isBeige, isBlue };
 };
 
 const ScrollTextRise: FC<ScrollTextRiseProps> = ({
@@ -69,7 +69,7 @@ const ScrollTextRise: FC<ScrollTextRiseProps> = ({
           )}
         >
           {words.map((word, i) => {
-            const { cleanWord, isBold, isUnderline, isBlue } = parseWord(word);
+            const { cleanWord, isBold, isBeige, isBlue } = parseWord(word);
             const start = i / words.length;
             // Stagger reveal: each word reveals over a span of 0.08 scroll progress
             const end = Math.min(start + 0.08, 1);
@@ -79,7 +79,7 @@ const ScrollTextRise: FC<ScrollTextRiseProps> = ({
                 progress={scrollYProgress}
                 range={[start, end]}
                 isBold={isBold}
-                isUnderline={isUnderline}
+                isBeige={isBeige}
                 isBlue={isBlue}
               >
                 {cleanWord}
@@ -97,7 +97,7 @@ interface RevealWordProps {
   progress: MotionValue<number>;
   range: [number, number];
   isBold?: boolean;
-  isUnderline?: boolean;
+  isBeige?: boolean;
   isBlue?: boolean;
 }
 
@@ -106,7 +106,7 @@ const RevealWord: FC<RevealWordProps> = ({
   progress,
   range,
   isBold,
-  isUnderline,
+  isBeige,
   isBlue,
 }) => {
   const [start, end] = range;
@@ -125,9 +125,6 @@ const RevealWord: FC<RevealWordProps> = ({
     return 12 - progressRatio * 12;
   });
 
-  const highlightClass = "text-[#0B1F3A] font-bold underline decoration-[#BCA688] decoration-2 underline-offset-4";
-  const ghostHighlightClass = "text-[#0B1F3A]/20 font-bold underline decoration-[#BCA688]/20 decoration-2 underline-offset-4";
-
   return (
     // inline-block relative wrapping ensures the layout bounds match and overflow clips properly
     <span className="relative inline-block mx-1 overflow-hidden lg:mx-2 xl:mx-2.5 my-0.5 align-bottom">
@@ -137,8 +134,8 @@ const RevealWord: FC<RevealWordProps> = ({
           "absolute left-0 top-0 select-none pointer-events-none text-center w-full h-full",
           isBold
             ? "text-[#0B1F3A]/20 font-bold"
-            : isUnderline || isBlue
-            ? ghostHighlightClass
+            : isBeige
+            ? "text-[#BCA688]/30 font-bold"
             : "text-[#0B1F3A]/15 font-light"
         )}
       >
@@ -151,8 +148,8 @@ const RevealWord: FC<RevealWordProps> = ({
           "block text-center w-full",
           isBold
             ? "text-[#0B1F3A] font-bold"
-            : isUnderline || isBlue
-            ? highlightClass
+            : isBeige
+            ? "text-[#BCA688] font-bold"
             : "text-[#0B1F3A] font-light"
         )}
       >

@@ -78,7 +78,7 @@ export const CoachesGroup: React.FC = () => {
       >
         <motion.div 
           style={{ x: textX, y: textY }}
-          className="text-[16vw] font-raleway font-extrabold text-[#0B1F3A] opacity-[0.16] tracking-tighter leading-none select-none text-center whitespace-nowrap"
+          className="text-[14.5vw] font-raleway font-extrabold bg-gradient-to-b from-[#0B1F3A]/45 via-[#0B1F3A]/20 to-transparent bg-clip-text text-transparent tracking-tighter leading-none select-none text-center whitespace-nowrap px-8"
         >
           NEIDHAL FC
         </motion.div>
