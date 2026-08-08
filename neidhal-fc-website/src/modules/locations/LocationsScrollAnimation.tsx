@@ -100,7 +100,7 @@ export const LocationsScrollAnimation: React.FC = () => {
   return (
     <div ref={triggerRef} className="w-full relative bg-[#FAF7F2]">
       {/* Pinned scroll area acting as the Hero */}
-      <div ref={containerRef} className="w-full h-screen flex flex-col justify-start items-center pt-28 pb-8 px-6 overflow-hidden relative">
+      <div ref={containerRef} className="w-full h-screen flex flex-col justify-center items-center pt-20 md:pt-28 pb-16 md:pb-12 px-6 overflow-hidden relative">
         <Navbar />
         
         {/* Subtle background glow */}
@@ -114,7 +114,7 @@ export const LocationsScrollAnimation: React.FC = () => {
         </div>
 
         {/* Hero Text Block at the top */}
-        <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-4 text-center mt-4">
+        <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-3 sm:gap-4 text-center mt-2 md:mt-4">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -135,7 +135,7 @@ export const LocationsScrollAnimation: React.FC = () => {
         </div>
 
         {/* Dynamic canvas in the middle */}
-        <div className="relative z-10 w-full max-w-4xl aspect-video bg-transparent flex justify-center items-center mt-[-6vh] md:mt-[-12vh] mb-[-6vh] md:mb-[-12vh]">
+        <div className="relative z-10 w-full max-w-4xl aspect-video bg-transparent flex justify-center items-center mt-4 sm:mt-6 md:mt-[-12vh] mb-2 md:mb-[-12vh]">
           {!isLoaded && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
               <div className="w-8 h-8 border-2 border-[#0B1F3A]/20 border-t-[#0B1F3A] rounded-full animate-spin" />
@@ -157,7 +157,7 @@ export const LocationsScrollAnimation: React.FC = () => {
         </div>
 
         {/* Scroll indicator overlay at the bottom */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none">
+        <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none">
           <span className="text-[9px] uppercase tracking-[0.25em] font-extrabold text-[#0B1F3A]/40">
             Scroll to explore
           </span>

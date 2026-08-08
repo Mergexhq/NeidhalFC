@@ -122,7 +122,7 @@ export const AboutHero: React.FC = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="block md:hidden mt-4 z-20 text-center w-full"
+                className="block md:hidden mt-14 xs:mt-16 sm:mt-20 z-20 text-center w-full"
               >
                 <span className="font-raleway font-bold text-[10px] xs:text-[11px] sm:text-[14px] uppercase tracking-[0.2em] text-[#0B1F3A] whitespace-nowrap">
                   NEIDHAL FOOTBALL CLUB

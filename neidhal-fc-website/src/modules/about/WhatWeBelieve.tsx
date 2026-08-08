@@ -102,19 +102,19 @@ export const WhatWeBelieve: React.FC = () => {
 
       {/* Full-width Card Grid Layer */}
       <div className="w-full relative z-10">
-        {/* Vertical Editorial Cards Grid (Flush side-by-side on desktop, embedded in the page bg) */}
+        {/* Vertical Editorial Cards Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-5 border-b border-primary/10 w-full"
+          className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-0 border-b border-primary/10 w-full px-4 sm:px-6 md:px-0"
         >
           {CARDS.map((card, idx) => (
             <motion.div
               key={card.bigWord}
               variants={cardVariants}
-              className={`relative flex flex-col justify-between pt-3 pb-8 px-6 md:pt-4 md:pb-10 md:px-8 min-h-[660px] md:min-h-[660px] transition-colors duration-500 group border-b md:border-b-0 overflow-hidden ${
+              className={`relative flex flex-col justify-between pt-10 pb-8 px-6 md:pt-4 md:pb-10 md:px-8 min-h-[660px] sm:min-h-[720px] md:min-h-[660px] transition-colors duration-500 group border border-primary/10 md:border-0 md:border-b rounded-2xl md:rounded-none overflow-hidden ${
                 idx < CARDS.length - 1 ? "md:border-r border-primary/10" : ""
               }`}
             >
@@ -130,11 +130,11 @@ export const WhatWeBelieve: React.FC = () => {
                 />
               </div>
 
-              {/* Gradient Overlay for blending image with page bg (#FAF7F2) - transparent at bottom */}
+              {/* Gradient Overlay for blending image with page bg (#FAF7F2) - desktop only */}
               <div 
-                className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-300"
+                className="hidden md:block absolute inset-0 z-10 pointer-events-none transition-opacity duration-300"
                 style={{
-                  background: `linear-gradient(to bottom, #FAF7F2 0%, #FAF7F2 15%, rgba(250, 247, 242, 0.6) 30%, rgba(250, 247, 242, 0) 60%)`
+                  background: `linear-gradient(to bottom, #FAF7F2 0%, #FAF7F2 22%, rgba(250, 247, 242, 0.75) 42%, rgba(250, 247, 242, 0) 70%)`
                 }}
               />
 
@@ -147,9 +147,9 @@ export const WhatWeBelieve: React.FC = () => {
               />
 
               {/* Top part: Big Condensed Nike-style Heading and Description Copy */}
-              <div className="relative z-20 w-full flex flex-col items-center text-center -mt-3 md:-mt-4">
+              <div className="relative z-20 w-full flex flex-col items-center text-center mt-0 md:-mt-4 pt-1 md:pt-0">
                 <h3 
-                  className={`font-raleway font-bold uppercase tracking-tighter leading-none select-none transition-transform duration-300 group-hover:-translate-y-1 mb-4 ${
+                  className={`font-raleway font-bold uppercase tracking-tighter leading-none select-none transition-transform duration-300 group-hover:-translate-y-1 mb-2.5 sm:mb-4 ${
                     card.bigWord === "Confidence"
                       ? "text-3xl sm:text-4xl md:text-[2.7vw]"
                       : "text-4xl sm:text-5xl md:text-[3.2vw]"
